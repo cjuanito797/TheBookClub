@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Below is a list of some of our world famous authors. </h1>
+
+{% for author in authors %}
+
+    {{ author.first_name }} {{ author.last_name }}
+{%  endfor %}
+</body>
+</html>
