@@ -43,6 +43,10 @@ class Genre (models.Model):
 
 
 class Book (models.Model):
+    owner = models.ForeignKey ("accounts.User",
+                                 related_name='owner',
+                                 on_delete=models.CASCADE,
+                                 default=None)
     genre = models.ForeignKey (Genre,
                                related_name='books',
                                on_delete=models.CASCADE)
