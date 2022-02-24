@@ -4,6 +4,7 @@ from django.db import models
 from django.db import models
 from django.urls import reverse
 import hashlib, random, sys
+from django.core.validators import RegexValidator, MinLengthValidator
 
 
 class Author (models.Model):
@@ -58,6 +59,8 @@ class Book (models.Model):
     price = models.DecimalField (max_digits=10, decimal_places=2)
     available = models.BooleanField (default=True)
     slug = models.SlugField (max_length=200, db_index=True)
+    isbn = models.CharField(max_length=13, validators=[MinLengthValidator(13)])
+
 
     class Meta:
         ordering = ('title',)
