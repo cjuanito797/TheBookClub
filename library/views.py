@@ -1,10 +1,20 @@
 from django.shortcuts import render
 from .models import Genre, Book, Author
 from accounts.views import Signup
-
+from django.urls import reverse_lazy
+from .forms import BookForm
+from bootstrap_modal_forms.generic import BSModalCreateView
 
 # Create your views here.
-# Create your views here.
+
+class BookCreateView(BSModalCreateView):
+    template_name = 'library/books/createBook.html'
+    form_class = BookForm
+    success_message = 'Success: Book was created'
+    success_url = reverse_lazy('library:home')
+
+
+
 def book_list(request, genre_slug=None):
     genre = None
     genres = Genre.objects.all ( )
