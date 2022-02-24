@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'library.apps.LibraryConfig',
+    'orders.apps.OrdersConfig',
     'bootstrap_modal_forms',
 ]
 
