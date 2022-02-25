@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Genre, Book, Author
-from accounts.views import Signup
+from accounts.views import registration_view
 from django.urls import reverse_lazy
 from .forms import BookForm
 from bootstrap_modal_forms.generic import BSModalCreateView
