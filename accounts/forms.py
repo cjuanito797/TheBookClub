@@ -11,37 +11,16 @@ from django.forms.models import ModelForm
 from .models import User
 
 
-class CustomUserCreationForm(UserCreationForm):
-    email = forms.EmailField(max_length=60, help_text='Required. Add a valid email address')
+class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', )
+        fields = ('email', 'password1', 'password2', 'first_name', 'last_name', 'street_num', 'city', 'state', 'zipcode',)
 
+    def __init__(self, *args, **kwargs):
+        super (RegistrationForm, self).__init__ (*args, **kwargs)
 
-class CustomUserChangeForm(UserChangeForm):
+        for fieldname in ['password1','password2',]:
 
-    class Meta:
-        model = User
-        fields = ('email',)
+            self.fields[fieldname].help_text = None
 
-class userRegistation(forms.ModelForm):
-    first_name = forms.CharField (label='', required=True, widget=forms.TextInput (attrs={'placeholder': 'First Name'}))
-    last_name = forms.CharField (label='', required=True, widget=forms.TextInput (attrs={'placeholder': 'Last Name'}))
-    # email = forms.CharField(label='', widget=forms.EmailInput(attrs={'placeholder', 'johndoe@example.com'}))
-    email = forms.CharField (label='', max_length=100,
-                             widget=forms.EmailInput
-                             (attrs={'placeholder': 'Enter your email'}))
-    password = forms.CharField (label='', widget=forms.PasswordInput (attrs={'placeholder': 'Password'}), required=True)
-    password2 = forms.CharField (label='',
-                                 widget=forms.PasswordInput (attrs={'placeholder': 'Verify Password'}))
-
-    class Meta:
-        model = User
-        fields = ('first_name', 'last_name', 'email')
-
-    def clean_password2(self):
-        cd = self.cleaned_data
-        if cd['password'] != cd['password2']:
-            raise forms.ValidationError ('Passwords don\'t match.')
-        return cd['password2']
