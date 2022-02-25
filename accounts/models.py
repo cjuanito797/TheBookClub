@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-
+from django.core.validators import MinLengthValidator
 from library.models import Book, Genre, Author
 # Create your models here.
 from .managers import CustomUserManager
@@ -14,7 +14,7 @@ class User (AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField (max_length=20)
     street_num = models.CharField (max_length=20)
     state = models.CharField (max_length=2)
-    zipcode = models.IntegerField (null=True)
+    zipcode = models.CharField(max_length=5, validators=[MinLengthValidator(5)])
     city = models.CharField (max_length=20)
     is_staff = models.BooleanField (default=False)
     is_active = models.BooleanField (default=True)
