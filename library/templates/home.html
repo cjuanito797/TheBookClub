@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="../../../BookClub/Library/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
     <title>The Book Club</title>
     <style>
         footer {
@@ -28,6 +28,7 @@
             <li><a href ="{% url 'library:author_list' %}">Authors</a></li>
             <li><a href ="{% url 'accounts:register' %}">Sign Up!</a></li>
             <li><a href ="{% url 'library:create_book' %}">Create A Book</a></li>
+            <li><a href ="{% url 'accounts:user_login' %}">Login</a></li>
 
 
 
