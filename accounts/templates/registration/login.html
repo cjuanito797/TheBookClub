@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+{% load static %}
+{% csrf_token %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            background-image: url("../../static/images/variety.jpeg");
+            background-repeat: no-repeat;
+            image-rendering: high-quality;
+            color: white;
+            max-width: 100%;
+            background-size: cover; /* <------ */
+        }
+
+        input[type=submit] {
+            border-color: black;
+            color: black;
+            background-color: white;
+            border-spacing: 0;
+            height: 25px;
+
+        }
+
+
+        .top {
+            height: auto;
+            width: 100%;
+            margin-left: 0;
+
+            position: fixed;
+            top: 0;
+            margin-bottom: 5px;
+        }
+
+        .top ul {
+            width: auto;
+            list-style-type: none;
+            white-space: nowrap;
+            overflow: hidden;
+            margin-left: 5%;
+            padding: 0;
+        }
+
+        .headTop {
+            margin-top: 100px;
+        }
+
+        .top li {
+            float: left;
+            margin-right: 2%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .top li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 3px;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .top li a:hover {
+            background: #111;
+        }
+
+        .top ul li ul {
+            margin-left: -0.2px;
+            background: rgb(189, 181, 181);
+            position: relative;
+            display: none;
+        }
+
+        .top ul li ul li {
+            float: none;
+            text-align: center;
+        }
+
+        .top ul li:hover ul {
+            display: block;
+        }
+
+
+    </style>
+</head>
+<body>
+
+
+
+<header class="headTop">
+    <h1></h1>
+    {% if form.errors %}
+        <p>
+            Your username and password didn't match.
+            Please try again.
+        </p>
+    {% else %}
+        <p>Please, use the following form to log-in:</p>
+    {% endif %}
+
+
+    <div class="login-form">
+        <form action="{% url 'accounts:user_login' %}" method="post">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}"/>
+            <p><input type="submit" value="Log-in"></p>
+        </form>
+
+    </div>
+
+</header>
+</body>
+</html>
