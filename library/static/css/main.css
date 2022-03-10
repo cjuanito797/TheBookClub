@@ -10,9 +10,16 @@ body {
 }
 .loginForm
 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 25px;
     border-radius: 25px;
-    border: 1px solid black;
+    border: 5px solid darkgray;
     text-align: center;
+    width: auto;
+    margin: auto;
 }
 
 .row {
@@ -37,6 +44,97 @@ body {
 #myMenu li a:hover {
     background-color: coral;
 }
+
+#signupBackdrop {
+            position: absolute;
+            top: 15%;
+            left: 25%;
+            right: 20%;
+            height: 800px;
+
+            background: black;
+            background: rgba(0, 0, 0, 0.3);
+
+            margin-top: 100px;
+
+            filter: blur(8px);
+            -o-filter: blur(4px);
+            -ms-filter: blur(4px);
+            -moz-filter: blur(4px);
+            -webkit-filter: blur(4px);
+        }
+
+        label {
+            margin-right: 10px;
+            width: 200px;
+            display: inline-block;
+            text-align: right;
+            align-content: center;
+        }
+
+        form.inline_label {
+            margin-right: 10px;
+            width: 200px;
+            display: inline-block;
+            text-align: right;
+            align-content: center;
+
+
+        }
+
+        input[type=text] {
+            width: 200px;
+            height: 25px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border-radius: 5px;
+            border-bottom: 2px solid black;
+        }
+
+        input[type=email] {
+            width: 200px;
+            height: 25px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border-radius: 5px;
+            border-bottom: 2px solid black;
+
+        }
+
+        input[type=password] {
+
+            width: 200px;
+            height: 25px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border-radius: 5px;
+            border-bottom: 0px solid black;
+        }
+
+        input[type=submit] {
+            background-color: lightcoral;
+            color: white;
+            width: 200px;
+            border-radius: 15px;
+            height: 30px;
+            font-size: larger;
+            border-style: none;
+            margin-left: 100px;
+        }
+
+        #form {
+            text-align: center;
+            color: white;
+            position: absolute;
+            top: 15%;
+            left: 0;
+            right: 0;
+            margin-top: 150px;
+
+        }
 
 
 
