@@ -14,7 +14,7 @@ class registration_view(FormView):
 
         if form.is_valid():
             form.save()
-            return redirect(reverse('library:home'))
+            return redirect(reverse('accounts:user_login'))
         return render(request, 'registration/register.html', {'form' : form})
 
     def get(self, request):
@@ -31,7 +31,7 @@ def user_login(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return render(request, 'home.html')
+                return render(redirect('accounts:customerView'))
             else:
                 return HttpResponse('Disabled Account')
         else:
