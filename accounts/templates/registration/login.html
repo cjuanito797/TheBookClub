@@ -5,8 +5,16 @@
 {% endblock %}
 
 {% block content %}
-    <div class = "loginForm">
-    <h1>Login Below</h1>
+    <div class="loginForm">
+        <h1>Login Below</h1>
+        <form action="{% url 'accounts:user_login' %}" method="post">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}"/>
+            <p><input type="submit" value="Log-in"></p>
+        </form>
+
+        </form>
     </div>
 
 {% endblock %}
