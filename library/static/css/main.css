@@ -8,40 +8,15 @@ body {
     text-align: left;
     color: black;
 }
-
-.musicPlayer {
-    align: center;
-    padding: 50px
-}
-
-
-* {
-    box-sizing: border-box;
+.loginForm
+{
+    border-radius: 25px;
+    border: 1px solid black;
+    text-align: center;
 }
 
 .row {
     display: flex;
-}
-
-.left {
-    flex: 15%;
-    padding: 15px 0;
-}
-
-.left h2 {
-    padding-left: 8px;
-}
-
-.right {
-    flex: 85%;
-    padding: 15px;
-}
-
-#mySearch {
-    width: 100%;
-    font-size: 18px;
-    padding: 11px;
-    border: 1px solid;
 }
 
 #myMenu {
@@ -62,11 +37,6 @@ body {
 #myMenu li a:hover {
     background-color: coral;
 }
-
-
-
-
-
 
 
 
