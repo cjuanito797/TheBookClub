@@ -1,11 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>Welcome!</h1>
+{% extends "home.html" %}
+{% block title %}
+    <title>Welcom, {{ user.first_name }}</title>
+{% endblock %}
+
+{% block sidebar %}
+<div class="row">
+
+        <ul id="myMenu">
+            <li><a href="{% url 'library:book_list' %}">My Books</a></li>
+            <li><a href ="{% url 'library:create_book' %}">Add a Book</a></li>
+
+        </ul>
+    </div>
+{% endblock %}
+
+{% block content %}
+
 
 <h3>{{user.first_name}}</h3>
 <h3>{{ user.last_name }}</h3>
@@ -15,5 +25,4 @@
 <h4>{{ user.city }}</h4>
 <h4>{{ user.state }}</h4>
 <h4>{{ user.zipcode }}</h4>
-</body>
-</html>
+{% endblock %}
