@@ -18,7 +18,7 @@ class BookCreateView(BSModalCreateView):
 def book_list(request, genre_slug=None):
     genre = None
     genres = Genre.objects.all ( )
-    books = Book.objects.filter (available=True)
+    books = Book.objects.all()
 
     if genre_slug:
         genre = get_object_or_404 (Genre, slug=genre_slug)
