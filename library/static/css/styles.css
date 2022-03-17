@@ -1,0 +1,219 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+
+#bookListing {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#bookListing td, #bookListing th{
+    border: 1px solid white;
+    padding: 8px;
+}
+
+#bookListing tr:nth-child(even){background-color: #f2f2f2;}
+#bookListing tr:hover {background-color: white;}
+#bookListing th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: lightskyblue;
+  color: white;
+}
+
+.Banner {
+    color: white;
+    margin: 7% auto auto;
+    width: 25%;
+    padding: 10px;
+    text-align: center;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #24252a;
+}
+
+li,
+a,
+button {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #edf0f1;
+    text-decoration: none;
+}
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 30px 10%;
+}
+
+.logo {
+    font-family: AppleSystemUIFont, serif;
+    cursor: pointer;
+    margin-right: 25px;
+    color: rgba(0, 136, 169, 1);
+}
+
+.nav__links {
+    list-style: none;
+}
+
+li {
+    display: inline-block;
+    padding: 0 20px;
+}
+
+.nav__links li a {
+    transition: all 0.3s ease 0s;
+}
+
+.nav__links li a:hover {
+    color: #0088a9;
+}
+
+a:hover {
+    color: #0088a9;
+}
+
+button {
+    margin-left: 20px;
+    padding: 9px 25px;
+    background-color: rgba(0, 136, 169, 1);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+button:hover {
+    background-color: rgba(0, 136, 169, 0.8);
+}
+
+#signupBackdrop {
+    position: absolute;
+    top: 15%;
+    left: 25%;
+    right: 20%;
+    height: 800px;
+
+    background: black;
+    background: rgba(0, 0, 0, 0.3);
+
+    margin-top: 100px;
+
+    filter: blur(8px);
+    -o-filter: blur(4px);
+    -ms-filter: blur(4px);
+    -moz-filter: blur(4px);
+    -webkit-filter: blur(4px);
+}
+
+label {
+    margin-right: 10px;
+    width: 200px;
+    display: inline-block;
+    text-align: right;
+    align-content: center;
+}
+
+form.inline_label {
+    margin-right: 10px;
+    width: 200px;
+    display: inline-block;
+    text-align: right;
+    align-content: center;
+
+
+}
+
+input[type=text] {
+    width: 350px;
+    height: 35px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border-bottom: 2px solid black;
+    color: white;
+    font-size: 15px;
+}
+
+input[type=email] {
+    color: white;
+    width: 350px;
+    height: 35px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border-bottom: 2px solid black;
+    font-size: 15px;
+
+}
+
+input[type=password] {
+    color: white;
+    width: 350px;
+    height: 35px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border-bottom: 0 solid black;
+    font-size: 15px;
+}
+
+input[type=submit] {
+    background-color: lightskyblue;
+    color: white;
+    width: 200px;
+    border-radius: 15px;
+    height: 30px;
+    font-size: larger;
+    border-style: none;
+    margin-left: 100px;
+}
+
+#form {
+    text-align: center;
+    color: white;
+    position: absolute;
+    top: 15%;
+    left: 0;
+    right: 0;
+    margin-top: 150px;
+
+}
+
+
+.footer {
+    position: absolute;
+    color: #fff;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    background-color: #000;
+}
+
+.loginForm {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 25px;
+    border-radius: 25px;
+    border: 5px solid darkgray;
+    text-align: center;
+    width: auto;
+    margin: auto;
+    color: white;
+}
