@@ -4,13 +4,12 @@
     <title>Signup!</title>
 {% endblock %}
 {% block content %}
-    </div>
-    <div id="signupBackdrop">
-        &nbsp;
+
+    <div class="Banner">
+    <h1>Create Your Account Below</h1>
     </div>
 
     <div id="form">
-        <h2>Create your account below</h2>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
