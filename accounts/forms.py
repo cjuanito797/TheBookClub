@@ -27,3 +27,9 @@ class RegistrationForm(UserCreationForm):
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+
+class EditAddress(forms.ModelForm):
+    class Meta:
+        model = User
+
+        fields = ("street_num", "city", "state", "zipcode")

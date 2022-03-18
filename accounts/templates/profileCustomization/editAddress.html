@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'accounts/base.html' %}
 
-</body>
-</html>
+{% block title %}
+    <title>Edit Address</title>
+{% endblock %}
+
+{% block content %}
+    <div class="Banner">
+        <h1>Edit your address below</h1>
+        <div id="form">
+        <form method="post">
+            {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Update</button>
+    </form>
+        </div>
+    </div>
+{% endblock %}
