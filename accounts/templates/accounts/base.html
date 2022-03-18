@@ -1,29 +1,42 @@
-{% extends "home.html" %}
+<!DOCTYPE html>
 {% load static %}
-{% block title %}
-    <title>Welcome, {{ user.first_name }}</title>
-{% endblock %}
+<html lang="en">
 
-{% block sidebar %}
-    <div class="row">
+    <head>
+        {% block title %}<title>Welcome, {{ user.first_name }}</title>{% endblock %}
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
 
-        <ul id="myMenu">
-            <li><a href="{% url 'library:book_list' %}">My Books</a></li>
-            <li><a href="{% url 'library:create_book' %}">Add a Book</a></li>
+<body>
+{% block navigation %}
 
-        </ul>
-    </div>
+    <header>
+        <a href="{% url 'accounts:customerView' %}"><h1 class="logo">Home</h1></a>
+        <nav>
+            <ul class="nav__links>">
+                <li><a href="{% url 'accounts:myBookShelf' %}">My Bookshelf</a></li>
+                <li><a href="{% url 'accounts:addBook' %}">Add a book</a></li>
+                <li><a href="{% url 'accounts:editProfile' %}">My Profile</a></li>
+                <li><a href="{% url 'accounts:logout' %}">Sign Out</a></li>
+            </ul>
+        </nav>
+        <a class="cta" href="#">
+            <button>Contact Us</button>
+        </a>
+
+    </header>
 {% endblock %}
 
 {% block content %}
 
+    <div class="Banner">
+        <h1>Your Next Reading Adventure Awaits...</h1>
+    </div>
 
-    <h3>{{ user.first_name }}</h3>
-    <h3>{{ user.last_name }}</h3>
-
-    <h2>Below is your address</h2>
-    <h4>{{ user.street_num }}</h4>
-    <h4>{{ user.city }}</h4>
-    <h4>{{ user.state }}</h4>
-    <h4>{{ user.zipcode }}</h4>
 {% endblock %}
+</body>
+</html>

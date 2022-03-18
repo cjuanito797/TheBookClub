@@ -1,25 +1,32 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
 
-#bookListing {
+.listings {
     color: white;
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
+    margin: auto;
     width: 100%;
 }
 
-#bookListing td, #bookListing th{
+.listings td, #bookListing th {
     border: 1px solid white;
     padding: 8px;
 }
 
-#bookListing tr:nth-child(even){background-color: #f2f2f2;}
-#bookListing tr:hover {background-color: white;}
-#bookListing th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: lightskyblue;
-  color: white;
+.listings tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.listings tr:hover {
+    background-color: white;
+}
+
+.listings th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: lightskyblue;
+    color: white;
 }
 
 .Banner {
@@ -216,4 +223,38 @@ input[type=submit] {
     width: auto;
     margin: auto;
     color: white;
+}
+
+#options {
+    color: white;
+    margin: 7% auto auto;
+    width: 25%;
+    padding: 10px;
+    text-align: center;
+    border-radius: 25px;
+    border: 1px solid white;
+    margin-top: 10px;
+
+}
+
+.button {
+    background-color: lightskyblue;
+    width: 150px;
+    height: 60px;
+    color: white;
+    outline: none;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin: 7% auto auto;
+
+}
+
+.block-display button {
+    display: block;
+}
+
+.button:hover {
+    background-color: cyan;
+    transition: 0.5s;
 }

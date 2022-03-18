@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.views.generic import FormView, TemplateView
 from .forms import RegistrationForm, LoginForm
 from django.contrib.auth.decorators import login_required
+from library.models import Book
 
 
 # Create your views here.
@@ -42,4 +43,22 @@ def user_login(request):
 
 @login_required
 def customerView(request):
+
     return render(request, 'accounts/base.html')
+
+@login_required
+def myBookShelf(request):
+    myBooks = Book.objects.filter(owner_id=request.user)
+    return render(request, 'accounts/myBookshelf.html', {'myBooks' : myBooks})
+
+@login_required
+def editProfile(request):
+    return render(request, 'profileCustomization/editProfile.html')
+
+@login_required
+def addBook(request):
+    return render(request, 'accounts/addBook.html')
+
+@login_required
+def user_logout(request):
+    return HttpResponseRedirect(reversed('your_app:login'))

@@ -1,0 +1,32 @@
+{% extends "accounts/base.html" %}
+
+{% block title %}
+    <title>My Bookshelf</title>
+{% endblock %}
+
+{% block content %}
+
+    <table class="listings">
+
+        <th>Name</th>
+        <th>Author</th>
+        <th>ISBN</th>
+        <th>Summary</th>
+        <th>Availability</th>
+
+        {% for book in myBooks %}
+            <tr class="bg-info">
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.isbn }}</td>
+                <td>{{ book.summary }}</td>
+                <td>{% if book.available is True %}
+                    <p>Book is available</p>
+                {% else %}
+                    <p>N/A</p>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

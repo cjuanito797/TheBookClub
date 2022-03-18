@@ -58,7 +58,8 @@ def author_detail(request, id, slug):
 
 
 def author_list(request):
-    authors = Author.objects.all ( )
+    authors = Author.objects.values('first_name', 'last_name').distinct()
+
 
     return render (request,
                    'library/author/authorList.html',

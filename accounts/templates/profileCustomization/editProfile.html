@@ -1,0 +1,35 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}
+    <title>Edit Profile</title>
+{% endblock %}
+
+{% block content %}
+    <div class="Banner">
+        <h1>Edit Your Profile Below</h1>
+    </div>
+
+    <div id="options">
+        <h3>Choose from the options below</h3>
+        <div class="block-display">
+            <a href="{% url 'accounts:myBookShelf' %}">
+                <button class="button">Edit Address</button>
+            </a>
+            <a href="{% url 'accounts:myBookShelf' %}">
+                <button class="button">Edit Password</button>
+            </a>
+            <a href="{% url 'accounts:myBookShelf' %}">
+                <button class="button">My Favorite Books</button>
+            </a>
+            <a href="{% url 'accounts:myBookShelf' %}">
+                <button class="button">My Favorite Authors</button>
+            </a>
+            <a href="{% url 'accounts:myBookShelf' %}">
+                <button class="button">My Favorite Genres</button>
+            </a>
+        </div>
+
+
+    </div>
+
+{% endblock %}
