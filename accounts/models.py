@@ -22,6 +22,7 @@ class User (AbstractBaseUser, PermissionsMixin):
     favorite_books = models.ManyToManyField (Book, related_name='favorite_books', blank=True)
     favorite_genres = models.ManyToManyField (Genre, related_name='favorite_genres', blank=True)
     favorite_authors = models.ManyToManyField (Author, related_name='favorite_authors', blank=True)
+    user_id = models.CharField(max_length=30, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -30,3 +31,9 @@ class User (AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+    def save(self, *args, **kwargs):
+        user_id = self.email.split('@')
+        user_id = user_id[0]
+        self.user_id = user_id
+        super(User, self).save(*args, **kwargs)

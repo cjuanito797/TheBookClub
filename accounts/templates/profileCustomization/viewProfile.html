@@ -1,0 +1,55 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}
+    <title>Edit Profile</title>
+{% endblock %}
+
+{% block content %}
+<div class="prof">
+    <div class="prof-header">
+        <h1>
+        {% if user.first_name %}
+            {{ user.first_name }}'s
+        {% else %}
+            User's  
+        {% endif %}
+        Profile
+        </h1>
+        <h3>
+            {{ user.email }}
+        </h3>
+    </div>
+    <h4>Bio</h4>
+    <div class="prof-container">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti accusamus quae tenetur? Error amet sapiente tenetur? Et commodi fugit deserunt porro. Aperiam excepturi odio quae. Maxime facere quas placeat doloremque ut dolorum explicabo porro dolor, temporibus nulla incidunt eligendi qui.</p>
+    </div>
+
+    <h4>Favorite Genres</h4>
+    <div class="prof-container">
+        {% for genre in favGenres %}
+            <li>{{ genre }}</li>
+        {% endfor %}
+    </div>
+
+    <h4>Favorite Books</h4>
+    <div class="prof-container">
+        <ul>
+        {% for book in favBooks %}
+            <li>{{ book }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    <h4>Favorite Authors</h4>
+    <div class="prof-container">
+        {% for author in favAuthors %}
+            <li>{{ author }}</li>
+        {% endfor %}
+    </div>
+    <div class="prof-btn-grp">
+        <button>View Bookshelf</button>
+        <button>View Wishlist</button>
+        <button>Add Friend</button>
+    </div>
+</div>
+
+{% endblock %}

@@ -53,11 +53,17 @@ def myBookShelf(request):
     myBooks = Book.objects.filter (owner_id=request.user)
     return render (request, 'accounts/myBookshelf.html', {'myBooks': myBooks})
 
-
 @login_required
 def editProfile(request):
     return render (request, 'profileCustomization/editProfile.html')
 
+@login_required
+def viewProfile(request, id):
+    user = User.objects.get(user_id=id)
+    favBooks = ['Book1', 'Book2', 'Book3']
+    favAuthors = ['Author1', 'Author2', 'Author3']
+    favGenres = ['Genre1', 'Genre2', 'Genre3']
+    return render (request, 'profileCustomization/viewProfile.html', {'user': user, 'favBooks': favBooks, 'favAuthors': favAuthors, 'favGenres': favGenres})
 
 @login_required
 def addBook(request):

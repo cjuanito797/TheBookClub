@@ -258,3 +258,86 @@ input[type=submit] {
     background-color: cyan;
     transition: 0.5s;
 }
+
+/* PROFILE VIEW PAGE */
+
+.prof {
+    background-color: rgb(0,0,0,0);
+    margin: 2rem auto 0 auto;
+    background-color: rgba(255, 255, 255, 0.904);
+    color: #24252a;
+    font-family: "Montserrat", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 70%;
+    border-radius: 25px;
+    padding: 1rem;
+}
+
+.prof * {
+    background-color: rgb(0,0,0,0);
+    color: white;
+}
+
+.prof h1, .prof h4 {
+    color: #24252a;
+}
+
+.prof h3 {
+    color: gray;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.prof h4 {
+    padding: 0;
+    margin: 0 0 0.2rem 1rem;
+    width: fit-content;
+    text-align: left;
+    align-self: flex-start;
+}
+
+
+
+.prof-container {
+    margin: 0 0 1rem 0;
+    padding: 1rem;
+    text-align: left;
+    background-color: #24252a;
+    border-radius: 15px;
+    min-height: 100px;
+    width: 100%;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.prof-container li {
+    padding: 0;
+}
+
+.prof-container li::after {
+    content: ", ";
+}
+
+.prof-container li:last-child::after {
+    content: "";
+}
+
+.prof-btn-grp {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    justify-content: space-around;
+    margin: 0;
+}
+
+.prof button {
+    color: #24252a;
+    border: solid 1px #24252a;
+    margin: 1rem;
+}
+
+

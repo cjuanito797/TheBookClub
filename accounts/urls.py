@@ -12,8 +12,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('bookshelf/' ,views.myBookShelf, name='myBookShelf'),
     path('editProfile/', views.editProfile, name='editProfile'),
+    path('viewProfile/<str:id>/', views.viewProfile, name='viewProfile'),
     path('editAddress/', views.edit_address, name='edit_address'),
     path('addBook/', views.addBook, name='addBook'),
-
-
 ]
