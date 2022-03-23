@@ -1,20 +1,27 @@
 {% extends "home.html" %}
 {% load static %}
+
 {% block title %}
     <title>Login</title>
 {% endblock %}
 
 {% block content %}
-    <div class="loginForm">
-        <h1>Login Below</h1>
-        <form action="{% url 'accounts:user_login' %}" method="post">
-            {{ form.as_p }}
-            {% csrf_token %}
-            <input type="hidden" name="next" value="{{ next }}"/>
-            <p><input type="submit" value="Log-in"></p>
-        </form>
 
-        </form>
-    </div>
+        
+
+        <div class="w-50 container p-5 pb-3 border border-4 border-secondary rounded-3">
+            <h1 class="fs-2 text-center">Login Below</h1>
+            <form class="px-5 py-3 mx-auto d-flex flex-column align-items-center" action="{% url 'accounts:user_login' %}" method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div id="login-form">
+                            {{ field.label_tag }}
+                            {{ field }}
+                    </div>
+                {% endfor %}
+                <input type="hidden" name="next" value="{{ next }}"/>
+                <p><input class="btn btn-primary rounded-pill m-auto text-ligh" type="submit" value="Log-in"></p>
+            </form>
+        </div>
 
 {% endblock %}

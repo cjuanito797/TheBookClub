@@ -1,0 +1,113 @@
+/* TYPOGRAPHY */
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+$font-family-base: "Montserrat", sans-serif;
+
+
+/* BOOTSTRAP COLOR VARIABLES */
+
+$primary: #0088a9;
+$secondary: rgb(74, 193, 223);
+// $success: ;
+// $info: ;
+// $warning: ;
+// $danger: ;
+$light: white;
+$dark: #24252a;
+$body-color: white;
+$body-bg: $dark;
+
+
+/* BOOTSTRAP CUSTOM SPACING */
+
+$spacer: 1rem !default;
+$spacers: () !default;
+$spacers: map-merge(
+  (
+    0: 0,
+    1: ($spacer * .25),    //4px
+    2: ($spacer * .5),     //8px
+    3: $spacer,            //16px
+    4: ($spacer * 1.5),    //24px
+    5: ($spacer * 3),      //48px
+    6: ($spacer * 4),      //64px
+    7: ($spacer * 5),      //80px
+    8: ($spacer * 6.25),   //100px
+    9: ($spacer * 7.5),    //120px
+    10: ($spacer * 9.375)  //150px
+  ),
+  $spacers
+);
+
+@import "../bootstrap/scss/bootstrap.scss";
+
+
+/* GENERAL STYLING */
+
+html, body{
+    height: 100%;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-brand {
+    margin-right: 25px;
+    color: #0088a9;
+}
+
+.nav-link {
+    color: white;
+}
+
+nav h1 {
+    font-family: AppleSystemUIFont, serif;
+}
+
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -60px;
+  }
+
+#push,
+#footer {
+        height: 60px;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+}
+
+/* LOGIN/REGISTRATION */
+
+#login-form {
+    width: 100%;
+
+    label {
+        @extend .form-label;
+    }
+
+    input {
+        @extend .mb-3;
+        @extend .form-control;
+    }
+}
+
+
+/* PROFILE */
+
+#options {
+    color: white;
+    margin: 7% auto auto;
+    width: 25%;
+    padding: 10px;
+    text-align: center;
+    border-radius: 25px;
+    border: 1px solid white;
+    margin-top: 10px;
+}

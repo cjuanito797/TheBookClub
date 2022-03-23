@@ -20,16 +20,18 @@ class RegistrationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super (RegistrationForm, self).__init__ (*args, **kwargs)
 
-        for fieldname in ['password1','password2',]:
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+            visible.field.widget.attrs['placeholder'] = visible.field.label
 
+        for fieldname in ['password1','password2',]:
             self.fields[fieldname].help_text = None
 
 class LoginForm(forms.Form):
-    username = forms.CharField()
+    username = forms.CharField(widget=forms.EmailInput)
     password = forms.CharField(widget=forms.PasswordInput)
 
 class EditAddress(forms.ModelForm):
     class Meta:
         model = User
-
         fields = ("street_num", "city", "state", "zipcode")

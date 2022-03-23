@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'library.apps.LibraryConfig',
     'bootstrap_modal_forms',
+    'compressor',
+    
 ]
 
 MIDDLEWARE = [
@@ -132,4 +134,16 @@ LOGOUT_REDIRECT_URL = '/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+COMPRESS_PRECOMPILERS = (
+    
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder'
+]
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')

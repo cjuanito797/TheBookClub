@@ -4,33 +4,39 @@
 <title>Books</title>
 {% endblock %}
 {% block content %}
-    <div class="Banner">
-    <h1>Below is a list of some books owned by our members, that are currently available for exchange.</h1>
+    <div class="container w-50 mb-4">
+    <h1 class="fs-3 text-center">Below is a list of some books owned by our members, that are currently available for exchange.</h1>
     </div>
 
-    <table class="listings">
-
-    <th>Name</th>
-    <th>Author</th>
-    <th>ISBN</th>
-    <th>Summary</th>
-    <th>Owner</th>
-    <th>Availability</th>
-    {% for b in books %}
-        <tr class="bg-info">
-        <td>{{ b.title }}</td>
-        <td>{{ b.author }}</td>
-        <td>{{ b.isbn }}</td>
-        <td>{{ b.summary }}</td>
-        <td>{{ b.owner }}</td>
-        <td>{% if b.available is True %}
-            <p>Book is available</p>
-            {% else %}
-            <p>N/A</p>
-            {% endif %}
-        </td>
-        </tr>
-    {% endfor %}
+    <table class="table table-dark">
+        <thead>
+            <tr class="table-primary">
+                <th scope="column">Name</th>
+                <th scope="column">Author</th>
+                <th scope="column">ISBN</th>
+                <th scope="column">Summary</th>
+                <th scope="column">Owner</th>
+                <th scope="column">Availability</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for b in books %}
+            <tr scope="row">
+            <td>{{ b.title }}</td>
+            <td>{{ b.author }}</td>
+            <td>{{ b.isbn }}</td>
+            <td>{{ b.summary }}</td>
+            <td>{{ b.owner }}</td>
+            <td>{% if b.available is True %}
+                <p>Book is available</p>
+                {% else %}
+                <p>N/A</p>
+                {% endif %}
+            </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        
     </table>
 
 {% endblock %}

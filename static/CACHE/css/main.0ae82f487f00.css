@@ -1,0 +1,327 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+/* line 7, static/main.scss */
+.listings {
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  margin: auto;
+  width: 100%; }
+
+/* line 15, static/main.scss */
+.listings td, #bookListing th {
+  border: 1px solid white;
+  padding: 8px; }
+
+/* line 20, static/main.scss */
+.listings tr:nth-child(even) {
+  background-color: #f2f2f2; }
+
+/* line 24, static/main.scss */
+.listings tr:hover {
+  background-color: white; }
+
+/* line 28, static/main.scss */
+.listings th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: lightskyblue;
+  color: white; }
+
+/* line 36, static/main.scss */
+.Banner {
+  color: white;
+  margin: 7% auto auto;
+  width: 25%;
+  padding: 10px;
+  text-align: center; }
+
+/* line 44, static/main.scss */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: #24252a; }
+
+/* line 51, static/main.scss */
+li,
+a,
+button {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #edf0f1;
+  text-decoration: none; }
+
+/* line 61, static/main.scss */
+header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 30px 10%; }
+
+/* line 68, static/main.scss */
+.logo {
+  font-family: AppleSystemUIFont, serif;
+  cursor: pointer;
+  margin-right: 25px;
+  color: #0088a9; }
+
+/* line 75, static/main.scss */
+.nav__links {
+  list-style: none; }
+
+/* line 79, static/main.scss */
+li {
+  display: inline-block;
+  padding: 0 20px; }
+
+/* line 84, static/main.scss */
+.nav__links li a {
+  transition: all 0.3s ease 0s; }
+
+/* line 88, static/main.scss */
+.nav__links li a:hover {
+  color: #0088a9; }
+
+/* line 92, static/main.scss */
+a:hover {
+  color: #0088a9; }
+
+/* line 96, static/main.scss */
+button {
+  margin-left: 20px;
+  padding: 9px 25px;
+  background-color: #0088a9;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s; }
+
+/* line 106, static/main.scss */
+button:hover {
+  background-color: rgba(0, 136, 169, 0.8); }
+
+/* line 110, static/main.scss */
+#signupBackdrop {
+  position: absolute;
+  top: 15%;
+  left: 25%;
+  right: 20%;
+  height: 800px;
+  background: black;
+  background: rgba(0, 0, 0, 0.3);
+  margin-top: 100px;
+  filter: blur(8px);
+  -o-filter: blur(4px);
+  -ms-filter: blur(4px);
+  -moz-filter: blur(4px);
+  -webkit-filter: blur(4px); }
+
+/* line 129, static/main.scss */
+label {
+  margin-right: 10px;
+  width: 200px;
+  display: inline-block;
+  text-align: right;
+  align-content: center; }
+
+/* line 137, static/main.scss */
+form.inline_label {
+  margin-right: 10px;
+  width: 200px;
+  display: inline-block;
+  text-align: right;
+  align-content: center; }
+
+/* line 147, static/main.scss */
+input[type=text] {
+  width: 350px;
+  height: 35px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border-bottom: 2px solid black;
+  color: white;
+  font-size: 15px; }
+
+/* line 159, static/main.scss */
+input[type=email] {
+  color: white;
+  width: 350px;
+  height: 35px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border-bottom: 2px solid black;
+  font-size: 15px; }
+
+/* line 172, static/main.scss */
+input[type=password] {
+  color: white;
+  width: 350px;
+  height: 35px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border-bottom: 0 solid black;
+  font-size: 15px; }
+
+/* line 184, static/main.scss */
+input[type=submit] {
+  background-color: lightskyblue;
+  color: white;
+  width: 200px;
+  border-radius: 15px;
+  height: 30px;
+  font-size: larger;
+  border-style: none;
+  margin-left: 100px; }
+
+/* line 195, static/main.scss */
+#form {
+  text-align: center;
+  color: white;
+  position: absolute;
+  top: 15%;
+  left: 0;
+  right: 0;
+  margin-top: 150px; }
+
+/* line 207, static/main.scss */
+.footer {
+  position: absolute;
+  color: #fff;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  background-color: #000; }
+
+/* line 218, static/main.scss */
+.loginForm {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 25px;
+  border-radius: 25px;
+  border: 5px solid darkgray;
+  text-align: center;
+  width: auto;
+  margin: auto;
+  color: white; }
+
+/* line 232, static/main.scss */
+#options {
+  color: white;
+  margin: 7% auto auto;
+  width: 25%;
+  padding: 10px;
+  text-align: center;
+  border-radius: 25px;
+  border: 1px solid white;
+  margin-top: 10px; }
+
+/* line 244, static/main.scss */
+.button {
+  background-color: lightskyblue;
+  width: 150px;
+  height: 60px;
+  color: white;
+  outline: none;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin: 7% auto auto; }
+
+/* line 257, static/main.scss */
+.block-display button {
+  display: block; }
+
+/* line 261, static/main.scss */
+.button:hover {
+  background-color: cyan;
+  transition: 0.5s; }
+
+/* PROFILE VIEW PAGE */
+/* line 268, static/main.scss */
+.prof {
+  background-color: rgba(0, 0, 0, 0);
+  margin: 2rem auto 0 auto;
+  background-color: rgba(255, 255, 255, 0.904);
+  color: #24252a;
+  font-family: "Montserrat", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 70%;
+  border-radius: 25px;
+  padding: 1rem; }
+
+/* line 284, static/main.scss */
+.prof * {
+  background-color: rgba(0, 0, 0, 0);
+  color: white; }
+
+/* line 289, static/main.scss */
+.prof h1, .prof h4 {
+  color: #24252a; }
+
+/* line 293, static/main.scss */
+.prof h3 {
+  color: gray;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  margin-bottom: 1.5rem; }
+
+/* line 300, static/main.scss */
+.prof h4 {
+  padding: 0;
+  margin: 0 0 0.2rem 1rem;
+  width: fit-content;
+  text-align: left;
+  align-self: flex-start; }
+
+/* line 310, static/main.scss */
+.prof-container {
+  margin: 0 0 1rem 0;
+  padding: 1rem;
+  text-align: left;
+  background-color: #24252a;
+  border-radius: 15px;
+  min-height: 100px;
+  width: 100%;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; }
+
+/* line 321, static/main.scss */
+.prof-container li {
+  padding: 0; }
+
+/* line 325, static/main.scss */
+.prof-container li::after {
+  content: ", "; }
+
+/* line 329, static/main.scss */
+.prof-container li:last-child::after {
+  content: ""; }
+
+/* line 333, static/main.scss */
+.prof-btn-grp {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  justify-content: space-around;
+  margin: 0; }
+
+/* line 341, static/main.scss */
+.prof button {
+  color: #24252a;
+  border: solid 1px #24252a;
+  margin: 1rem; }
