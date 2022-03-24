@@ -37,3 +37,5 @@ class User (AbstractBaseUser, PermissionsMixin):
         user_id = user_id[0]
         self.user_id = user_id
         super(User, self).save(*args, **kwargs)
+
+# Define a model for a user's friends list, since we can't define it within the User model itself
