@@ -41,11 +41,37 @@
     {%if favorite_books %}
         {% for fb in favorite_books %}
             {{ fb.title }}
+            <br>
             {% endfor %}
     {% else %}
         <br>
         <h3>Let's add some favorite books to your collection.</h3>
     {% endif %}
+
+    <h1>Below are some of your listed favorite authors</h1>
+    {% if favorite_books %}
+        {% for fb in favorite_books %}
+            {{ fb.author.first_name }}&nbsp;{{ fb.author.last_name }}
+            <br>
+        {% endfor %}
+
+    {% else %}
+    <br>
+    <h3>NO favorite genres</h3>
+    {% endif %}
+
+    <h1>Below are some of your listed favorite genres</h1>
+    {% if favorite_books %}
+        {% for fb in favorite_books %}
+            {{ fb.genre }}
+            <br>
+        {% endfor %}
+
+    {% else %}
+    <br>
+    <h3>NO favorite genres</h3>
+    {% endif %}
+
 
 {% endblock %}
 </body>

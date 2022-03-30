@@ -10,6 +10,7 @@
 
     <h1>Add A Book To Your Favorites Below</h1>
 
+    <div id="form">
     <form method="post">
     {% csrf_token %}
         <h3>Enter the book information</h3>
@@ -20,5 +21,7 @@
         {{ addGenre.as_p }}
         <p><input type="submit"></p>
     </form>
+    </div>
+
 
 {% endblock %}

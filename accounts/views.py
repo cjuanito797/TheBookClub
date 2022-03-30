@@ -47,6 +47,7 @@ def user_login(request):
 @login_required
 def customerView(request):
     favorite_books = Book.objects.filter(owner_id=request.user.id, favorite=True)
+
     return render (request, 'accounts/base.html', {'favorite_books': favorite_books})
 
 
@@ -62,14 +63,35 @@ def editProfile(request):
 @login_required
 def viewProfile(request, id):
     user = User.objects.get(user_id=id)
-    favBooks = ['Book1', 'Book2', 'Book3']
-    favAuthors = ['Author1', 'Author2', 'Author3']
-    favGenres = ['Genre1', 'Genre2', 'Genre3']
-    return render (request, 'profileCustomization/viewProfile.html', {'user': user, 'favBooks': favBooks, 'favAuthors': favAuthors, 'favGenres': favGenres})
+    favBooks = Book.objects.filter(owner_id=request.user.id, favorite=True)
+    return render (request, 'profileCustomization/viewProfile.html', {'user': user, 'favBooks': favBooks})
 
 @login_required
 def addBook(request):
-    return render (request, 'accounts/addBook.html')
+    if request.method == "POST":
+        addBook = addBookForm(request.POST)
+        addAuthor = addAuthorForm(request.POST)
+        addGenre = addGenreForm(request.POST)
+
+        if addBook.is_valid() and addAuthor.is_valid() and addGenre.is_valid():
+            user = request.user
+            book = addBook.save(commit=False)
+            book.owner_id = request.user.id
+            author = addAuthor.save(commit=False)
+            genre = addGenre.save(commit=False)
+            book.author = author
+            book.genre = genre
+            author.save()
+            genre.save()
+            book.save()
+
+
+            return redirect(reverse('accounts:myBookShelf'))
+    else:
+        addBook = addBookForm ()
+        addAuthor = addAuthorForm ()
+        addGenre = addGenreForm ()
+    return render(request, "accounts/addBook.html", {'addBook' : addBook, 'addAuthor': addAuthor, 'addGenre': addGenre})
 
 
 @login_required
@@ -109,6 +131,7 @@ def addFavoriteBook(request):
             author.save()
             genre.save()
             book.save()
+
 
             return redirect(reverse('accounts:myBookShelf'))
     else:

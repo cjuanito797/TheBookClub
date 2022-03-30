@@ -38,7 +38,7 @@ class EditAddress(forms.ModelForm):
 class addBookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ("title", "summary", "price", "isbn")
+        fields = ("title", "summary", "price", "isbn", "favorite")
 
 class addAuthorForm(forms.ModelForm):
     class Meta:

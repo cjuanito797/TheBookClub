@@ -11,6 +11,7 @@ class Author (models.Model):
     first_name = models.CharField (max_length=50, db_index=True)
     last_name = models.CharField (max_length=50, db_index=True)
     slug = models.SlugField (max_length=200, db_index=True)
+    favorite = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('last_name',)
@@ -27,7 +28,7 @@ class Genre (models.Model):
     name = models.CharField (max_length=200,
                              db_index=True, )
     slug = models.SlugField (max_length=200,
-                             unique=True)
+                             unique=False)
 
     class Meta:
         ordering = ('name',)
