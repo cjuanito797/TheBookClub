@@ -5,7 +5,8 @@ from django.urls import reverse
 from django.views.generic import FormView, TemplateView
 from .forms import RegistrationForm, LoginForm, EditAddress
 from django.contrib.auth.decorators import login_required
-from library.models import Book
+from library.models import Book, Author, Genre
+from .forms import *
 
 
 # Create your views here.
@@ -45,7 +46,8 @@ def user_login(request):
 
 @login_required
 def customerView(request):
-    return render (request, 'accounts/base.html')
+    favorite_books = Book.objects.filter(owner_id=request.user.id, favorite=True)
+    return render (request, 'accounts/base.html', {'favorite_books': favorite_books})
 
 
 @login_required
@@ -86,3 +88,31 @@ def edit_address(request):
     else:
         form = EditAddress (request.POST or None, instance=request.user, use_required_attribute=False )
     return render (request, 'profileCustomization/editAddress.html', {'form': form})
+
+@login_required()
+def addFavoriteBook(request):
+    if request.method == "POST":
+        addFavBook = addBookForm(request.POST)
+        addAuthor = addAuthorForm(request.POST)
+        addGenre = addGenreForm(request.POST)
+
+        if addFavBook.is_valid() and addAuthor.is_valid() and addGenre.is_valid():
+            user = request.user
+            book = addFavBook.save(commit=False)
+            book.owner_id = request.user.id
+            book.favorite = True
+
+            author = addAuthor.save(commit=False)
+            genre = addGenre.save(commit=False)
+            book.author = author
+            book.genre = genre
+            author.save()
+            genre.save()
+            book.save()
+
+            return redirect(reverse('accounts:myBookShelf'))
+    else:
+        addFavBook = addBookForm ()
+        addAuthor = addAuthorForm ()
+        addGenre = addGenreForm ()
+    return render(request, "profileCustomization/myFavoriteBooks.html", {'addFavBook' : addFavBook, 'addAuthor': addAuthor, 'addGenre': addGenre})

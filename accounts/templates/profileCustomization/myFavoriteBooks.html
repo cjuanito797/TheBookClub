@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'accounts/base.html' %}
 
-</body>
-</html>
+
+{% block title %}
+    <title>Add Favroite Book</title>
+{% endblock %}
+
+
+{% block content %}
+
+    <h1>Add A Book To Your Favorites Below</h1>
+
+    <form method="post">
+    {% csrf_token %}
+        <h3>Enter the book information</h3>
+        {{ addFavBook.as_p }}
+        <h3>Enter the author information</h3>
+        {{ addAuthor.as_p }}
+        <h3>Enter the genre of your book</h3>
+        {{ addGenre.as_p }}
+        <p><input type="submit"></p>
+    </form>
+
+{% endblock %}

@@ -37,7 +37,15 @@
         <h1>Your Next Reading Adventure Awaits...</h1>
     </div>
 
-    <h1>Below are some of your favorite books</h1>
+    <h1>Below are some of your listed favorite books</h1>
+    {%if favorite_books %}
+        {% for fb in favorite_books %}
+            {{ fb.title }}
+            {% endfor %}
+    {% else %}
+        <br>
+        <h3>Let's add some favorite books to your collection.</h3>
+    {% endif %}
 
 {% endblock %}
 </body>

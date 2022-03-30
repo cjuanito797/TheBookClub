@@ -9,6 +9,7 @@ from django.core.exceptions import ValidationError
 from django.forms import HiddenInput
 from django.forms.models import ModelForm
 from .models import User
+from library.models import Book, Author, Genre
 
 
 class RegistrationForm(UserCreationForm):
@@ -33,3 +34,18 @@ class EditAddress(forms.ModelForm):
         model = User
 
         fields = ("street_num", "city", "state", "zipcode")
+
+class addBookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ("title", "summary", "price", "isbn")
+
+class addAuthorForm(forms.ModelForm):
+    class Meta:
+        model = Author
+        fields = ("first_name", "last_name")
+
+class addGenreForm(forms.ModelForm):
+    class Meta:
+        model = Genre
+        fields = ("name", )
