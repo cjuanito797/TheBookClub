@@ -7,8 +7,7 @@
 {% block content %}
     <div class="Banner">
         <h1>Edit Your Profile Below</h1>
-        <h2>{{ user.street_num }}</h2>
-        <h2>{{ user.city }}, &nbsp;{{ user.state }}, &nbsp;{{ user.zipcode }}</h2>
+
     </div>
 
     <div id="options">
@@ -16,9 +15,6 @@
         <div class="block-display">
             <a href="{% url 'accounts:edit_address' %}">
                 <button class="button">Edit Address</button>
-            </a>
-            <a href="{% url 'accounts:myBookShelf' %}">
-                <button class="button">Edit Password</button>
             </a>
             <a href="{% url 'accounts:viewFavBooks' %}">
                 <button class="button">My Favorite Books</button>
