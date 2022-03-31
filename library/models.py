@@ -62,6 +62,7 @@ class Book (models.Model):
     slug = models.SlugField (max_length=200, db_index=True)
     isbn = models.CharField(max_length=13, validators=[MinLengthValidator(13)])
     favorite = models.BooleanField(default=False)
+    shared = models.BooleanField(default=False)
 
 
     class Meta:
