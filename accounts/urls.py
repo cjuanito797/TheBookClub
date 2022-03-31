@@ -19,5 +19,6 @@ urlpatterns = [
     path('myFavAuthors', views.viewFavAuthors, name='viewFavAuthors'),
     path('myFavGenres', views.viewFavGenres, name='viewFavGenres'),
     path('addFavAuthor', views.addFavAuthors, name='addFavAuthors'),
+    path('<int:pk>/delete', views.deleteBook, name='deleteBook'),
 
 ]
