@@ -17,19 +17,19 @@
                 <td>{{ book.title }}</td>
                 <td>{{ book.author }}</td>
                 <td><a href="{% url 'accounts:myBookShelf'  %}"
-                       class="btn btn-primary"><button>Edit Book</button></a>
+                       class="btn btn-primary">Edit Book</a>
                 {% if book.available is True %}
                 <td><a href="{% url 'accounts:myBookShelf'  %}"
                             onclick="return confirm('Are you sure you would like to hide the visibility of this book? ')"
-                       class="btn btn-primary"><button>Hide Book</button></a>
+                       class="btn btn-primary">Hide Book</a>
                 {% else %}
                 <td><a href="{% url 'accounts:myBookShelf'  %}"
                             onclick="return confirm('Are you sure you would like to hide the visibility of this book? ')"
-                       class="btn btn-primary"><button>Show Book</button></a>
+                       class="btn btn-primary">Show Book</a>
                 {% endif %}
                 <td><a href="{% url 'accounts:deleteBook' pk=book.pk %}"
                                 onclick="return confirm('Are you sure you want to delete?')"
-                       class="btn btn-warning"><button class="danger">Delete Book</button></a>
+                       class="btn btn-danger">Delete Book</a>
                 <td><a href="{% url 'accounts:myBookShelf'  %}"
                            class="btn btn-primary"><button>Summary</button></a>
             </tr>
