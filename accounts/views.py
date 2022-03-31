@@ -53,7 +53,7 @@ def customerView(request):
 
 @login_required
 def myBookShelf(request):
-    myBooks = Book.objects.filter (owner_id=request.user,)
+    myBooks = Book.objects.filter (owner_id=request.user,).order_by("title")
     return render (request, 'accounts/myBookshelf.html', {'myBooks': myBooks})
 
 @login_required
