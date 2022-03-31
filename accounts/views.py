@@ -53,7 +53,7 @@ def customerView(request):
 
 @login_required
 def myBookShelf(request):
-    myBooks = Book.objects.filter (owner_id=request.user, available=True)
+    myBooks = Book.objects.filter (owner_id=request.user,)
     return render (request, 'accounts/myBookshelf.html', {'myBooks': myBooks})
 
 @login_required
@@ -160,3 +160,15 @@ def addFavAuthors(request):
         favAuthor = addAuthorForm(request.POST)
 
     return render(request, 'profileCustomization/addFavAuthor.html', {'favAuthor' : favAuthor})
+
+
+@login_required()
+def deleteBook(request, pk):
+    # whenever we delete a book, we also want to go through and delete the related author as well as the related genre.
+    book = get_object_or_404(Book, pk=pk)
+    author = book.author
+    genre = book.genre
+    book.delete()
+    author.delete()
+    genre.delete()
+    return redirect('accounts:myBookShelf')
