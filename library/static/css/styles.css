@@ -344,4 +344,14 @@ input[type=submit] {
     margin: 1rem;
 }
 
+.btn-danger {
+    padding: 10px;
+    border-radius: 8px;
+    background-color: red;
+}
 
+.btn-primary {
+    padding: 10px;
+    border-radius: 8px;
+    background-color: blue;
+}
