@@ -10,22 +10,12 @@
 
         <th>Name</th>
         <th>Author</th>
-        <th>ISBN</th>
-        <th>Summary</th>
-        <th>Availability</th>
+        <th colspan="3">Actions</th>
 
         {% for book in myBooks %}
             <tr class="bg-info">
                 <td>{{ book.title }}</td>
                 <td>{{ book.author }}</td>
-                <td>{{ book.isbn }}</td>
-                <td>{{ book.summary }}</td>
-                <td>{% if book.available is True %}
-                    <p>Book is available</p>
-                {% else %}
-                    <p>N/A</p>
-                {% endif %}
-                </td>
             </tr>
         {% endfor %}
     </table>
