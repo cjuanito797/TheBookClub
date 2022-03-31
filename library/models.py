@@ -55,7 +55,7 @@ class Book (models.Model):
     author = models.ForeignKey (Author,
                                 related_name='books',
                                 on_delete=models.CASCADE)
-    title = models.CharField (max_length=50, db_index=True)
+    title = models.CharField (max_length=50, db_index=True,)
     summary = models.TextField (blank=True)
     price = models.DecimalField (max_digits=10, decimal_places=2)
     available = models.BooleanField (default=True)
@@ -73,3 +73,4 @@ class Book (models.Model):
     def get_absolute_url(self):
         return reverse ('Library:book_detail',
                         args=[self.id, self.slug])
+

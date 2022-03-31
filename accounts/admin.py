@@ -7,24 +7,27 @@ from .models import User
 
 class CustomUserAdmin (UserAdmin):
     add_form = RegistrationForm
-    form = RegistrationForm
-    model = User
     list_display = ('email', 'first_name', 'last_name',)
     list_filter = ('email', 'is_staff', 'is_active',)
-    fieldsets = (
-        (None, {'fields': (
-            'email', 'password', 'first_name', 'last_name', 'street_num', 'city', 'state', 'zipcode', 'favorite_books',
-            'favorite_genres', 'favorite_authors')}),
+    search_fields = ('email', 'first_name', 'last_name')
 
+    fieldsets = (
+        (
+            'Fields', {
+                'fields': ('email', 'first_name', 'last_name', 'street_num', 'city', 'state', 'zipcode', 'favoriteGenres', 'favoriteAuthors')
+            },
+        ),
     )
+
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'is_staff', 'is_active')}
-         ),
+            'fields': ('email', 'password1', 'password2'),
+        }),
     )
     search_fields = ('email',)
     ordering = ('email',)
+    filter_horizontal = ()
 
 
 admin.site.register (User, CustomUserAdmin)

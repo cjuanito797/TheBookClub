@@ -6,6 +6,17 @@
 
 
 {% block content %}
-    <h1>Edit Your Address Below</h1>
+    <div class="Banner">
+    <h1>See Your Favorite Genres Below Based Off of your books</h1>
+    </div>
+
+    {% for fg in uniqueGenres%}
+
+        <!-- build a list here but only grab unique items -->
+        <h2>{{ fg }}</h2>
+        <br>
+
+    {% endfor %}
+
 
 {% endblock %}

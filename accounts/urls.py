@@ -15,5 +15,9 @@ urlpatterns = [
     path('viewProfile/<str:id>/', views.viewProfile, name='viewProfile'),
     path('editAddress/', views.edit_address, name='edit_address'),
     path('addBook/', views.addBook, name='addBook'),
-    path('addFavoriteBook', views.addFavoriteBook, name='addFavoriteBook'),
+    path('myFavBooks', views.viewFavBooks, name='viewFavBooks'),
+    path('myFavAuthors', views.viewFavAuthors, name='viewFavAuthors'),
+    path('myFavGenres', views.viewFavGenres, name='viewFavGenres'),
+    path('addFavAuthor', views.addFavAuthors, name='addFavAuthors'),
+
 ]

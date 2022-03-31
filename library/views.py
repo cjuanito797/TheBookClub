@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from .models import Genre, Book, Author
 from accounts.views import registration_view
 from django.urls import reverse_lazy
 from .forms import BookForm
 from bootstrap_modal_forms.generic import BSModalCreateView
+from accounts.views import customerView
 
 # Create your views here.
 
@@ -71,6 +72,6 @@ def author_list(request):
 def home(request):
 
     if request.user.is_authenticated:
-        return render(request, 'accounts/base.html')
+        return redirect(reverse ('accounts:customerView'))
     else:
         return render (request, 'home.html')

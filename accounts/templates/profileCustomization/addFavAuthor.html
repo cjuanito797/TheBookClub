@@ -1,0 +1,21 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}
+    <title>Add Favorite Author</title>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="Banner">
+        <h1>Add Favorite Author Below</h1>
+    </div>
+
+    <form method="post">
+
+    {% csrf_token %}
+    {{ favAuthor.as_p }}
+    <p><input type="submit">Submit</p>
+    </form>
+
+{% endblock %}

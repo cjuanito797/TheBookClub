@@ -9,7 +9,8 @@ from .managers import CustomUserManager
 
 
 class User (AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField (_ ('email address'), unique=True)
+    username = None
+    email = models.EmailField (_ ('email'), unique=True)
     first_name = models.CharField (max_length=20)
     last_name = models.CharField (max_length=20)
     street_num = models.CharField (max_length=20)
@@ -19,23 +20,19 @@ class User (AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField (default=False)
     is_active = models.BooleanField (default=True)
     date_joined = models.DateTimeField (default=timezone.now)
-    favorite_books = models.ManyToManyField (Book, related_name='favorite_books', blank=True)
-    favorite_genres = models.ManyToManyField (Genre, related_name='favorite_genres', blank=True)
-    favorite_authors = models.ManyToManyField (Author, related_name='favorite_authors', blank=True)
-    user_id = models.CharField(max_length=30, blank=True)
+    favoriteGenres = models.ManyToManyField(Genre, symmetrical=False, blank=True)
+    favoriteAuthors = models.ManyToManyField(Author, blank=True)
 
+    objects = CustomUserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    objects = CustomUserManager ( )
 
     def __str__(self):
         return self.email
 
-    def save(self, *args, **kwargs):
-        user_id = self.email.split('@')
-        user_id = user_id[0]
-        self.user_id = user_id
-        super(User, self).save(*args, **kwargs)
+    def get_username(self):
+        return self.email
 
-# Define a model for a user's friends list, since we can't define it within the User model itself
+
+

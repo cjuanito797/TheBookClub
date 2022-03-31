@@ -26,7 +26,7 @@ class RegistrationForm(UserCreationForm):
             self.fields[fieldname].help_text = None
 
 class LoginForm(forms.Form):
-    username = forms.CharField()
+    email = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
 class EditAddress(forms.ModelForm):

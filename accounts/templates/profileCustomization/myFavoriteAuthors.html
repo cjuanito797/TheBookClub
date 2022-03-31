@@ -1,1 +1,25 @@
 {% extends 'accounts/base.html' %}
+
+{% block title %}
+    <title>Favorite Authors</title>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+    <div class="Banner">
+    <h1>Your Favorite Authors</h1>
+    </div>
+
+    {% for fa in uniqueAuthors %}
+    <h3>{{ fa.first_name }}&nbsp;{{ fa.last_name }}</h3>
+    {% endfor %}
+
+    <br>
+    <h1>Add More Favorite Authors Below</h1>
+
+
+
+{% endblock %}
