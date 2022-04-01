@@ -20,5 +20,8 @@ urlpatterns = [
     path('myFavGenres', views.viewFavGenres, name='viewFavGenres'),
     path('addFavAuthor', views.addFavAuthors, name='addFavAuthors'),
     path('<int:pk>/delete', views.deleteBook, name='deleteBook'),
+    path('<int:pk>/details', views.viewBook, name='viewBook'),
+    path('<int:pk>/edit', views.edit_book, name='edit_book'),
+    path('<int:pk>/changeVisibility', views.changeBookVisibility, name='changeBookVisibility'),
 
 ]

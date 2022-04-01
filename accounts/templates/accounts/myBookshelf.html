@@ -16,22 +16,32 @@
             <tr class="bg-info">
                 <td>{{ book.title }}</td>
                 <td>{{ book.author }}</td>
-                <td><a href="{% url 'accounts:myBookShelf'  %}"
+                <td><a href="{% url 'accounts:edit_book' pk=book.pk %}"
                        class="btn btn-primary">Edit Book</a>
-                {% if book.available is True %}
-                <td><a href="{% url 'accounts:myBookShelf'  %}"
-                            onclick="return confirm('Are you sure you would like to hide the visibility of this book? ')"
-                       class="btn btn-primary">Hide Book</a>
-                {% else %}
-                <td><a href="{% url 'accounts:myBookShelf'  %}"
-                            onclick="return confirm('Are you sure you would like to hide the visibility of this book? ')"
-                       class="btn btn-primary">Show Book</a>
-                {% endif %}
+
+                    {% if book.available is True and book.shared is False %}
+                        <td><a href="{% url 'accounts:changeBookVisibility' pk=book.pk %}"
+                               onclick="return confirm('Are you sure you would like to hide the visibility of this book? ')"
+                               class="btn btn-primary">Hide Book</a>
+
+                            {% elif book.available is False and book.shared is True %}
+                        <td><a href="{% url 'accounts:myBookShelf'%}"
+                               onclick="return ('Book appears to be shared')"
+                               class="btn btn-shared">Shared</a>
+
+                            {% else %}
+                        <td><a href="{% url 'accounts:changeBookVisibility' pk=book.pk %}"
+                               onclick="return confirm('Are you sure you would like to change the visibility of this book to public? ')"
+                               class="btn btn-primary">Show Book</a>
+
+                    {% endif %}
                 <td><a href="{% url 'accounts:deleteBook' pk=book.pk %}"
-                                onclick="return confirm('Are you sure you want to delete?')"
+                       onclick="return confirm('Are you sure you want to delete?')"
                        class="btn btn-danger">Delete Book</a>
-                <td><a href="{% url 'accounts:myBookShelf'  %}"
-                           class="btn btn-primary"><button>Summary</button></a>
+                <td><a href="{% url 'accounts:viewBook' pk=book.pk %}"
+                       class="btn btn-primary">
+                    <button>View Details</button>
+                </a>
             </tr>
         {% endfor %}
     </table>

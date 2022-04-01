@@ -1,4 +1,4 @@
-from .models import Book, Genre, Author
+from .models import Book, Genre, Author, SharedBook
 from django.contrib import admin
 
 # Register your models here.
@@ -19,3 +19,8 @@ class AuthorAdmin(admin.ModelAdmin):
 class GenreAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug']
     prepopulated_fields = {'slug': ('name', )}
+
+@admin.register(SharedBook)
+class SharedBookAdmin(admin.ModelAdmin):
+    list_display = ['borrower', 'book', 'shared_on_date', 'shared_until']
+

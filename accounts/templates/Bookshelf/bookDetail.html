@@ -1,0 +1,22 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}
+    <title>{{ book.title }}</title>
+{% endblock %}
+
+
+{% block content %}
+    <div class="Banner">
+        <h1>{{ book.title }} by {{ book.author.first_name }} {{ book.author.last_name }}</h1>
+        <br>
+        <h2>Summary</h2>
+        <p>{{ book.summary }}</p>
+        <br>
+        <h2>General Information Regarding Your Book</h2>
+        <p><strong>ISBN:</strong>{{ book.isbn }}</p>
+        <p><strong>PRICE:</strong> ${{ book.price }}</p>
+
+    </div>
+
+
+{% endblock %}

@@ -23,6 +23,7 @@ class User (AbstractBaseUser, PermissionsMixin):
     favoriteGenres = models.ManyToManyField(Genre, symmetrical=False, blank=True)
     favoriteAuthors = models.ManyToManyField(Author, blank=True)
 
+    wishlist = models.ManyToManyField(Book, symmetrical=False, blank=True)
     objects = CustomUserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

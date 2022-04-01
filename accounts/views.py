@@ -46,55 +46,57 @@ def user_login(request):
 
 @login_required
 def customerView(request):
-    favorite_books = Book.objects.filter(owner_id=request.user.id, favorite=True)
+    favorite_books = Book.objects.filter (owner_id=request.user.id, favorite=True)
 
     return render (request, 'accounts/base.html', {'favorite_books': favorite_books})
 
 
 @login_required
 def myBookShelf(request):
-    myBooks = Book.objects.filter (owner_id=request.user,).order_by("title")
+    myBooks = Book.objects.filter (owner_id=request.user, ).order_by ("title")
     return render (request, 'accounts/myBookshelf.html', {'myBooks': myBooks})
+
 
 @login_required
 def editProfile(request):
     return render (request, 'profileCustomization/editProfile.html')
 
+
 @login_required
 def viewProfile(request, id):
-    favBooks = Book.objects.filter(owner_id=request.user.id, favorite=True)
+    favBooks = Book.objects.filter (owner_id=request.user.id, favorite=True)
     return render (request, 'profileCustomization/viewProfile.html', {'user': user, 'favBooks': favBooks})
+
 
 @login_required
 def addBook(request):
     if request.method == "POST":
-        addBook = addBookForm(request.POST)
-        addAuthor = addAuthorForm(request.POST)
-        addGenre = addGenreForm(request.POST)
+        addBook = addBookForm (request.POST)
+        addAuthor = addAuthorForm (request.POST)
+        addGenre = addGenreForm (request.POST)
 
-        if addBook.is_valid() and addAuthor.is_valid() and addGenre.is_valid():
+        if addBook.is_valid ( ) and addAuthor.is_valid ( ) and addGenre.is_valid ( ):
             user = request.user
-            book = addBook.save(commit=False)
+            book = addBook.save (commit=False)
             book.owner_id = request.user.id
-            author = addAuthor.save(commit=False)
-            genre = addGenre.save(commit=False)
+            author = addAuthor.save (commit=False)
+            genre = addGenre.save (commit=False)
             book.author = author
             book.genre = genre
-            author.save()
-            genre.save()
-            book.save()
+            author.save ( )
+            genre.save ( )
+            book.save ( )
 
             if book.favorite is True:
-                user.favoriteAuthors.add(author)
-                user.favoriteGenres.add(genre)
+                user.favoriteAuthors.add (author)
+                user.favoriteGenres.add (genre)
 
-
-            return redirect(reverse('accounts:myBookShelf'))
+            return redirect (reverse ('accounts:myBookShelf'))
     else:
-        addBook = addBookForm ()
-        addAuthor = addAuthorForm ()
-        addGenre = addGenreForm ()
-    return render(request, "accounts/addBook.html", {'addBook' : addBook, 'addAuthor': addAuthor, 'addGenre': addGenre})
+        addBook = addBookForm ( )
+        addAuthor = addAuthorForm ( )
+        addGenre = addGenreForm ( )
+    return render (request, "accounts/addBook.html", {'addBook': addBook, 'addAuthor': addAuthor, 'addGenre': addGenre})
 
 
 @login_required
@@ -105,70 +107,111 @@ def user_logout(request):
 @login_required
 def edit_address(request):
     if request.method == "POST":
-        form = EditAddress (request.POST or None, instance=request.user,use_required_attribute=False )
-        if form.is_valid( ):
-            form.save( )
+        form = EditAddress (request.POST or None, instance=request.user, use_required_attribute=False)
+        if form.is_valid ( ):
+            form.save ( )
             return render (request, 'profileCustomization/editProfile.html')
 
     else:
-        form = EditAddress (request.POST or None, instance=request.user, use_required_attribute=False )
+        form = EditAddress (request.POST or None, instance=request.user, use_required_attribute=False)
     return render (request, 'profileCustomization/editAddress.html', {'form': form})
 
-@login_required()
+
+@login_required ( )
 def viewFavBooks(request):
     favBooks = Book.objects.filter (owner_id=request.user.id, favorite=True)
 
     return render (request, 'profileCustomization/myFavoriteBooks.html', {'favBooks': favBooks})
 
 
-
-@login_required()
+@login_required ( )
 def viewFavAuthors(request):
     user = request.user
-    favAuthors = user.favoriteAuthors.distinct()
+    favAuthors = user.favoriteAuthors.distinct ( )
 
     uniqueAuthors = []
     for fa in favAuthors:
         if fa not in uniqueAuthors:
-            uniqueAuthors.append(fa)
+            uniqueAuthors.append (fa)
 
     # now we will also get the favorite authors from the books that were marked as favorites again we will still want to keep it unique
 
-    return render(request, 'profileCustomization/myFavoriteAuthors.html', {'uniqueAuthors': uniqueAuthors} )
+    return render (request, 'profileCustomization/myFavoriteAuthors.html', {'uniqueAuthors': uniqueAuthors})
 
-@login_required()
+
+@login_required ( )
 def viewFavGenres(request):
     user = request.user
-    favGenres = user.favoriteGenres.filter()
+    favGenres = user.favoriteGenres.filter ( )
     uniqueGenres = []
     for fg in favGenres:
         if fg.name not in uniqueGenres:
-            uniqueGenres.append(fg.name)
+            uniqueGenres.append (fg.name)
 
-    return render(request, 'profileCustomization/myFavoriteGenres.html', {'uniqueGenres' : uniqueGenres})
+    return render (request, 'profileCustomization/myFavoriteGenres.html', {'uniqueGenres': uniqueGenres})
 
-@login_required()
+
+@login_required ( )
 def addFavAuthors(request):
     if request.method == "POST":
-        favAuthor = addAuthorForm(request.POST)
+        favAuthor = addAuthorForm (request.POST)
 
-        if favAuthor.is_valid():
-            author = favAuthor.save(commit=False)
+        if favAuthor.is_valid ( ):
+            author = favAuthor.save (commit=False)
             author.favorite = True
-            author.save()
+            author.save ( )
     else:
-        favAuthor = addAuthorForm(request.POST)
+        favAuthor = addAuthorForm (request.POST)
 
-    return render(request, 'profileCustomization/addFavAuthor.html', {'favAuthor' : favAuthor})
+    return render (request, 'profileCustomization/addFavAuthor.html', {'favAuthor': favAuthor})
 
 
-@login_required()
+@login_required ( )
 def deleteBook(request, pk):
     # whenever we delete a book, we also want to go through and delete the related author as well as the related genre.
-    book = get_object_or_404(Book, pk=pk)
+    book = get_object_or_404 (Book, pk=pk)
     author = book.author
     genre = book.genre
-    book.delete()
-    author.delete()
-    genre.delete()
+    book.delete ( )
+    author.delete ( )
+    genre.delete ( )
+    return redirect ('accounts:myBookShelf')
+
+
+@login_required ( )
+def viewBook(reqeust, pk):
+    # we may have several books in our library so the bookshelf page may not want to get overflowed with loads of book, so we want to keep
+    # this page as clean as we can.
+    book = get_object_or_404 (Book, pk=pk)
+
+    return render (reqeust, 'Bookshelf/bookDetail.html', {'book': book})
+
+
+@login_required ( )
+def edit_book(request, pk):
+    book = get_object_or_404 (Book, pk=pk)
+
+    if request.method == "POST":
+        form = EditBook (request.POST, instance=book)
+        if form.is_valid ( ):
+            book = form.save ( )
+
+            book.save ( )
+            return redirect ('accounts:myBookShelf')
+    else:
+        form = EditBook (instance=book)
+    return render (request, 'Bookshelf/editBook.html', {'form': form})
+
+@login_required()
+def changeBookVisibility(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+
+    if not book.available:
+        book.available = True
+        book.save()
+
+    elif book.available:
+        book.available = False
+        book.save()
+
     return redirect('accounts:myBookShelf')

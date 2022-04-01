@@ -355,3 +355,9 @@ input[type=submit] {
     border-radius: 8px;
     background-color: blue;
 }
+
+.btn-shared {
+    padding: 10px;
+    border-radius: 8px;
+    background-color: green;
+}

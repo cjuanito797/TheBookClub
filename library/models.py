@@ -1,3 +1,6 @@
+import datetime
+import time
+
 from django.db import models
 
 # Create your models here.
@@ -5,7 +8,7 @@ from django.db import models
 from django.urls import reverse
 import hashlib, random, sys
 from django.core.validators import RegexValidator, MinLengthValidator
-
+import django.utils.timezone
 
 class Author (models.Model):
     first_name = models.CharField (max_length=50, db_index=True)
@@ -75,3 +78,17 @@ class Book (models.Model):
         return reverse ('Library:book_detail',
                         args=[self.id, self.slug])
 
+
+
+class SharedBook(models.Model):
+    borrower = models.ForeignKey ("accounts.User",
+                                 related_name='borrower',
+                                 on_delete=models.CASCADE,
+                                 default=None)
+
+    book = models.ForeignKey(Book,
+                             related_name='Book',
+                             on_delete=models.CASCADE,
+                             default=None)
+    shared_on_date = models.DateField(default=time.timezone)
+    shared_until = models.DateField()

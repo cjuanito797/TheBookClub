@@ -35,6 +35,14 @@ class EditAddress(forms.ModelForm):
 
         fields = ("street_num", "city", "state", "zipcode")
 
+
+class EditBook(forms.ModelForm):
+    class Meta:
+        model = Book
+
+        fields = ("title", "summary", "price", "available", "shared")
+
+
 class addBookForm(forms.ModelForm):
     class Meta:
         model = Book
