@@ -6,18 +6,18 @@
 
 {% block content %}
 <div class="Banner">
-    <h1>Add A Book Below To Your Bookshelf</h1>
+    <h1>Add A Book To Your Bookshelf</h1>
 </div>
 
 
     <div id="form">
     <form method="post">
     {% csrf_token %}
-        <h3>Enter the book information</h3>
+        <h3 style="height:35px">Book Information</h3>
         {{ addBook.as_p }}
-        <h3>Enter the author information</h3>
+        <h3 style="height:35px">Author Information</h3>
         {{ addAuthor.as_p }}
-        <h3>Enter the genre of your book</h3>
+        <h3 style="height:35px">Book Genre</h3>
         {{ addGenre.as_p }}
         <p><input type="submit"></p>
     </form>
