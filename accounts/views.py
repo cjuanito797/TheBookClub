@@ -215,3 +215,7 @@ def changeBookVisibility(request, pk):
         book.save()
 
     return redirect('accounts:myBookShelf')
+
+@login_required()
+def findBook(request):
+    return render(request, 'Social/findBook.html')
