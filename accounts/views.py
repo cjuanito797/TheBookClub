@@ -218,4 +218,16 @@ def changeBookVisibility(request, pk):
 
 @login_required()
 def findBook(request):
-    return render(request, 'Social/findBook.html')
+    # get all of the user objects, except for the currently logged in user.
+    users = User.objects.exclude(pk=request.user.id)
+
+    # get some of the favorite authors of the user (0 - 3) objects only.
+
+
+    # get some of the favorite genres of the user (0 - 3) objects only.
+
+    # get some of the favorite books of the user (0 - 3) objects only.
+
+
+    # Compare the favorites of the users, compare them to our currently logged in user and determine whether we should them as a suggestion.
+    return render(request, 'Social/findBook.html', {'users': users})
