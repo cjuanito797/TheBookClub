@@ -2,14 +2,14 @@
 {% load static %}
 <html lang="en">
 
-    <head>
-        {% block title %}<title>Welcome, {{ user.first_name }}</title>{% endblock %}
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
+<head>
+    {% block title %}<title>Welcome, {{ user.first_name }}</title>{% endblock %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 
 <body>
 {% block navigation %}
@@ -21,6 +21,7 @@
                 <li><a href="{% url 'accounts:myBookShelf' %}">My Bookshelf</a></li>
                 <li><a href="{% url 'accounts:addBook' %}">Add a book</a></li>
                 <li><a href="{% url 'accounts:editProfile' %}">My Profile</a></li>
+                <li><a href="{% url 'accounts:findBook' %}">Find A Book</a></li>
                 <li><a href="{% url 'accounts:logout' %}">Sign Out</a></li>
             </ul>
         </nav>
