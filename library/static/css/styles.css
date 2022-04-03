@@ -192,6 +192,27 @@ input[type=submit] {
     margin-left: 100px;
 }
 
+input[type=number] {
+    color: white;
+    width: 350px;
+    height: 35px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border-bottom: 2px solid black;
+    font-size: 15px;
+
+}
+
+input[type=checkbox] {
+    color: white;
+    width: 18px;
+    height: 16px;
+    margin: 20px 0;
+
+}
+
 #form {
     text-align: center;
     color: white;
