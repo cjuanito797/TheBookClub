@@ -11,4 +11,9 @@
         <h1>View Users with similar interests as yours.</h1>
     </div>
 
+    <h1>Users</h1>
+    {% for user in users %}
+        <h2>{{ user.email}}</h2>
+    {% endfor %}
+
 {% endblock %}
