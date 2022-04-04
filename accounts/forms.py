@@ -21,8 +21,11 @@ class RegistrationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super (RegistrationForm, self).__init__ (*args, **kwargs)
 
-        for fieldname in ['password1','password2',]:
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+            visible.field.widget.attrs['placeholder'] = visible.field.label
 
+        for fieldname in ['password1','password2',]:
             self.fields[fieldname].help_text = None
 
 class LoginForm(forms.Form):

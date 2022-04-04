@@ -4,6 +4,7 @@ body {
     color: white;
 }
 .listings {
+    background-color: #24252a;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -16,13 +17,13 @@ body {
     padding: 8px;
 }
 
-.listings tr:nth-child(even) {
+/* .listings tr:nth-child(even) {
     background-color: #f2f2f2;
-}
+} */
 
-.listings tr:hover {
+/* .listings tr:hover {
     background-color: white;
-}
+} */
 
 .listings th {
     padding-top: 12px;
@@ -40,14 +41,14 @@ body {
     text-align: center;
 }
 
-* {
+/* * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     background-color: #24252a;
-}
+} */
 
-li,
+/* li,
 a,
 button {
     font-family: "Montserrat", sans-serif;
@@ -55,21 +56,21 @@ button {
     font-size: 16px;
     color: #edf0f1;
     text-decoration: none;
-}
+} */
 
-header {
+/* header {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding: 30px 10%;
-}
+} */
 
-.logo {
+/* .logo {
     font-family: AppleSystemUIFont, serif;
     cursor: pointer;
     margin-right: 25px;
     color: rgba(0, 136, 169, 1);
-}
+} */
 
 .nav__links {
     list-style: none;
@@ -106,7 +107,7 @@ button:hover {
     background-color: rgba(0, 136, 169, 0.8);
 }
 
-#signupBackdrop {
+/* #signupBackdrop {
     position: absolute;
     top: 15%;
     left: 25%;
@@ -123,9 +124,9 @@ button:hover {
     -ms-filter: blur(4px);
     -moz-filter: blur(4px);
     -webkit-filter: blur(4px);
-}
+} */
 
-label {
+/* label {
     margin-right: 10px;
     width: 200px;
     display: inline-block;
@@ -141,10 +142,10 @@ form.inline_label {
     align-content: center;
 
 
-}
+} */
 
 
-input[type=text] {
+/* input[type=text] {
     width: 350px;
     height: 35px;
     padding: 12px 20px;
@@ -211,7 +212,7 @@ input[type=checkbox] {
     height: 16px;
     margin: 20px 0;
 
-}
+} */
 
 #form {
     text-align: center;
@@ -221,11 +222,10 @@ input[type=checkbox] {
     left: 0;
     right: 0;
     margin-top: 150px;
-
 }
 
 
-.footer {
+/* .footer {
     position: absolute;
     color: #fff;
     bottom: 0;
@@ -234,7 +234,7 @@ input[type=checkbox] {
     line-height: 100px;
     text-align: center;
     background-color: #000;
-}
+} */
 
 .loginForm {
     position: absolute;

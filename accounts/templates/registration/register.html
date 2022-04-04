@@ -3,17 +3,20 @@
 {% block title %}
     <title>Signup!</title>
 {% endblock %}
+
 {% block content %}
 
-    <div class="Banner">
-    <h1>Create Your Account Below</h1>
-    </div>
+    <h1 class="fs-2 text-center">Create Your Account Below</h1>
 
-    <div id="form">
-        <form method="post">
+        <form class="w-50 px-5 py-3 mx-auto d-flex flex-column align-items-center" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <label><input type="submit" value="Join Now"></label>
+            {% for field in form %}
+                <div class="form-floating mb-3 w-100">
+                {{ field }}
+                {{ field.label_tag }}
+                </div>
+            {% endfor %}
+            <input class="btn btn-primary rounded-pill m-auto text-light" type="submit" value="Join Now">
         </form>
-    </div>
+
 {% endblock %}
