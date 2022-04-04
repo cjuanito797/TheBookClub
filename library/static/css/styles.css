@@ -365,7 +365,7 @@ input[type=checkbox] {
     margin: 1rem;
 }
 
-.btn-danger {
+/* .btn-danger {
     padding: 10px;
     border-radius: 8px;
     background-color: red;
@@ -375,7 +375,7 @@ input[type=checkbox] {
     padding: 10px;
     border-radius: 8px;
     background-color: blue;
-}
+} */
 
 .btn-shared {
     padding: 10px;
