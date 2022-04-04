@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'library.apps.LibraryConfig',
     'bootstrap_modal_forms',
+    'compressor',
 ]
 
 MIDDLEWARE = [
@@ -126,6 +127,17 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '../customerView/'
 LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = '/'
+
+COMPRESS_PRECOMPILERS = (
+    
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder'
+]
 
 
 # Default primary key field type
