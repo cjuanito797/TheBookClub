@@ -1,1 +1,3 @@
 django-bootstrap-modal-forms
+git+https://github.com/django-compressor/django-compressor.git
+django-libsass
