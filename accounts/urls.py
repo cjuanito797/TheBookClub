@@ -24,5 +24,6 @@ urlpatterns = [
     path('<int:pk>/edit', views.edit_book, name='edit_book'),
     path('<int:pk>/changeVisibility', views.changeBookVisibility, name='changeBookVisibility'),
     path('findBook/', views.findBook, name='findBook'),
+    path('search/', views.search_results, name="search_results"),
 
 ]
