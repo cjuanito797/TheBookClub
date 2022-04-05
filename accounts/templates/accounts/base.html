@@ -46,8 +46,16 @@
 
 {% block content %}
 
-        <h1 class="text-center ">Your Next Reading Adventure Awaits...</h1>
-        <h2 class="text-center text-muted mb-7">Take a look at some suggested books</h2>
+<h1 class="text-center ">Your Next Reading Adventure Awaits...</h1>
+
+
+        <form class="input-group w-50 mx-auto my-4 mb-7" action="{% url 'accounts:search_results' %}" method="get">
+            <input type="search" name="input" class="form-control rounded mx-2" placeholder="Seach for authors, books, or genres"/>
+            <button type="submit" class="btn btn-outline-primary rounded">search</button>
+        </form>
+
+    <h2 class="text-center text-muted my-4">Take a look at some suggested books</h2>
+        
 
     <div class="d-flex justify-content-center">
         {% for book in avail_books %}

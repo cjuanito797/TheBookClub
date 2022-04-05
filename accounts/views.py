@@ -8,7 +8,7 @@ from .forms import RegistrationForm, LoginForm, EditAddress
 from django.contrib.auth.decorators import login_required
 from library.models import Book, Author, Genre
 from .forms import *
-from random import randint
+from django.db.models import Q
 
 
 # Create your views here.
@@ -51,6 +51,16 @@ def customerView(request):
     favorite_books = Book.objects.filter (owner_id=request.user.id, favorite=True)
     allAvailableBooks = Book.objects.filter(available=True)[:5]
     return render (request, 'accounts/base.html', {'avail_books': allAvailableBooks, 'favorite_books': favorite_books})
+
+@login_required
+def search_results(request):
+    input = request.GET.get("input")
+    results = Book.objects.filter(Q(title__icontains=input) | Q(author__first_name__icontains=input) | Q(author__last_name__icontains=input) | Q(genre__name__icontains=input))
+    results.filter(available=True)
+    results_found = results.exists()
+    if (not results_found):
+        results = Book.objects.filter(available=True)[:5]
+    return render (request, 'accounts/search_results.html', {'results_found': results_found, 'results': results})
 
 
 @login_required
