@@ -28,6 +28,8 @@ class User (AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    follows_list = []
+
 
     def __str__(self):
         return self.email
