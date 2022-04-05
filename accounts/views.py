@@ -49,7 +49,7 @@ def user_login(request):
 @login_required
 def customerView(request):
     favorite_books = Book.objects.filter (owner_id=request.user.id, favorite=True)
-    allAvailableBooks = Book.objects.filter(available=True)[:5]
+    allAvailableBooks = Book.objects.all().exclude(owner_id=request.user.id)[0:3]
     return render (request, 'accounts/base.html', {'avail_books': allAvailableBooks, 'favorite_books': favorite_books})
 
 @login_required

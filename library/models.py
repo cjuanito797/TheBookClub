@@ -82,7 +82,7 @@ class Book (models.Model):
 
 class SharedBook(models.Model):
     borrower = models.ForeignKey ("accounts.User",
-                                 related_name='borrower',
+                                 related_name='borrowers',
                                  on_delete=models.CASCADE,
                                  default=None)
 
