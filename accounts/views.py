@@ -234,5 +234,7 @@ def findBook(request):
     # get some of the favorite books of the user (0 - 3) objects only.
 
 
-    # Compare the favorites of the users, compare them to our currently logged in user and determine whether we should them as a suggestion.
+
+    # Compare the favorites of the users and determine whether we should suggest them to the currently logged in user. We will build a list of suggestions.
+
     return render(request, 'Social/findBook.html', {'users': users})
