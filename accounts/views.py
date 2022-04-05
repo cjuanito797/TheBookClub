@@ -1,3 +1,4 @@
+import email
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 from .models import User
 from django.contrib.auth import login, authenticate
@@ -7,6 +8,7 @@ from .forms import RegistrationForm, LoginForm, EditAddress
 from django.contrib.auth.decorators import login_required
 from library.models import Book, Author, Genre
 from .forms import *
+from random import randint
 
 
 # Create your views here.
@@ -47,8 +49,8 @@ def user_login(request):
 @login_required
 def customerView(request):
     favorite_books = Book.objects.filter (owner_id=request.user.id, favorite=True)
-
-    return render (request, 'accounts/base.html', {'favorite_books': favorite_books})
+    allAvailableBooks = Book.objects.filter(available=True)[:5]
+    return render (request, 'accounts/base.html', {'avail_books': allAvailableBooks, 'favorite_books': favorite_books})
 
 
 @login_required
@@ -64,8 +66,11 @@ def editProfile(request):
 
 @login_required
 def viewProfile(request, id):
-    favBooks = Book.objects.filter (owner_id=request.user.id, favorite=True)
-    return render (request, 'profileCustomization/viewProfile.html', {'user': user, 'favBooks': favBooks})
+    user = User.objects.get(email=id)
+    favBooks = Book.objects.filter (owner_id=user.id, favorite=True)
+    favAuthors = user.favoriteAuthors.distinct ( )
+    favGenres = user.favoriteGenres.filter ( )
+    return render (request, 'profileCustomization/viewProfile.html', {'user': user, 'favBooks': favBooks, 'favAuthors': favAuthors, 'favGenres': favGenres})
 
 
 @login_required

@@ -13,7 +13,7 @@
         {% else %}
             User's  
         {% endif %}
-        Profile
+            Profile
         </h1>
         <h3>
             {{ user.email }}
@@ -46,9 +46,10 @@
         {% endfor %}
     </div>
     <div class="prof-btn-grp">
-        <button>View Bookshelf</button>
-        <button>View Wishlist</button>
-        <button>Add Friend</button>
+        <a class="btn btn-primary text-dark mx-1" href="#">View Bookshelf</a>
+        <a class="btn btn-primary text-dark mx-1" href="#">View Wishlist</a>
+        <a class="btn btn-primary text-dark mx-1" href="#">Add Friend</a>
+        <a class="btn btn-primary text-dark mx-1" href="#">Email {{user.first_name}}</a>
     </div>
 </div>
 
