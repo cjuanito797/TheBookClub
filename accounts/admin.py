@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import RegistrationForm
-from .models import User
+from .models import User, Message
 
 
 class CustomUserAdmin (UserAdmin):
@@ -31,3 +31,8 @@ class CustomUserAdmin (UserAdmin):
 
 
 admin.site.register (User, CustomUserAdmin)
+
+
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ['sender']

@@ -1,11 +1,30 @@
 {% extends 'accounts/base.html' %}
 
 {% block title %}
-<title>Request A Book</title>
+    <title>Request A Book</title>
 {% endblock %}
 
 
 {% block content %}
-<h1>Please fill out the form below to request a book from {{ user.first_name }}.</h1>
+
+
+    <h1>Please fill out the form below to request a book from {{ requestee.first_name }}</h1>
+
+    <h2>Below is a list of books that are shareable at the moment.</h2><br>
+    {% for book in books %}
+        <h6>{{ book.title }}</h6>
+        <br>
+    {% endfor %}
+
+
+    <div id="form">
+    <form method="post">
+        {% csrf_token%}
+        {{ messageForm.as_p }}
+        <p><input type="submit"></p>
+    </form>
+    </div>
+
+
 
 {% endblock %}

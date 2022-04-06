@@ -1,17 +1,17 @@
+import datetime
 import email
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
-from .models import User
+from .models import User, Message
 from django.contrib.auth import login, authenticate
 from django.urls import reverse
 from django.views.generic import FormView, TemplateView
-from .forms import RegistrationForm, LoginForm, EditAddress
+from .forms import RegistrationForm, LoginForm, EditAddress, messageForm
 from django.contrib.auth.decorators import login_required
 from library.models import Book, Author, Genre
 from .forms import *
 from django.db.models import Q
 from library.models import followSystem
-
-
+from django.contrib import messages
 
 # Create your views here.
 class registration_view (FormView):
@@ -52,17 +52,19 @@ def user_login(request):
 @login_required
 def customerView(request):
     favorite_books = Book.objects.filter (owner_id=request.user.id, favorite=True)
-    allAvailableBooks = Book.objects.all().exclude(owner_id=request.user.id)[0:3]
+    allAvailableBooks = Book.objects.all ( ).exclude (owner_id=request.user.id)[0:3]
     return render (request, 'accounts/base.html', {'avail_books': allAvailableBooks, 'favorite_books': favorite_books})
+
 
 @login_required
 def search_results(request):
-    input = request.GET.get("input")
-    results = Book.objects.filter(Q(title__icontains=input) | Q(author__first_name__icontains=input) | Q(author__last_name__icontains=input) | Q(genre__name__icontains=input))
-    results.filter(available=True)
-    results_found = results.exists()
+    input = request.GET.get ("input")
+    results = Book.objects.filter (Q (title__icontains=input) | Q (author__first_name__icontains=input) | Q (
+        author__last_name__icontains=input) | Q (genre__name__icontains=input))
+    results.filter (available=True)
+    results_found = results.exists ( )
     if (not results_found):
-        results = Book.objects.filter(available=True)[:5]
+        results = Book.objects.filter (available=True)[:5]
     return render (request, 'accounts/search_results.html', {'results_found': results_found, 'results': results})
 
 
@@ -79,26 +81,26 @@ def editProfile(request):
 
 @login_required
 def viewProfile(request, id):
-    user = User.objects.get(email=id)
+    user = User.objects.get (email=id)
     favBooks = Book.objects.filter (owner_id=user.id, favorite=True)
     favAuthors = user.favoriteAuthors.distinct ( )
     favGenres = user.favoriteGenres.filter ( )
 
     # display the user's book that
-    books = Book.objects.filter(owner_id=user.id)
+    books = Book.objects.filter (owner_id=user.id, available=True, shared=False)
 
     # determine whether we are currently following the user or not based off of the user's following list and check if email exists. Pass in boolean value to template.
 
-    this_user = User.objects.get(pk=request.user.id)
+    this_user = User.objects.get (pk=request.user.id)
 
-
-
-    if (this_user.follow_list.all().contains(user)):
+    if (this_user.follow_list.all ( ).contains (user)):
         following = True
     else:
         following = False
 
-    return render (request, 'profileCustomization/viewProfile.html', {'user': user, 'favBooks': favBooks, 'favAuthors': favAuthors, 'favGenres': favGenres, 'books':books, 'following': following })
+    return render (request, 'profileCustomization/viewProfile.html',
+                   {'user': user, 'favBooks': favBooks, 'favAuthors': favAuthors, 'favGenres': favGenres,
+                    'books': books, 'following': following})
 
 
 @login_required
@@ -235,74 +237,96 @@ def edit_book(request, pk):
         form = EditBook (instance=book)
     return render (request, 'Bookshelf/editBook.html', {'form': form})
 
-@login_required()
+
+@login_required ( )
 def changeBookVisibility(request, pk):
-    book = get_object_or_404(Book, pk=pk)
+    book = get_object_or_404 (Book, pk=pk)
 
     if not book.available:
         book.available = True
-        book.save()
+        book.save ( )
 
     elif book.available:
         book.available = False
-        book.save()
+        book.save ( )
 
-    return redirect('accounts:myBookShelf')
+    return redirect ('accounts:myBookShelf')
 
-@login_required()
+
+@login_required ( )
 def findBook(request):
     # get all of the user objects, except for the currently logged in user.
-    users = User.objects.exclude(pk=request.user.id)
-
-
+    users = User.objects.exclude (pk=request.user.id)
 
     # get some of the favorite authors of the user (0 - 3) objects only.
-
 
     # get some of the favorite genres of the user (0 - 3) objects only.
 
     # get some of the favorite books of the user (0 - 3) objects only.
 
-
-
     # Compare the favorites of the users and determine whether we should suggest them to the currently logged in user. We will build a list of suggestions.
 
-    return render(request, 'Social/findBook.html', {'users': users})
+    return render (request, 'Social/findBook.html', {'users': users})
 
-@login_required()
+
+@login_required ( )
 def follow(request, pk):
-    user_to_add = User.objects.get(pk=pk)
 
-    this_user = User.objects.get(pk=request.user.id)
-    this_user.follow_list.add(user_to_add)
+    user_to_add = User.objects.get (pk=pk)
+    this_user = User.objects.get (pk=request.user.id)
+    this_user.follow_list.add (user_to_add)
+
+    # return a message indicating that user was added to following list.
+    messages.success (request, 'User Added To My Followings List.')
+    return HttpResponseRedirect ('/account/viewProfile/' + str(user_to_add.email))
 
 
-    return redirect('accounts:followList')
-
-@login_required()
+@login_required ( )
 def followList(request):
-    user = User.objects.get(pk=request.user.id)
 
-    this_user = User.objects.get(pk=request.user.id)
+    user = User.objects.get (pk=request.user.id)
+    this_user = User.objects.get (pk=request.user.id)
+    list = this_user.follow_list.all ( )
 
-    list = this_user.follow_list.all()
+    return render (request, 'social/myFollowings.html', {'list': list})
 
 
-
-    return render(request, 'social/myFollowings.html', {'list':list})
-
-@login_required()
+@login_required ( )
 def unfollow(request, pk):
-    user_to_unfollow = User.objects.get(pk=pk)
 
-    this_user = User.objects.get(pk=request.user.id)
-    this_user.follow_list.remove(user_to_unfollow)
+    user_to_unfollow = User.objects.get (pk=pk)
+    this_user = User.objects.get (pk=request.user.id)
+    this_user.follow_list.remove (user_to_unfollow)
+    # return a message indicating that user was removed from our followings list.
+    messages.success (request, 'User Removed From My Followings List.')
+    return HttpResponseRedirect ('/account/viewProfile/' + str (user_to_unfollow.email))
 
 
-
-    return redirect('accounts:followList')
-
-@login_required()
+@login_required ( )
 def requestABook(request, pk):
 
-    return render(request, 'Social/requestABook.html')
+    user_to_request_from = User.objects.get(pk=pk)
+
+    # display the list of available books that the user can share at the moment
+    books = Book.objects.filter(owner_id=pk, available=True, shared=False)
+
+    if request.method == 'POST':
+        new_message = messageForm(request.POST)
+
+        if new_message.is_valid():
+            message = new_message.save(commit=False)
+            message.sender = request.user
+            message.reciever = user_to_request_from
+            message.save()
+            return redirect('accounts:customerView')
+
+
+    else:
+        message = messageForm()
+    return render (request, 'Social/requestABook.html', {'requestee' : user_to_request_from, 'books' : books, 'messageForm' : messageForm})
+
+@login_required()
+def myMessages(request):
+    messages = Message.objects.filter(reciever_id=request.user.id)
+
+    return render(request, 'Social/myRequests.html', {'messages' : messages})

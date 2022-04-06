@@ -1,10 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'accounts/base.html' %}
 
-</body>
-</html>
+
+{% block title %}
+    <title>My Requests</title>
+{% endblock %}
+
+
+{% block content %}
+    <div class="Banner">
+        <h1>View Your Messages Below</h1>
+    </div>
+
+    {% for message in messages %}
+        <h3>{{ message.sender.email }}</h3><br>
+        {{ message.message }}
+
+        <br>
+    {% endfor %}
+{% endblock %}

@@ -22,7 +22,8 @@ class User (AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField (default=timezone.now)
     favoriteGenres = models.ManyToManyField(Genre, symmetrical=False, blank=True)
     favoriteAuthors = models.ManyToManyField(Author, blank=True)
-    follow_list = models.ManyToManyField('accounts.User')
+    follow_list = models.ManyToManyField('accounts.User', blank=True
+                                         )
     wishlist = models.ManyToManyField(Book, symmetrical=False, blank=True)
     objects = CustomUserManager()
     USERNAME_FIELD = 'email'
@@ -36,6 +37,13 @@ class User (AbstractBaseUser, PermissionsMixin):
 
     def get_username(self):
         return self.email
+
+
+class Message(models.Model):
+    sender = models.ForeignKey('accounts.User', related_name='sender', on_delete=models.CASCADE)
+    reciever = models.ForeignKey('accounts.User', related_name='reciever', on_delete=models.CASCADE)
+    message = models.TextField()
+    created_on = models.DateTimeField(blank=True, null=True)
 
 
 

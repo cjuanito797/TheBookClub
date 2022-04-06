@@ -6,13 +6,14 @@
 
 
 {% block content %}
-<div class="Banner">
-<h1>My Followings</h1>
+    <div class="Banner">
+        <h1>My Followings</h1>
 
-{% for item in list %}
-    {{ item }}
+        {% for item in list %}
+            {{ item }}&nbsp;
+            <a class="btn btn-primary text-dark mx-1" href="{% url 'accounts:unfollow' pk=item.pk %}">Unfollow</a>
+        {% endfor %}
 
-{% endfor %}
-
-</div>
+    </div>
 {% endblock %}
+

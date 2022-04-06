@@ -80,19 +80,27 @@ class Book (models.Model):
 
 
 
-class SharedBook(models.Model):
+class requestBook(models.Model):
     borrower = models.ForeignKey ("accounts.User",
-                                 related_name='borrowers',
+                                 related_name='book_borrower',
                                  on_delete=models.CASCADE,
                                  default=None)
 
-    book = models.ForeignKey(Book,
-                             related_name='Book',
-                             on_delete=models.CASCADE,
-                             default=None)
+
+
     shared_on_date = models.DateField(default=time.timezone)
     shared_until = models.DateField()
 
+    owner = models.ForeignKey("accounts.User",
+                              related_name='book_owner',
+                              on_delete=models.CASCADE,
+                              default=None)
+    approved = models.BooleanField(default=False)
+
+    books = models.ManyToManyField (Book,
+                                    related_name='Book',
+                                    default=None,
+                                    )
 
 class followSystem(models.Model):
     this_user = models.OneToOneField("accounts.User",
@@ -103,3 +111,5 @@ class followSystem(models.Model):
     following = models.ManyToManyField("accounts.User",
                                        related_name='following',
                                        )
+
+

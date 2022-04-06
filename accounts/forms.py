@@ -8,7 +8,7 @@ from .models import User
 from django.core.exceptions import ValidationError
 from django.forms import HiddenInput
 from django.forms.models import ModelForm
-from .models import User
+from .models import User, Message
 from library.models import Book, Author, Genre
 
 
@@ -60,3 +60,8 @@ class addGenreForm(forms.ModelForm):
     class Meta:
         model = Genre
         fields = ("name", )
+
+class messageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ("message", )
