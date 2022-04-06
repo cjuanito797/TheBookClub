@@ -28,6 +28,7 @@ class User (AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+
     follows_list = []
 
 
@@ -36,6 +37,29 @@ class User (AbstractBaseUser, PermissionsMixin):
 
     def get_username(self):
         return self.email
+
+    def save_follow_list(self):
+        # write the current user's follow list to a file in a directory.
+
+        # not sure if the lists will be deleted once the code is pushed to production, but in the event of a server failure
+        # we would not want the user's following list to get lost.
+        username = self.get_username()
+        filename = open('/Users/juan/Desktop/Python/TheBookClub/followsList/' + username, "w+")
+        filename.truncate()
+        for item in self.follows_list:
+            filename.write(item)
+
+        filename.close()
+
+
+    def get_follow_list(self):
+
+        # now read the follow list
+        username = self.get_username()
+        filename = open(''/Users/juan/Desktop/Python/TheBookClub/followsList/' + username, "r"')
+        for line in filename:
+            self.follows_list.append(line)
+
 
 
 

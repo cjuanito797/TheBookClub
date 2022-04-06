@@ -36,6 +36,7 @@ def user_login(request):
         if user is not None:
             if user.is_active:
                 login (request, user)
+                user.get_follow_list()
                 return render (redirect ('accounts:customerView'))
             else:
                 return HttpResponse ('Disabled Account')
@@ -80,7 +81,18 @@ def viewProfile(request, id):
     favBooks = Book.objects.filter (owner_id=user.id, favorite=True)
     favAuthors = user.favoriteAuthors.distinct ( )
     favGenres = user.favoriteGenres.filter ( )
-    return render (request, 'profileCustomization/viewProfile.html', {'user': user, 'favBooks': favBooks, 'favAuthors': favAuthors, 'favGenres': favGenres})
+
+    # display the user's book that
+    books = Book.objects.filter(owner_id=user.id)
+
+    # determine whether we are currently following the user or not based off of the user's following list and check if email exists. Pass in boolean value to template.
+
+    this_user = User.objects.get(pk=request.user.id)
+    if (this_user.follows_list.__contains__(user.email)):
+        follows = True
+    else:
+        follows = False
+    return render (request, 'profileCustomization/viewProfile.html', {'user': user, 'favBooks': favBooks, 'favAuthors': favAuthors, 'favGenres': favGenres, 'books':books, 'follows': follows})
 
 
 @login_required
@@ -236,6 +248,8 @@ def findBook(request):
     # get all of the user objects, except for the currently logged in user.
     users = User.objects.exclude(pk=request.user.id)
 
+
+
     # get some of the favorite authors of the user (0 - 3) objects only.
 
 
@@ -248,3 +262,41 @@ def findBook(request):
     # Compare the favorites of the users and determine whether we should suggest them to the currently logged in user. We will build a list of suggestions.
 
     return render(request, 'Social/findBook.html', {'users': users})
+
+@login_required()
+def follow(request, pk):
+    user_to_add = User.objects.get(pk=pk)
+
+    user = User.objects.get(pk=request.user.id)
+    print(user_to_add.email)
+
+    user.follows_list.append(user_to_add.email)
+    user.save_follow_list()
+
+    return redirect('accounts:followList')
+
+@login_required()
+def followList(request):
+    user = User.objects.get(pk=request.user.id)
+
+    list = user.follows_list
+
+    for li in list:
+        print(li)
+
+
+    return render(request, 'social/myFollowings.html', {'list' : user.follows_list})
+
+@login_required()
+def unfollow(request, pk):
+    user_to_unfollow = User.objects.get(pk=pk)
+
+    this_user = User.objects.get(pk=request.user.id)
+    this_user.follows_list.remove(user_to_unfollow.email)
+
+    return redirect('accounts:followList')
+
+@login_required()
+def requestABook(request, pk):
+
+    return render(request, 'Social/requestABook.html')

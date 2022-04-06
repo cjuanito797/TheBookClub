@@ -1,7 +1,7 @@
 {% extends 'accounts/base.html' %}
 
 {% block title %}
-    <title>Edit Profile</title>
+    <title>View Profile</title>
 {% endblock %}
 
 {% block content %}
@@ -46,11 +46,23 @@
         {% endfor %}
     </div>
     <div class="prof-btn-grp">
-        <a class="btn btn-primary text-dark mx-1" href="#">View Bookshelf</a>
         <a class="btn btn-primary text-dark mx-1" href="#">View Wishlist</a>
-        <a class="btn btn-primary text-dark mx-1" href="#">Add Friend</a>
-        <a class="btn btn-primary text-dark mx-1" href="#">Email {{user.first_name}}</a>
+        {% if follows %}
+            <a class="btn btn-primary text-dark mx-1" href="{% url 'accounts:unfollow' pk=user.pk %}">Unfollow</a>
+        {% else %}
+                <a class="btn btn-primary text-dark mx-1" href="{% url 'accounts:follow' pk=user.pk %}">Follow</a>
+        {% endif %}
+
+
+        <a class="btn btn-primary text-dark mx-1" href="#">Request A Book</a>
     </div>
+<br>
+<h1>User's Bookshelf</h1>
+{% for book in books %}
+    {{ book.title }} by {{ book.author.first_name }} {{ book.author.last_name }}
+    <br>
+
+{% endfor %}
 </div>
 
 {% endblock %}
