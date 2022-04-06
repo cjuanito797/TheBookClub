@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from library.models import Book, Author, Genre
 from .forms import *
 from django.db.models import Q
+from library.models import followSystem
+
 
 
 # Create your views here.
@@ -29,6 +31,7 @@ class registration_view (FormView):
 def user_login(request):
     form = LoginForm (request.POST)
     if form.is_valid ( ):
+
         cd = form.cleaned_data
         user = authenticate (request,
                              username=cd['email'],
@@ -36,7 +39,6 @@ def user_login(request):
         if user is not None:
             if user.is_active:
                 login (request, user)
-                user.get_follow_list()
                 return render (redirect ('accounts:customerView'))
             else:
                 return HttpResponse ('Disabled Account')
@@ -88,11 +90,15 @@ def viewProfile(request, id):
     # determine whether we are currently following the user or not based off of the user's following list and check if email exists. Pass in boolean value to template.
 
     this_user = User.objects.get(pk=request.user.id)
-    if (this_user.follows_list.__contains__(user.email)):
-        follows = True
+
+
+
+    if (this_user.follow_list.all().contains(user)):
+        following = True
     else:
-        follows = False
-    return render (request, 'profileCustomization/viewProfile.html', {'user': user, 'favBooks': favBooks, 'favAuthors': favAuthors, 'favGenres': favGenres, 'books':books, 'follows': follows})
+        following = False
+
+    return render (request, 'profileCustomization/viewProfile.html', {'user': user, 'favBooks': favBooks, 'favAuthors': favAuthors, 'favGenres': favGenres, 'books':books, 'following': following })
 
 
 @login_required
@@ -267,11 +273,9 @@ def findBook(request):
 def follow(request, pk):
     user_to_add = User.objects.get(pk=pk)
 
-    user = User.objects.get(pk=request.user.id)
-    print(user_to_add.email)
+    this_user = User.objects.get(pk=request.user.id)
+    this_user.follow_list.add(user_to_add)
 
-    user.follows_list.append(user_to_add.email)
-    user.save_follow_list()
 
     return redirect('accounts:followList')
 
@@ -279,20 +283,21 @@ def follow(request, pk):
 def followList(request):
     user = User.objects.get(pk=request.user.id)
 
-    list = user.follows_list
+    this_user = User.objects.get(pk=request.user.id)
 
-    for li in list:
-        print(li)
+    list = this_user.follow_list.all()
 
 
-    return render(request, 'social/myFollowings.html', {'list' : user.follows_list})
+
+    return render(request, 'social/myFollowings.html', {'list':list})
 
 @login_required()
 def unfollow(request, pk):
     user_to_unfollow = User.objects.get(pk=pk)
 
     this_user = User.objects.get(pk=request.user.id)
-    this_user.follows_list.remove(user_to_unfollow.email)
+
+
 
     return redirect('accounts:followList')
 

@@ -92,3 +92,14 @@ class SharedBook(models.Model):
                              default=None)
     shared_on_date = models.DateField(default=time.timezone)
     shared_until = models.DateField()
+
+
+class followSystem(models.Model):
+    this_user = models.OneToOneField("accounts.User",
+                                     related_name='account_owner',
+                                     on_delete=models.CASCADE,
+                                     unique=True)
+
+    following = models.ManyToManyField("accounts.User",
+                                       related_name='following',
+                                       )

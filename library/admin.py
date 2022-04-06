@@ -1,4 +1,4 @@
-from .models import Book, Genre, Author, SharedBook
+from .models import Book, Genre, Author, SharedBook, followSystem
 from django.contrib import admin
 
 # Register your models here.
@@ -23,4 +23,8 @@ class GenreAdmin(admin.ModelAdmin):
 @admin.register(SharedBook)
 class SharedBookAdmin(admin.ModelAdmin):
     list_display = ['borrower', 'book', 'shared_on_date', 'shared_until']
+
+@admin.register(followSystem)
+class followSystemAdmin(admin.ModelAdmin):
+    list_display = ['this_user']
 

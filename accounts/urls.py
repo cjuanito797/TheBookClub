@@ -26,7 +26,8 @@ urlpatterns = [
     path('findBook/', views.findBook, name='findBook'),
     path('<int:pk>/follow/', views.follow, name='follow'),
     path('<int:pk>/unfollow/', views.unfollow, name='unfollow'),
-    path('myFollowings', views.followList, name='followList'),
+    path('myFollowings/', views.followList, name='followList'),
+    path('<int:pk>/request/', views.requestABook, name='request'),
     path('search/', views.search_results, name="search_results"),
 
 ]

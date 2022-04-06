@@ -11,7 +11,7 @@
         {% if user.first_name %}
             {{ user.first_name }}'s
         {% else %}
-            User's  
+            User's
         {% endif %}
             Profile
         </h1>
@@ -47,14 +47,14 @@
     </div>
     <div class="prof-btn-grp">
         <a class="btn btn-primary text-dark mx-1" href="#">View Wishlist</a>
-        {% if follows %}
+        {% if following %}
             <a class="btn btn-primary text-dark mx-1" href="{% url 'accounts:unfollow' pk=user.pk %}">Unfollow</a>
         {% else %}
                 <a class="btn btn-primary text-dark mx-1" href="{% url 'accounts:follow' pk=user.pk %}">Follow</a>
         {% endif %}
 
 
-        <a class="btn btn-primary text-dark mx-1" href="#">Request A Book</a>
+        <a class="btn btn-primary text-dark mx-1" href="{% url 'accounts:request' pk=user.pk %}">Request A Book</a>
     </div>
 <br>
 <h1>User's Bookshelf</h1>
