@@ -330,3 +330,8 @@ def myMessages(request):
     messages = Message.objects.filter(reciever_id=request.user.id)
 
     return render(request, 'Social/myRequests.html', {'messages' : messages})
+
+    
+@login_required ( )
+def wishlist(request):
+    return render (request, 'accounts/myWishlist.html', {'wishlist': wishlist})
