@@ -46,7 +46,7 @@
         {% endfor %}
     </div>
     <div class="prof-btn-grp">
-        <a class="btn btn-primary text-dark mx-1" href="#">View Wishlist</a>
+        <a class="btn btn-primary text-dark mx-1" href="{% url 'accounts:wishlist' %}">View Wishlist</a>
         {% if following %}
             <a class="btn btn-primary text-dark mx-1" href="{% url 'accounts:unfollow' pk=user.pk %}">Unfollow</a>
         {% else %}
