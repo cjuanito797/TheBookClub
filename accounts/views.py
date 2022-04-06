@@ -296,6 +296,7 @@ def unfollow(request, pk):
     user_to_unfollow = User.objects.get(pk=pk)
 
     this_user = User.objects.get(pk=request.user.id)
+    this_user.follow_list.remove(user_to_unfollow)
 
 
 
