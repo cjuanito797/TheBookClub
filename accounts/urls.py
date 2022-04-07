@@ -30,5 +30,6 @@ urlpatterns = [
     path('<int:pk>/request/', views.requestABook, name='request'),
     path('myMessages/', views.myMessages, name='myMessages'),
     path('search/', views.search_results, name="search_results"),
+    path('wishlist/', views.wishlist, name="wishlist"),
 
 ]
