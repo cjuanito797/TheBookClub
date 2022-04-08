@@ -3,44 +3,56 @@
 {% load static %}
 {% block title %}<title>Welcome, {{ user.first_name }}</title>{% endblock %}
 <body>
-{% block navigation %}
-    <header class="bg-dark mb-6">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark my-2 ">
-            <div class="container-fluid align-items-center">
-                <a class="navbar-brand" href="{% url 'library:home' %}"><h1 class="text-primary fw-bold fs-2 m-0">The
-                    Book Club</h1></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
-                        <li class="nav-item max-3"><a class="nav-link" href="{% url 'accounts:myBookShelf' %}">My
-                            Bookshelf</a></li>
-                        <li class="nav-item max-3"><a class="nav-link" href="{% url 'accounts:wishlist' %}">My
-                            Wishlist</a></li>
-                        <li class="nav-item max-3"><a class="nav-link" href="{% url 'accounts:addBook' %}">Add A
-                            Book</a></li>
-                        <li class="nav-item max-3"><a class="nav-link" href="{% url 'accounts:editProfile' %}">My
-                            Profile</a></li>
-                        <li class="nav-item max-3"><a class="nav-link" href="{% url 'accounts:findBook' %}">Find A
-                            Book</a></li>
-                        <li class="nav-item max-3"><a class="nav-link" href="{% url 'accounts:myMessages' %}">My Messages
-                            </a></li>
-                        <li class="nav-item max-3"><a class="nav-link" href="{% url 'accounts:followList' %}">My Followings
-                            </a></li>
-
-                        <li class="nav-item max-3"><a class="nav-link" href="{% url 'accounts:logout' %}">Sign Out</a>
-                        </li>
-                        <a href="#" class="btn btn-primary text-light mx-3 rounded-pill px-4">Contact Us</a>
-                    </ul>
+    {% block navigation %}
+        <header class="bg-dark mb-6">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark my-2 ">
+                <div class="container-fluid align-items-center">
+                    <a class="navbar-brand" href="{% url 'library:home' %}">
+                        <h1 class="text-primary fw-bold fs-2 m-0">
+                            The
+                            Book Club
+                        </h1>
+                    </a>
+                    <button class="navbar-toggler"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#navbarNavDropdown"
+                            aria-controls="navbarNavDropdown"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'accounts:myBookShelf' %}">Bookshelf</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'accounts:wishlist' %}">Wishlist</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'accounts:editProfile' %}">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'accounts:findBook' %}">Discover</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'accounts:myMessages' %}">Messages</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'accounts:followList' %}">Following</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'accounts:logout' %}">Sign Out</a>
+                            </li>
+                            {% comment %} <a href="#" class="btn btn-primary text-light mx-3 rounded-pill px-4">Contact Us</a> {% endcomment %}
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
-{% endblock %}
-{% comment %} {% block navigation %}
+            </nav>
+        </header>
+    {% endblock %}
+    {% comment %} {% block navigation %}
     <header>
         <a href="{% url 'accounts:customerView' %}"><h1 class="logo">Home</h1></a>
         <nav>
@@ -57,37 +69,33 @@
         </a>
 
     </header>
-{% endblock %} {% endcomment %}
-
-{% block content %}
-
-    <h1 class="text-center ">Your Next Reading Adventure Awaits...</h1>
-
-
-    <form class="input-group w-50 mx-auto my-4 mb-7" action="{% url 'accounts:search_results' %}" method="get">
-        <input type="search" name="input" class="form-control rounded mx-2"
-               placeholder="Seach for authors, books, or genres"/>
-        <button type="submit" class="btn btn-outline-primary rounded">search</button>
-    </form>
-
-    <h2 class="text-center text-muted my-4">Take a look at some suggested books</h2>
-
-
-    <div class="d-flex justify-content-center">
-        {% for book in avail_books %}
-            <div class="card text-dark mx-2" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">{{ book.title }}</h5>
-                    <p class="card-text">{{ book.author }}.</p>
-                    <a href="/account/viewProfile/{{ book.owner.email }}" class="btn btn-primary">Contact Owner</a>
+    {% endblock %} {% endcomment %}
+    {% block content %}
+        <h1 class="text-center ">Your Next Reading Adventure Awaits...</h1>
+        <form class="input-group w-50 mx-auto my-4 mb-7"
+              action="{% url 'accounts:search_results' %}"
+              method="get">
+            <input type="search"
+                   name="input"
+                   class="form-control rounded mx-2"
+                   placeholder="Seach for authors, books, or genres"/>
+            <button type="submit" class="btn btn-outline-primary rounded">search</button>
+        </form>
+        <h2 class="text-center text-muted my-4">Take a look at some suggested books</h2>
+        <div class="d-flex justify-content-center">
+            {% for book in avail_books %}
+                <div class="card text-dark mx-2" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.title }}</h5>
+                        <p class="card-text">
+                            {{ book.author }}.
+                        </p>
+                        <a href="/account/viewProfile/{{ book.owner.email }}"
+                           class="btn btn-primary">Contact Owner</a>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
-    </div>
-
-
-
-
-{% endblock %}
+            {% endfor %}
+        </div>
+    {% endblock %}
 </body>
 </html>
