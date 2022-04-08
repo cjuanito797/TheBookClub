@@ -24,6 +24,15 @@
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti accusamus quae tenetur? Error amet sapiente tenetur? Et commodi fugit deserunt porro. Aperiam excepturi odio quae. Maxime facere quas placeat doloremque ut dolorum explicabo porro dolor, temporibus nulla incidunt eligendi qui.</p>
     </div>
 
+    <h4>Bookshelf</h4>
+    <div class="prof-container">
+        <ul>
+        {% for book in books %}
+            <li>{{ book }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+
     <h4>Favorite Genres</h4>
     <div class="prof-container">
         {% for genre in favGenres %}
@@ -31,14 +40,7 @@
         {% endfor %}
     </div>
 
-    <h4>Favorite Books</h4>
-    <div class="prof-container">
-        <ul>
-        {% for book in favBooks %}
-            <li>{{ book }}</li>
-        {% endfor %}
-        </ul>
-    </div>
+
     <h4>Favorite Authors</h4>
     <div class="prof-container">
         {% for author in favAuthors %}

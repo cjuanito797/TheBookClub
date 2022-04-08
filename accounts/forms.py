@@ -38,6 +38,18 @@ class EditAddress(forms.ModelForm):
 
         fields = ("street_num", "city", "state", "zipcode")
 
+class EditProfile(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("email", "first_name", "last_name", "bio", "street_num", "city", "state", "zipcode")
+
+    def __init__(self, *args, **kwargs):
+            super (EditProfile, self).__init__ (*args, **kwargs)
+
+            for visible in self.visible_fields():
+                visible.field.widget.attrs['class'] = 'form-control'
+                visible.field.widget.attrs['placeholder'] = visible.field.label        
+
 
 class EditBook(forms.ModelForm):
     class Meta:
@@ -51,15 +63,37 @@ class addBookForm(forms.ModelForm):
         model = Book
         fields = ("title", "summary", "price", "isbn", "favorite")
 
+    def __init__(self, *args, **kwargs):
+            super (addBookForm, self).__init__ (*args, **kwargs)
+
+            for visible in self.visible_fields():
+                visible.field.widget.attrs['class'] = 'form-control'
+                if visible.name == 'favorite':
+                    visible.field.widget.attrs['class'] = 'form-check-input border-white ml-1'
+
 class addAuthorForm(forms.ModelForm):
     class Meta:
         model = Author
         fields = ("first_name", "last_name")
 
+
+    def __init__(self, *args, **kwargs):
+            super (addAuthorForm, self).__init__ (*args, **kwargs)
+
+            for visible in self.visible_fields():
+                visible.field.widget.attrs['class'] = 'form-control'
+
 class addGenreForm(forms.ModelForm):
     class Meta:
         model = Genre
         fields = ("name", )
+
+
+    def __init__(self, *args, **kwargs):
+            super (addGenreForm, self).__init__ (*args, **kwargs)
+
+            for visible in self.visible_fields():
+                visible.field.widget.attrs['class'] = 'form-control'
 
 class messageForm(forms.ModelForm):
     class Meta:

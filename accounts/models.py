@@ -1,3 +1,4 @@
+from distutils import text_file
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils import timezone
@@ -22,8 +23,8 @@ class User (AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField (default=timezone.now)
     favoriteGenres = models.ManyToManyField(Genre, symmetrical=False, blank=True)
     favoriteAuthors = models.ManyToManyField(Author, blank=True)
-    follow_list = models.ManyToManyField('accounts.User', blank=True
-                                         )
+    follow_list = models.ManyToManyField('accounts.User', blank=True)
+    bio = models.TextField(blank=True)
     wishlist = models.ManyToManyField(Book, symmetrical=False, blank=True)
     objects = CustomUserManager()
     USERNAME_FIELD = 'email'

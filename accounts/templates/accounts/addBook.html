@@ -1,26 +1,18 @@
 {% extends 'accounts/base.html' %}
-
-{% block title %}
-    <title>Add A Book</title>
-{% endblock %}
-
+{% block title %}<title>Add A Book</title>{% endblock %}
 {% block content %}
-<div class="Banner">
-    <h1>Add A Book To Your Bookshelf</h1>
-</div>
-
-
-    <div id="form">
-    <form method="post">
-    {% csrf_token %}
-        <h3 style="height:35px">Book Information</h3>
-        {{ addBook.as_p }}
-        <h3 style="height:35px">Author Information</h3>
-        {{ addAuthor.as_p }}
-        <h3 style="height:35px">Book Genre</h3>
-        {{ addGenre.as_p }}
-        <p><input type="submit"></p>
-    </form>
+    <h1 class="text-center mb-2">Add A Book To Your Bookshelf</h1>
+    <div class="container w-50 ">
+        <form class="add-book d-flex flex-column justify-content-center"
+              method="post">
+            {% csrf_token %}
+            <h3 class="text-muted">Book Information</h3>
+            {{ addBook.as_p }}
+            <h3 class="text-muted">Author Information</h3>
+            {{ addAuthor.as_p }}
+            <h3 class="text-muted">Book Genre</h3>
+            {{ addGenre.as_p }}
+            <input class="btn btn-primary rounded-pill m-auto text-light" type="submit">
+        </form>
     </div>
-
 {% endblock %}

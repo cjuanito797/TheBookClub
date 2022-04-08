@@ -76,13 +76,19 @@ def myBookShelf(request):
 
 @login_required
 def editProfile(request):
-    return render (request, 'profileCustomization/editProfile.html')
+    if request.method == "POST":
+        form = EditProfile (request.POST or None, instance=request.user, use_required_attribute=False)
+        if form.is_valid ( ):
+            form.save ( )
+            return render (request, 'profileCustomization/editProfile.html', {'form':form})
+    else:
+        form = EditProfile (request.POST or None, instance=request.user, use_required_attribute=False)
+    return render (request, 'profileCustomization/editProfile.html', {'form': form})
 
 
 @login_required
 def viewProfile(request, id):
     user = User.objects.get (email=id)
-    favBooks = Book.objects.filter (owner_id=user.id, favorite=True)
     favAuthors = user.favoriteAuthors.distinct ( )
     favGenres = user.favoriteGenres.filter ( )
 
@@ -99,7 +105,7 @@ def viewProfile(request, id):
         following = False
 
     return render (request, 'profileCustomization/viewProfile.html',
-                   {'user': user, 'favBooks': favBooks, 'favAuthors': favAuthors, 'favGenres': favGenres,
+                   {'user': user, 'favAuthors': favAuthors, 'favGenres': favGenres,
                     'books': books, 'following': following})
 
 
