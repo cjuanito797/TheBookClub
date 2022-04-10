@@ -99,7 +99,7 @@ def viewProfile(request, id):
 
     this_user = User.objects.get (pk=request.user.id)
 
-    if (this_user.follow_list.all ( ).contains (user)):
+    if user in this_user.follow_list.all():
         following = True
     else:
         following = False
