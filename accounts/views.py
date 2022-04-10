@@ -294,7 +294,7 @@ def followList(request):
     this_user = User.objects.get (pk=request.user.id)
     list = this_user.follow_list.all ( )
 
-    return render (request, 'social/myFollowings.html', {'list': list})
+    return render (request, 'Social/myFollowings.html', {'list': list})
 
 
 @login_required ( )
