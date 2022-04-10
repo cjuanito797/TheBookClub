@@ -1,70 +1,128 @@
 {% extends 'accounts/base.html' %}
-
-{% block title %}
-    <title>View Profile</title>
-{% endblock %}
-
+{% block title %}<title>View Profile</title>{% endblock %}
 {% block content %}
-<div class="prof">
-    <div class="prof-header">
-        <h1>
-        {% if user.first_name %}
-            {{ user.first_name }}'s
-        {% else %}
-            User's
-        {% endif %}
-            Profile
-        </h1>
-        <h3>
-            {{ user.email }}
-        </h3>
+    <div class="card mt-5 mb-xl-0 w-50 mx-auto">
+        <div class="card-header text-dark">
+            <h2 class="text-center mt-2">
+                {% if user.first_name %}
+                    {{ user.first_name }}'s
+                {% else %}
+                    User's
+                {% endif %}
+                Profile
+            </h2>
+            <p class="text-muted text-center mb-2"> {{user.email}} </p>
+        </div>
+        <div class="profile-card-section">
+            <h4>Bio</h4>
+            <p>
+                {% if user.bio %}
+                    {{ user.bio }}
+                {% else %}
+                    {{ user.first_name }} hasn't added a bio yet.
+                {% endif %}
+            </p>
+        </div>
+        <div class="profile-card-section">
+            <h4>Bookshelf</h4>
+            {% if books %}
+                <ul>
+                    {% for book in books %}<li>{{ book }}</li>{% endfor %}
+                </ul>
+            {% else %}
+                <p>
+                    None added yet.
+                </p>
+            {% endif %}
+        </div>
+        <div class="profile-card-section">
+            <h4>Favorite Genres</h4>
+            {% if favGenres %}
+                <ul>
+                    {% for genre in favGenres %}<li>{{ genre }}</li>{% endfor %}
+                </ul>
+            {% else %}
+                <p>
+                    None added yet.
+                </p>
+            {% endif %}
+        </div>
+        <div class="profile-card-section">
+            <h4>Favorite Authors</h4>
+            {% if favAuthors %}
+                <ul>
+                    {% for author in favAuthors %}<li>{{ author }}</li>{% endfor %}
+                </ul>
+            {% else %}
+                <p>
+                    None added yet.
+                </p>
+            {% endif %}
+        </div>
+        <div class="d-flex justify-content-center gap-5 my-5">
+            <a class="btn btn-primary text-dark"
+               href="{% url 'accounts:wishlist' %}">View Wishlist</a>
+            {% if following %}
+                <a class="btn btn-primary text-dark"
+                   href="{% url 'accounts:unfollow' pk=user.pk %}">Unfollow</a>
+            {% else %}
+                <a class="btn btn-primary text-dark"
+                   href="{% url 'accounts:follow' pk=user.pk %}">Follow</a>
+            {% endif %}
+            <a class="btn btn-primary text-dark"
+               href="{% url 'accounts:request' pk=user.pk %}">Request A Book</a>
+        </div>
     </div>
-    <h4>Bio</h4>
-    <div class="prof-container">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti accusamus quae tenetur? Error amet sapiente tenetur? Et commodi fugit deserunt porro. Aperiam excepturi odio quae. Maxime facere quas placeat doloremque ut dolorum explicabo porro dolor, temporibus nulla incidunt eligendi qui.</p>
-    </div>
-
-    <h4>Bookshelf</h4>
-    <div class="prof-container">
-        <ul>
-        {% for book in books %}
-            <li>{{ book }}</li>
-        {% endfor %}
-        </ul>
-    </div>
-
-    <h4>Favorite Genres</h4>
-    <div class="prof-container">
-        {% for genre in favGenres %}
-            <li>{{ genre }}</li>
-        {% endfor %}
-    </div>
-
-
-    <h4>Favorite Authors</h4>
-    <div class="prof-container">
-        {% for author in favAuthors %}
-            <li>{{ author }}</li>
-        {% endfor %}
-    </div>
-    <div class="prof-btn-grp">
-        <a class="btn btn-primary text-dark mx-1" href="{% url 'accounts:wishlist' %}">View Wishlist</a>
-        {% if following %}
-            <a class="btn btn-primary text-dark mx-1" href="{% url 'accounts:unfollow' pk=user.pk %}">Unfollow</a>
-        {% else %}
+    {% comment %} <div class="prof">
+        <div class="prof-header">
+            <h1>
+                {% if user.first_name %}
+                    {{ user.first_name }}'s
+                {% else %}
+                    User's
+                {% endif %}
+                Profile
+            </h1>
+            <h3>{{ user.email }}</h3>
+        </div>
+        <h4>Bio</h4>
+        <div class="prof-container">
+            <p>
+                {% if user.bio %}
+                    {{ user.bio }}
+                {% else %}
+                    {{ user.first_name }} hasn't added a bio yet.
+                {% endif %}
+            </p>
+        </div>
+        <h4>Bookshelf</h4>
+        <div class="prof-container">
+            <ul>
+                {% for book in books %}<li>{{ book }}</li>{% endfor %}
+            </ul>
+        </div>
+        <h4>Favorite Genres</h4>
+        <div class="prof-container">
+            {% for genre in favGenres %}<li>{{ genre }}</li>{% endfor %}
+        </div>
+        <h4>Favorite Authors</h4>
+        <div class="prof-container">
+            {% for author in favAuthors %}<li>{{ author }}</li>{% endfor %}
+        </div>
+        <div class="prof-btn-grp">
+            <a class="btn btn-primary text-dark mx-1" href="{% url 'accounts:wishlist' %}">View Wishlist</a>
+            {% if following %}
+                <a class="btn btn-primary text-dark mx-1" href="{% url 'accounts:unfollow' pk=user.pk %}">Unfollow</a>
+            {% else %}
                 <a class="btn btn-primary text-dark mx-1" href="{% url 'accounts:follow' pk=user.pk %}">Follow</a>
-        {% endif %}
-
-
-        <a class="btn btn-primary text-dark mx-1" href="{% url 'accounts:request' pk=user.pk %}">Request A Book</a>
-    </div>
-<br>
-<h1>User's Bookshelf</h1>
-{% for book in books %}
-    {{ book.title }} by {{ book.author.first_name }} {{ book.author.last_name }}
-    <br>
-
-{% endfor %}
-</div>
-
+            {% endif %}
+            <a class="btn btn-primary text-dark mx-1" href="{% url 'accounts:request' pk=user.pk %}">Request A Book</a>
+        </div>
+        <br>
+        <h1>User's Bookshelf</h1>
+        {% for book in books %}
+            {{ book.title }} by {{ book.author.first_name }} {{ book.author.last_name }}
+            <br>
+        {% endfor %}
+    </div> {% endcomment %}
 {% endblock %}
