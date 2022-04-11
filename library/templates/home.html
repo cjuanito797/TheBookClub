@@ -1,59 +1,90 @@
 <!DOCTYPE html>
 {% load static %}
 {% block head %}
-{% load compress %}
-<html lang="en">
-
-    <head>
-        {% block title %}<title>Welcome!</title>{% endblock %}
-        {% compress css %}
-        <link href="{% static '/bootstrap/scss/bootstrap.scss' %}" rel="stylesheet" type="text/x-scss">
-        <link rel="stylesheet" type="text/x-scss" href="{% static 'scss/custom.scss' %}" />
-        {% endcompress %}
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
-{% endblock %}
-
+    {% load compress %}
+    <html lang="en">
+        <head>
+            {% block title %}<title>Welcome!</title>{% endblock %}
+            {% compress css %}
+                <link href="{% static '/bootstrap/scss/bootstrap.scss' %}"
+                      rel="stylesheet"
+                      type="text/x-scss">
+                <link rel="stylesheet"
+                      type="text/x-scss"
+                      href="{% static 'scss/custom.scss' %}"/>
+            {% endcompress %}
+            <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="description" content="">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+        </head>
+    {% endblock %}
     <body>
-    {% block navigation %}
-        <header class="bg-dark mb-6">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark my-2 ">
-                <div class="container-fluid align-items-center">
-                  <a class="navbar-brand" href="{% url 'library:home' %}"><h1 class="text-primary fw-bold fs-2 m-0">The Book Club</h1></a>
-                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
-                      <li class="nav-item text-light mx-3"><a class="nav-link" href="{% url 'library:book_list' %}">Books</a></li>
-                      <li class="nav-item mx-3"><a class="nav-link" href="{% url 'library:author_list' %}">Authors</a></li>
-                      <li class="nav-item mx-3"><a class="nav-link" href="{% url 'accounts:register' %}">Sign Up</a></li>
-                      <li class="nav-item mx-3"><a class="nav-link" href="{% url 'accounts:user_login' %}">Login</a></li>
-                      <a href="#" class="btn btn-primary text-light mx-3 rounded-pill px-4">Contact Us</a>
-                    </ul>
-                  </div>
-                </div>
-              </nav>
-        </header>
+        {% block navigation %}
+            <header class="bg-dark mb-6">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark my-2 ">
+                    <div class="container-fluid align-items-center">
+                        <a class="navbar-brand" href="{% url 'library:home' %}">
+                            <h1 class="text-primary fw-bold fs-2 m-0">The Book Club</h1>
+                        </a>
+                        <button class="navbar-toggler"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#navbarNavDropdown"
+                                aria-controls="navbarNavDropdown"
+                                aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item text-light mx-3">
+                                    <a class="nav-link" href="{% url 'library:book_list' %}">Books</a>
+                                </li>
+                                <li class="nav-item mx-3">
+                                    <a class="nav-link" href="{% url 'library:author_list' %}">Authors</a>
+                                </li>
+                                <li class="nav-item mx-3">
+                                    <a class="nav-link" href="{% url 'accounts:register' %}">Sign Up</a>
+                                </li>
+                                <li class="nav-item mx-3">
+                                    <a class="nav-link" href="{% url 'accounts:user_login' %}">Login</a>
+                                </li>
+                                {% comment %} <a href="#" class="btn btn-primary text-light mx-3 rounded-pill px-4">Contact Us</a> {% endcomment %}
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+        {% endblock %}
+        {% block content %}
+            <h1 class="text-center">Welcome to The Book Club!</h1>
+            <p class="text-white-50 w-50 text-center mx-auto fs-5">
+                The Book Club is a community-based web application for exchanging books with people in and around Omaha.
+                Use our website to explore your literary interests and expand your access to books and local book lovers.
+                Set up an account to get started interacting with other users and explore various genres and authors
+                through book exchanges with others in the community! 
+            </p>
+            <div class="container w-50 d-flex flex-wrap justify-content-center my-3">
+              <a class="btn btn-primary" href="{% url 'accounts:register' %}">Sign Up Now!</a>
+              <div class="w-100"></div>
+              <p class="text-muted mt-4 mb-2">Already have an account?</p>
+              <div class="w-100"></div>
+              <a class="btn btn-light" href="{% url 'accounts:user_login' %}">Login</a>
+            </div>
+            
+        {% endblock %}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    </body>
+    {% block footer %}
+        <div id="push"></div>
+        <footer id="footer">
+            <div class="container">
+                <p class="text-center text-muted">
+                    The Book Club &trade;
+                </p>
+            </div>
+        </footer>
     {% endblock %}
-    {% block content %}
-        <div class="Banner">
-        <h1>Welcome to the book club!</h1>
-        <h3>Fostering a sense of community through the exchanges of books.</h3>
-        </div>
-    {% endblock %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-   </body>
-   {% block footer %}
-   <div id="push"></div>
-       <footer id="footer">
-           <div class="container">
-               <p class="text-center text-muted">The Book Club &trade;</p>
-           </div>
-       </footer>
-   {% endblock %}
 </html>
