@@ -52,24 +52,7 @@
             </nav>
         </header>
     {% endblock %}
-    {% comment %} {% block navigation %}
-    <header>
-        <a href="{% url 'accounts:customerView' %}"><h1 class="logo">Home</h1></a>
-        <nav>
-            <ul class="nav__links>">
-                <li><a href="{% url 'accounts:myBookShelf' %}">My Bookshelf</a></li>
-                <li><a href="{% url 'accounts:addBook' %}">Add a book</a></li>
-                <li><a href="{% url 'accounts:editProfile' %}">My Profile</a></li>
-                <li><a href="{% url 'accounts:findBook' %}">Find A Book</a></li>
-                <li><a href="{% url 'accounts:logout' %}">Sign Out</a></li>
-            </ul>
-        </nav>
-        <a class="cta" href="#">
-            <button>Contact Us</button>
-        </a>
 
-    </header>
-    {% endblock %} {% endcomment %}
     {% block content %}
         <h1 class="text-center ">Your Next Reading Adventure Awaits...</h1>
         <form class="input-group w-50 mx-auto my-4 mb-7"

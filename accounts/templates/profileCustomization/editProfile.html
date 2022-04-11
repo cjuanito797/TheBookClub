@@ -1,36 +1,17 @@
 {% extends 'accounts/base.html' %}
 {% block title %}<title>Edit Profile</title>{% endblock %}
 {% block content %}
-    {% comment %} <div>
-        <h3>Choose from the options below</h3>
-        <div>
-            <a href="{% url 'accounts:edit_address' %}">
-                <button class="button">Edit Address</button>
-            </a>
-            <a href="{% url 'accounts:viewFavBooks' %}">
-                <button class="button">My Favorite Books</button>
-            </a>
-            <a href="{% url 'accounts:viewFavAuthors' %}">
-                <button class="button">My Favorite Authors</button>
-            </a>
-            <a href="{% url 'accounts:viewFavGenres' %}">
-                <button class="button">My Favorite Genres</button>
-            </a>
-        </div>
-    </div> {% endcomment %}
     <div class="container w-50">
         <h2 class="text-center">Edit Profile</h2>
         <form class="mb-2 w-100" method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <div class="container d-flex ">
-                <button type="submit" class="btn btn-primary rounded-pill mx-auto text-light">Update Profile</button>
-                <a href="{% url 'accounts:viewFavAuthors' %}">
-                    <button class="btn btn-primary rounded-pill text-light">Edit Favorite Authors</button>
-                </a>
-                <a href="{% url 'accounts:viewFavGenres' %}">
-                    <button class="btn btn-primary rounded-pill text-light">Edit Favorite Genres</button>
-                </a>
+            <div class="container d-flex gap-3">
+                <button type="submit" class="btn btn-primary rounded-pill text-light">Update Profile</button>
+                <a class="btn btn-primary rounded-pill text-light"
+                   href="{% url 'accounts:viewFavAuthors' %}">Edit Favorite Authors</a>
+                <a class="btn btn-primary rounded-pill text-light"
+                   href="{% url 'accounts:viewFavGenres' %}">Edit Favorite Genre</a>
             </div>
         </form>
         <div class="container flex justify-content-center mx-auto"></div>
