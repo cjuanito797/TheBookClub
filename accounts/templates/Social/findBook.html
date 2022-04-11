@@ -3,19 +3,18 @@
 {% block content %}
     <h1 class="text-center mb-5">View users with similar interests as yours</h1>
     <div class="w-75 mx-auto d-flex flex-row flex-wrap gap-5">
-    {% for user in users %}
-
+        {% for user in users %}
             <div class="card" style="width: 18rem;">
                 <div class="card-body mx-auto d-flex flex-column justify-content-center">
                     <h5 class="card-title text-dark text-center">{{ user.first_name }} {{ user.last_name }}</h5>
-                    <h6 class="card-subtitle text-muted text-center">{{user.email}}</h6>
+                    <h6 class="card-subtitle text-muted text-center">{{ user.email }}</h6>
                     <p class="card-text text-dark">
                         {{ user.bio }}
                     </p>
-                    <a href="/account/viewProfile/{{ user.email }}" class="btn btn-primary mx-auto">View Profile</a>
+                    <a href="/account/viewProfile/{{ user.email }}"
+                       class="btn btn-primary mx-auto">View Profile</a>
                 </div>
             </div>
-
-    {% endfor %}
-</div>
+        {% endfor %}
+    </div>
 {% endblock %}
