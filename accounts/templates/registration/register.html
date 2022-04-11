@@ -8,10 +8,10 @@
 
     <h1 class="fs-2 text-center">Create Your Account Below</h1>
 
-        <form class="add-book w-50 px-5 py-3 mx-auto d-flex flex-column align-items-center" method="post">
+        <form class="add-book w-50 py-3 mx-auto d-flex flex-column align-items-center" method="post">
             {% csrf_token %}
             {% for field in form %}
-                <div class="form-floating mb-3">
+                <div class="form-floating mb-3 w-100">
                 {{ field }}
                 {{ field.label_tag }}
                 </div>
