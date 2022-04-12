@@ -55,13 +55,13 @@ class EditBook(forms.ModelForm):
     class Meta:
         model = Book
 
-        fields = ("title", "summary", "price", "available", "shared")
+        fields = ("title", "summary", "available", "shared")
 
 
 class addBookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ("title", "summary", "price", "isbn", "favorite")
+        fields = ("title", "summary", "isbn", "favorite")
 
     def __init__(self, *args, **kwargs):
             super (addBookForm, self).__init__ (*args, **kwargs)

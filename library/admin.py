@@ -6,7 +6,7 @@ from django.contrib import admin
 
 @admin.register (Book)
 class BookAdmin (admin.ModelAdmin):
-    list_display = ['title', 'slug', 'price', 'available', 'author']
+    list_display = ['title', 'slug', 'available', 'author']
     list_filter = ['available', ]
     prepopulated_fields = {'slug': ('title',)}
 

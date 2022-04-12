@@ -5,4 +5,4 @@ from bootstrap_modal_forms.forms import BSModalModelForm
 class BookForm(BSModalModelForm):
     class Meta:
         model = Book
-        fields = ['title', 'author', 'genre', 'price', 'summary', 'available']
+        fields = ['title', 'author', 'genre', 'summary', 'available']

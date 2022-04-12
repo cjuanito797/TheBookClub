@@ -60,7 +60,6 @@ class Book (models.Model):
                                 on_delete=models.CASCADE)
     title = models.CharField (max_length=50, db_index=True,)
     summary = models.TextField (blank=True)
-    price = models.DecimalField (max_digits=10, decimal_places=2)
     available = models.BooleanField (default=True)
     slug = models.SlugField (max_length=200, db_index=True)
     isbn = models.CharField(max_length=13, validators=[MinLengthValidator(13)])
