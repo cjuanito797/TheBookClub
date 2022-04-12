@@ -1,0 +1,96 @@
+<div class="modal-container"
+     id="modal_container">
+    <div class="modal">
+        <h2>CALL US</h2>
+        <p>1(402) 123 4567 <br> 1 (531) 123 4567</p>
+        <h2>EMAIL</h2>
+        <p>contactus@thebookclub.com</p>
+        <h2>LOCATION</h2>
+        <p>6001 Dodge St, Omaha, NE 68182<br> </p>
+        <p>University of Nebraska - Omaha<br> </p>
+        <h2>BUSINESS HOURS</h2>
+        <p>Mon - Fri ...... 8 am - 5 pm <br> </p>
+        <p>Sat, Sun ...... Closed<br> <br><br></p>
+
+        <a  class="btn btn-primary text-light mx-3 rounded-pill px-4" href="{% url 'library:home' %}"><h2>Close</h2></a>
+    </div>
+</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+
+</head>
+
+</html>
+
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+* {
+    box-sizing: border-box;
+}
+
+ /* button {
+    background-color: #47a386;
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    font-size: 14px;
+    color: #fff;
+    padding: 10px 25px;
+    /* margin-bottom: -50%; */
+}  */
+
+.modal-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position:fixed;
+    opacity: 0;
+    pointer-events: none;
+    top: 0%;
+    left: 20%;
+    width: 100vh;
+    height: 100vh;
+    transition: opacity 0.3s ease;
+}
+.modal-container.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+.modal {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    padding: 30px 50px;
+    width: 450px;
+    height: 600px;
+    margin-left: 450px;
+    margin-top: 100px;
+    max-width: 100%;
+    text-align: center;
+}
+.modal h1 {
+    margin: 0;
+    background-color: aqua;
+}
+.modal p {
+    font-size: 14px;
+    margin: 0.7;
+    text-align: center;
+}
+.modal close{
+    margin-bottom: 100px;
+    margin-top: 200px;
+}
+.modal a{
+    background-color: rgb(229, 236, 236);
+    font-size: medium;
+    margin-bottom: 100px;
+    margin-top: 200px;
+}
+</style>
