@@ -51,5 +51,8 @@ class Message(models.Model):
 
 
 
-
-
+class Post(models.Model):
+    writer = models.OneToOneField('accounts.User', related_name='writer', on_delete=models.CASCADE)
+    heading = models.CharField(max_length=30, blank=False, null=False)
+    content = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)

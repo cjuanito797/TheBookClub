@@ -9,6 +9,9 @@
     <div class="Banner">
         <h1>My Followings</h1>
 
+    {% if list.count == 0 %}
+    <h3>It looks like you aren't following anybody hit the discover button to find new book lovers.</h3>
+    {% endif %}
         {% for item in list %}
             {{ item }}&nbsp;
             <a class="btn btn-primary text-dark mx-1" href="{% url 'accounts:unfollow' pk=item.pk %}">Unfollow</a>

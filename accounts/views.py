@@ -1,7 +1,7 @@
 import datetime
 import email
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
-from .models import User, Message
+from .models import User, Message, Post
 from django.contrib.auth import login, authenticate
 from django.urls import reverse
 from django.views.generic import FormView, TemplateView
@@ -54,7 +54,20 @@ def user_login(request):
 def customerView(request):
     favorite_books = Book.objects.filter (owner_id=request.user.id, favorite=True)
     allAvailableBooks = Book.objects.all ( ).exclude (owner_id=request.user.id)[0:3]
-    return render (request, 'accounts/base.html', {'avail_books': allAvailableBooks, 'favorite_books': favorite_books})
+    my_posts = Post.objects.all().filter(writer_id=request.user.id)
+
+    this_user = User.objects.get (pk=request.user.id)
+    list = this_user.follow_list.all ( )
+
+    # for each person in the list get their posts
+    post = 0
+    posts = my_posts
+    for item in list:
+        post = Post.objects.all().filter(writer_id=item.id)
+        posts = post | posts
+
+
+    return render (request, 'accounts/base.html', {'avail_books': allAvailableBooks, 'favorite_books': favorite_books, 'posts': posts, })
 
 
 @login_required
