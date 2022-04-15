@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container w-50">
         <h2 class="text-center">Edit Profile</h2>
-        <form class="mb-2 w-100" method="post">
+        <form class="mb-2 w-100" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <div class="container d-flex gap-3">

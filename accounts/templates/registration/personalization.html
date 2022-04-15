@@ -1,0 +1,20 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}
+<title>Tell Me About Yourself</title>
+{% endblock %}
+
+
+{% block content %}
+<h1>Tell me a little about yourself.</h1>
+    <form class="add-book w-50 py-3 mx-auto d-flex flex-column align-items-center" method="post">
+            {% csrf_token %}
+            {% for field in personalization_form %}
+                <div class="form-floating mb-3 w-100">
+                {{ field }}
+                {{ field.label_tag }}
+                </div>
+            {% endfor %}
+            <input class="btn btn-primary rounded-pill m-auto text-light" type="submit" value="Join Now">
+        </form>
+{% endblock %}

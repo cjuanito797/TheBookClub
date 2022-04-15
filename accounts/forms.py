@@ -16,7 +16,7 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password1', 'password2', 'first_name', 'last_name', 'street_num', 'city', 'state', 'zipcode',)
+        fields = ('email', 'password1', 'password2', 'first_name', 'last_name', 'street_num', 'city', 'state', 'zipcode','profile_picture')
 
     def __init__(self, *args, **kwargs):
         super (RegistrationForm, self).__init__ (*args, **kwargs)
@@ -41,7 +41,7 @@ class EditAddress(forms.ModelForm):
 class EditProfile(forms.ModelForm):
     class Meta:
         model = User
-        fields = ("email", "first_name", "last_name", "bio", "street_num", "city", "state", "zipcode")
+        fields = ("email", "first_name", "last_name", "bio", "street_num", "city", "state", "zipcode", "profile_picture",)
 
     def __init__(self, *args, **kwargs):
             super (EditProfile, self).__init__ (*args, **kwargs)
@@ -99,3 +99,8 @@ class messageForm(forms.ModelForm):
     class Meta:
         model = Message
         fields = ("message", )
+
+class PostPersonalization(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("favoriteGenres", "favoriteAuthors", "profile_picture")

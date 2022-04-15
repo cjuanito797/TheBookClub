@@ -376,3 +376,33 @@ input[type=checkbox] {
     border-radius: 8px;
     background-color: green;
 }
+
+#picture {
+            width: 100px;
+            border-radius: 50%;
+        }
+
+        #picture:hover .overlay {
+            opacity: 25;
+
+        }
+
+        .overlay {
+            position: relative;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            right: 0;
+            height: 100%;
+            opacity: 0;
+            transition: .5s ease;
+            background-color: lightblue;
+            text-align: center;
+        }
+
+        .overlay a {
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+
+        }

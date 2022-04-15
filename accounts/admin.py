@@ -14,7 +14,7 @@ class CustomUserAdmin (UserAdmin):
     fieldsets = (
         (
             'Fields', {
-                'fields': ('email', 'first_name', 'last_name', 'street_num', 'city', 'state', 'zipcode', 'favoriteGenres', 'favoriteAuthors', 'wishlist', 'follow_list')
+                'fields': ('email', 'first_name', 'last_name', 'street_num', 'city', 'state', 'zipcode', 'favoriteGenres', 'favoriteAuthors', 'wishlist', 'follow_list', 'profile_picture')
             },
         ),
     )

@@ -26,6 +26,8 @@ class User (AbstractBaseUser, PermissionsMixin):
     follow_list = models.ManyToManyField('accounts.User', blank=True)
     bio = models.TextField(blank=True)
     wishlist = models.ManyToManyField(Book, symmetrical=False, blank=True)
+    profile_picture = models.ImageField(upload_to='users/%Y/%m/%d',
+                                        blank=True)
     objects = CustomUserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

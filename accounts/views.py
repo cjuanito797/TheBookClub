@@ -19,6 +19,7 @@ class registration_view (FormView):
         form = RegistrationForm (request.POST)
 
         if form.is_valid ( ):
+
             form.save ( )
             return redirect (reverse ('accounts:user_login'))
         return render (request, 'registration/register.html', {'form': form})
@@ -77,12 +78,12 @@ def myBookShelf(request):
 @login_required
 def editProfile(request):
     if request.method == "POST":
-        form = EditProfile (request.POST or None, instance=request.user, use_required_attribute=False)
+        form = EditProfile (data=request.POST, instance=request.user, files=request.FILES)
         if form.is_valid ( ):
             form.save ( )
-            return render (request, 'profileCustomization/editProfile.html', {'form':form})
+            return customerView(request)
     else:
-        form = EditProfile (request.POST or None, instance=request.user, use_required_attribute=False)
+        form = EditProfile (instance=request.user)
     return render (request, 'profileCustomization/editProfile.html', {'form': form})
 
 
