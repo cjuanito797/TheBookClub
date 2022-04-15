@@ -16,7 +16,7 @@ from django.contrib import messages
 # Create your views here.
 class registration_view (FormView):
     def post(self, request):
-        form = RegistrationForm (request.POST)
+        form = RegistrationForm (request.POST, files=request.FILES)
 
         if form.is_valid ( ):
 
@@ -25,7 +25,7 @@ class registration_view (FormView):
         return render (request, 'registration/register.html', {'form': form})
 
     def get(self, request):
-        form = RegistrationForm ( )
+        form = RegistrationForm (files=request.FILES )
         return render (request, 'registration/register.html', {'form': form})
 
 
