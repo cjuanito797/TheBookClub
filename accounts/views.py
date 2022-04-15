@@ -49,9 +49,26 @@ def user_login(request):
         form = LoginForm ( )
     return render (request, 'registration/login.html', {'form': form})
 
-
 @login_required
 def customerView(request):
+    if request.method == "POST":
+        new_post = PostCreation(request.POST)
+        if new_post.is_valid():
+            this = new_post.save(commit=False)
+            print(this.heading)
+            print(this.content)
+            this.writer_id = request.user.id
+            this.save()
+
+            return HttpResponseRedirect(request.path_info)
+
+
+
+    else:
+        new_post = PostCreation()
+
+
+
     favorite_books = Book.objects.filter (owner_id=request.user.id, favorite=True)
     allAvailableBooks = Book.objects.all ( ).exclude (owner_id=request.user.id)[0:3]
     my_posts = Post.objects.all().filter(writer_id=request.user.id)
@@ -63,11 +80,12 @@ def customerView(request):
     post = 0
     posts = my_posts
     for item in list:
-        post = Post.objects.all().filter(writer_id=item.id)
+        post = Post.objects.all().filter(writer_id=item.id).order_by('-created_on')
         posts = post | posts
 
+    posts.order_by('-created_on')
 
-    return render (request, 'accounts/base.html', {'avail_books': allAvailableBooks, 'favorite_books': favorite_books, 'posts': posts, })
+    return render (request, 'accounts/base.html', {'avail_books': allAvailableBooks, 'favorite_books': favorite_books, 'posts': posts, 'new_post' : new_post })
 
 
 @login_required

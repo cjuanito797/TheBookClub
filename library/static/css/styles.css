@@ -371,6 +371,16 @@ input[type=checkbox] {
     background-color: blue;
 } */
 
+#postings {
+    height: 500px;
+}
+
+.post {
+    overflow-y: scroll;
+}
+
+
+
 .btn-shared {
     padding: 10px;
     border-radius: 8px;

@@ -94,21 +94,36 @@
         {% endfor %}
     </div>
 
-    <div class="Banner">
-        <h1>Your News Feed</h1>
+    <br>
+   <div class="Banner" style="width: 850px; height: 400px; overflow-y: scroll;">
+       <h1>Your News Feed</h1>
+        <br>
         <br>
         {% for post in posts %}
             {% if post.writer.email == request.user.email %}
-                <h5>{{ post.heading }}&nbsp;{{ post.created_on }}</h5>
+                <h3>{{ post.heading }}</h3>
 
             {% else %}
-                <h5>{{ post.heading }}&nbsp;{{ post.created_on }}&nbsp by: {{ post.writer.first_name }}</h5>
+                <h3>{{ post.heading }}</h3>
 
             {% endif %}
-            {{ post.content }}
+            <p>{{ post.content }}</p>
+            <footer>{{ post.created_on }}</footer>
+            <footer>{{ post.writer }}</footer>
             <br>
             <br>
         {% endfor %}
+    </div>
+
+    <div class="Banner">
+        <h1 class="text-center mb-2">What's on your mind? </h1>
+    <div class="container w-50 ">
+        <form class="add-book d-flex flex-column justify-content-center"
+              method="post">
+            {% csrf_token %}
+            {{ new_post.as_p }}
+            <input class="btn btn-primary rounded-pill m-auto text-light" type="submit">
+        </form>
     </div>
 {% endblock %}
 </body>
