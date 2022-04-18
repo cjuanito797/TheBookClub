@@ -88,10 +88,10 @@ def search_results(request):
     input = request.GET.get ("input")
     results = Book.objects.filter (Q (title__icontains=input) | Q (author__first_name__icontains=input) | Q (
         author__last_name__icontains=input) | Q (genre__name__icontains=input))
-    results.filter (available=True)
+    results = results.exclude(available=False).exclude(owner=request.user)
     results_found = results.exists ( )
     if (not results_found):
-        results = Book.objects.filter (available=True)[:5]
+        results = Book.objects.filter (available=True).exclude(owner=request.user)[0:3]
     return render (request, 'accounts/search_results.html', {'results_found': results_found, 'results': results})
 
 
