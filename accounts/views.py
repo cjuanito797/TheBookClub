@@ -366,21 +366,23 @@ def requestABook(request, pk):
 def myMessages(request):
     # by default get all of the messages.
     # load all of your messages both sent and recieved
-    recieved_messages = Message.objects.filter (reciever_id=request.user.id)
-    sent_messages = Message.objects.filter (sender_id=request.user.id)
+    recieved_messages = Message.objects.filter (reciever_id=request.user.id).order_by('-created_on')
+    sent_messages = Message.objects.filter (sender_id=request.user.id).order_by('-created_on')
     messages = recieved_messages | sent_messages
+    messages.order_by('-created_on')
 
     if (request.GET.get ('all_messages')):
         # load all of your messages both sent and recieved
-        recieved_messages = Message.objects.filter (reciever_id=request.user.id)
-        sent_messages = Message.objects.filter (sender_id=request.user.id)
+        recieved_messages = Message.objects.filter (reciever_id=request.user.id).order_by('-created_on')
+        sent_messages = Message.objects.filter (sender_id=request.user.id).order_by('-created_on')
         messages = recieved_messages | sent_messages
+        messages.order_by('-created_on')
 
     elif (request.GET.get ('sent_messages')):
-        messages = Message.objects.filter (sender_id=request.user.id)
+        messages = Message.objects.filter (sender_id=request.user.id).order_by('-created_on')
 
     elif (request.GET.get ('recieved_messages')):
-        messages = Message.objects.filter (reciever_id=request.user.id)
+        messages = Message.objects.filter (reciever_id=request.user.id).order_by('-created_on')
 
     return render (request, 'Social/myRequests.html', {'messages': messages})
 
