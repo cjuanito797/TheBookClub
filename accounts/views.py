@@ -61,13 +61,8 @@ def customerView(request):
             this.save()
 
             return HttpResponseRedirect(request.path_info)
-
-
-
     else:
         new_post = PostCreation()
-
-
 
     favorite_books = Book.objects.filter (owner_id=request.user.id, favorite=True)
     allAvailableBooks = Book.objects.all ( ).exclude (owner_id=request.user.id)[0:3]
