@@ -13,31 +13,49 @@
 
     <div class="flex-container">
         <div class="flex-child options">
-<form action="#" method="get">
+            <form action="#" method="get">
+                <button type="submit" class="option" name="all_messages" value="All">All</button>
+                <br>
+                <br>
+                <button type="submit" class="option" name="sent_messages" value="Sent">Sent</button>
+                <br>
+                <br>
+                <button type="submit" class="option" name="recieved_messages" value="Recieved">Recieved</button>
+            </form>
+        </div>
 
-    <input type="submit" class="option" name="all_messages" value="All">
-        <br>
-        <br>
-    <input type="submit" class="option" name="sent_messages" value="Sent">
-        <br>
-        <br>
-    <input type="submit" class="option" name="recieved_messages" value="Recieved">
-</form>
+        <div class="messages">
+            <!-- Depending on the selected button we will display the messages, and if the messages count is 0, we will display an image -->
+            {% if messages.count == 0 %}
+                <!-- display an image all done for today -->
+                <h3>Nothing to see here, click on the discover tab in order to find a new book or two.</h3>
+            {% endif %}
+
+            {% for message in messages %}
+
+                <h3>{{ message.message }}</h3>
+
+                {% if message.sender.email == user.email %}
+                    <p>Sent On: {{ message.created_on }}</p>
+                    <p>Sent To: {{ message.reciever.email }}</p>
+                    <!-- if the message was sent by the logged in user, display certain functions -->
+                    <a href="{% url 'accounts:deleteMessages' pk=message.pk %}"
+                       onclick="return confirm('Are you sure you want to delete?')"
+                       class="btn btn-danger">Delete</a>
+
+                {% else %}
+                    <p>Recieved On: {{ message.created_on }}</p>
+                    <a href="{% url 'accounts:deleteMessages' pk=message.pk %}"
+                       onclick="return confirm('Are you sure you want to delete?')"
+                       class="btn btn-danger">Delete</a>
+                    <a href="{% url 'accounts:deleteMessages' pk=message.pk %}"
+                       onclick="return confirm('Are you sure you want to delete?')"
+                       class="btn btn-primary">Reply</a>
+                    <a class="btn btn-success" href="{% url 'accounts:deleteMessages' pk=message.pk %}">Share Book</a>
+                    <a href="/account/viewProfile/{{ message.sender.email }}"
+                       class="btn btn-primary">View Profile</a>
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
-
-    <div class="messages">
-    <!-- Depending on the selected button we will display the messages, and if the messages count is 0, we will display an image -->
-
-    {% for message in messages %}
-
-        <h3>{{ message.message }}</h3>
-        <p>{{ message.created_on }}</p>
-
-    {% endfor %}
-
-    </div>
-
-    </div>
-
-
 {% endblock %}

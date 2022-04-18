@@ -13,19 +13,19 @@ from django.db.models import Q
 from library.models import followSystem
 from django.contrib import messages
 
+
 # Create your views here.
 class registration_view (FormView):
     def post(self, request):
         form = RegistrationForm (request.POST, files=request.FILES)
 
         if form.is_valid ( ):
-
             form.save ( )
             return redirect (reverse ('accounts:user_login'))
         return render (request, 'registration/register.html', {'form': form})
 
     def get(self, request):
-        form = RegistrationForm (files=request.FILES )
+        form = RegistrationForm (files=request.FILES)
         return render (request, 'registration/register.html', {'form': form})
 
 
@@ -49,29 +49,28 @@ def user_login(request):
         form = LoginForm ( )
     return render (request, 'registration/login.html', {'form': form})
 
+
 @login_required
 def customerView(request):
     if request.method == "POST":
-        new_post = PostCreation(request.POST)
-        if new_post.is_valid():
-            this = new_post.save(commit=False)
-            print(this.heading)
-            print(this.content)
+        new_post = PostCreation (request.POST)
+        if new_post.is_valid ( ):
+            this = new_post.save (commit=False)
+            print (this.heading)
+            print (this.content)
             this.writer_id = request.user.id
-            this.save()
+            this.save ( )
 
-            return HttpResponseRedirect(request.path_info)
+            return HttpResponseRedirect (request.path_info)
 
 
 
     else:
-        new_post = PostCreation()
-
-
+        new_post = PostCreation ( )
 
     favorite_books = Book.objects.filter (owner_id=request.user.id, favorite=True)
     allAvailableBooks = Book.objects.all ( ).exclude (owner_id=request.user.id)[0:3]
-    my_posts = Post.objects.all().filter(writer_id=request.user.id)
+    my_posts = Post.objects.all ( ).filter (writer_id=request.user.id)
 
     this_user = User.objects.get (pk=request.user.id)
     list = this_user.follow_list.all ( )
@@ -80,12 +79,14 @@ def customerView(request):
     post = 0
     posts = my_posts
     for item in list:
-        post = Post.objects.all().filter(writer_id=item.id).order_by('-created_on')
+        post = Post.objects.all ( ).filter (writer_id=item.id).order_by ('-created_on')
         posts = post | posts
 
-    posts.order_by('-created_on')
+    posts.order_by ('-created_on')
 
-    return render (request, 'accounts/base.html', {'avail_books': allAvailableBooks, 'favorite_books': favorite_books, 'posts': posts, 'new_post' : new_post })
+    return render (request, 'accounts/base.html',
+                   {'avail_books': allAvailableBooks, 'favorite_books': favorite_books, 'posts': posts,
+                    'new_post': new_post})
 
 
 @login_required
@@ -112,7 +113,7 @@ def editProfile(request):
         form = EditProfile (data=request.POST, instance=request.user, files=request.FILES)
         if form.is_valid ( ):
             form.save ( )
-            return customerView(request)
+            return customerView (request)
     else:
         form = EditProfile (instance=request.user)
     return render (request, 'profileCustomization/editProfile.html', {'form': form})
@@ -131,7 +132,7 @@ def viewProfile(request, id):
 
     this_user = User.objects.get (pk=request.user.id)
 
-    if user in this_user.follow_list.all():
+    if user in this_user.follow_list.all ( ):
         following = True
     else:
         following = False
@@ -309,19 +310,17 @@ def findBook(request):
 
 @login_required ( )
 def follow(request, pk):
-
     user_to_add = User.objects.get (pk=pk)
     this_user = User.objects.get (pk=request.user.id)
     this_user.follow_list.add (user_to_add)
 
     # return a message indicating that user was added to following list.
     messages.success (request, 'User Added To My Followings List.')
-    return HttpResponseRedirect ('/account/viewProfile/' + str(user_to_add.email))
+    return HttpResponseRedirect ('/account/viewProfile/' + str (user_to_add.email))
 
 
 @login_required ( )
 def followList(request):
-
     user = User.objects.get (pk=request.user.id)
     this_user = User.objects.get (pk=request.user.id)
     list = this_user.follow_list.all ( )
@@ -331,7 +330,6 @@ def followList(request):
 
 @login_required ( )
 def unfollow(request, pk):
-
     user_to_unfollow = User.objects.get (pk=pk)
     this_user = User.objects.get (pk=request.user.id)
     this_user.follow_list.remove (user_to_unfollow)
@@ -342,48 +340,59 @@ def unfollow(request, pk):
 
 @login_required ( )
 def requestABook(request, pk):
-
-    user_to_request_from = User.objects.get(pk=pk)
+    user_to_request_from = User.objects.get (pk=pk)
 
     # display the list of available books that the user can share at the moment
-    books = Book.objects.filter(owner_id=pk, available=True, shared=False)
+    books = Book.objects.filter (owner_id=pk, available=True, shared=False)
 
     if request.method == 'POST':
-        new_message = messageForm(request.POST)
+        new_message = messageForm (request.POST)
 
-        if new_message.is_valid():
-            message = new_message.save(commit=False)
+        if new_message.is_valid ( ):
+            message = new_message.save (commit=False)
             message.sender = request.user
             message.reciever = user_to_request_from
-            message.save()
-            return redirect('accounts:customerView')
+            message.save ( )
+            return redirect ('accounts:customerView')
 
 
     else:
-        message = messageForm()
-    return render (request, 'Social/requestABook.html', {'requestee' : user_to_request_from, 'books' : books, 'messageForm' : messageForm})
+        message = messageForm ( )
+    return render (request, 'Social/requestABook.html',
+                   {'requestee': user_to_request_from, 'books': books, 'messageForm': messageForm})
 
-@login_required()
+
+@login_required ( )
 def myMessages(request):
-    messages = Message.objects.filter(reciever_id=request.user.id)
+    # by default get all of the messages.
+    # load all of your messages both sent and recieved
+    recieved_messages = Message.objects.filter (reciever_id=request.user.id)
+    sent_messages = Message.objects.filter (sender_id=request.user.id)
+    messages = recieved_messages | sent_messages
 
-    if (request.GET.get('all_messages')):
+    if (request.GET.get ('all_messages')):
         # load all of your messages both sent and recieved
-        recieved_messages = Message.objects.filter(reciever_id=request.user.id)
-        sent_messages = Message.objects.filter(sender_id=request.user.id)
+        recieved_messages = Message.objects.filter (reciever_id=request.user.id)
+        sent_messages = Message.objects.filter (sender_id=request.user.id)
         messages = recieved_messages | sent_messages
 
-    elif (request.GET.get('sent_messages')):
-        messages = Message.objects.filter(sender_id=request.user.id)
+    elif (request.GET.get ('sent_messages')):
+        messages = Message.objects.filter (sender_id=request.user.id)
 
-    elif(request.GET.get('recieved_messages')):
-        messages = Message.objects.filter(reciever_id=request.user.id)
+    elif (request.GET.get ('recieved_messages')):
+        messages = Message.objects.filter (reciever_id=request.user.id)
+
+    return render (request, 'Social/myRequests.html', {'messages': messages})
 
 
+@login_required ( )
+def deleteMessages(request, pk):
+    message = get_object_or_404 (Message, pk=pk)
+    message.delete ( )
 
-    return render(request, 'Social/myRequests.html', {'messages' : messages})
+    return redirect ('accounts:myMessages')
 
-    
+
 @login_required ( )
 def wishlist(request):
     return render (request, 'accounts/myWishlist.html', {'wishlist': wishlist})
