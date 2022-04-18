@@ -35,7 +35,7 @@ admin.site.register (User, CustomUserAdmin)
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ['sender']
+    list_display = ['sender', 'created_on']
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):

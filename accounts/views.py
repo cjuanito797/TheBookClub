@@ -367,6 +367,20 @@ def requestABook(request, pk):
 def myMessages(request):
     messages = Message.objects.filter(reciever_id=request.user.id)
 
+    if (request.GET.get('all_messages')):
+        # load all of your messages both sent and recieved
+        recieved_messages = Message.objects.filter(reciever_id=request.user.id)
+        sent_messages = Message.objects.filter(sender_id=request.user.id)
+        messages = recieved_messages | sent_messages
+
+    elif (request.GET.get('sent_messages')):
+        messages = Message.objects.filter(sender_id=request.user.id)
+
+    elif(request.GET.get('recieved_messages')):
+        messages = Message.objects.filter(reciever_id=request.user.id)
+
+
+
     return render(request, 'Social/myRequests.html', {'messages' : messages})
 
     

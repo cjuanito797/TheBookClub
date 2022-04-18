@@ -11,10 +11,33 @@
         <h1>View Your Messages Below</h1>
     </div>
 
-    {% for message in messages %}
-        <h3>{{ message.sender.email }}</h3><br>
-        {{ message.message }}
+    <div class="flex-container">
+        <div class="flex-child options">
+<form action="#" method="get">
 
+    <input type="submit" class="option" name="all_messages" value="All">
         <br>
+        <br>
+    <input type="submit" class="option" name="sent_messages" value="Sent">
+        <br>
+        <br>
+    <input type="submit" class="option" name="recieved_messages" value="Recieved">
+</form>
+    </div>
+
+    <div class="messages">
+    <!-- Depending on the selected button we will display the messages, and if the messages count is 0, we will display an image -->
+
+    {% for message in messages %}
+
+        <h3>{{ message.message }}</h3>
+        <p>{{ message.created_on }}</p>
+
     {% endfor %}
+
+    </div>
+
+    </div>
+
+
 {% endblock %}

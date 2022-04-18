@@ -3,6 +3,7 @@
 body {
     color: white;
 }
+
 .listings {
     background-color: #24252a;
     color: white;
@@ -287,7 +288,7 @@ input[type=checkbox] {
 /* PROFILE VIEW PAGE */
 
 .prof {
-    background-color: rgb(0,0,0,0);
+    background-color: rgb(0, 0, 0, 0);
     margin: 2rem auto 0 auto;
     background-color: rgba(255, 255, 255, 0.904);
     color: #24252a;
@@ -303,7 +304,7 @@ input[type=checkbox] {
 }
 
 .prof * {
-    background-color: rgb(0,0,0,0);
+    background-color: rgb(0, 0, 0, 0);
     color: white;
 }
 
@@ -325,7 +326,6 @@ input[type=checkbox] {
     text-align: left;
     align-self: flex-start;
 }
-
 
 
 .prof-container {
@@ -380,7 +380,6 @@ input[type=checkbox] {
 }
 
 
-
 .btn-shared {
     padding: 10px;
     border-radius: 8px;
@@ -388,31 +387,76 @@ input[type=checkbox] {
 }
 
 #picture {
-            width: 100px;
-            border-radius: 50%;
-        }
+    width: 100px;
+    border-radius: 50%;
+}
 
-        #picture:hover .overlay {
-            opacity: 25;
+#picture:hover .overlay {
+    opacity: 25;
 
-        }
+}
 
-        .overlay {
-            position: relative;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            right: 0;
-            height: 100%;
-            opacity: 0;
-            transition: .5s ease;
-            background-color: lightblue;
-            text-align: center;
-        }
+.overlay {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    right: 0;
+    height: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: lightblue;
+    text-align: center;
+}
 
-        .overlay a {
-            color: white;
-            text-decoration: none;
-            text-transform: uppercase;
+.overlay a {
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
 
-        }
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+}
+
+.flex-child:first-child {
+    width: 25px;
+    margin-right: 20px;
+}
+
+#messageOptions {
+    width: 15%;
+    padding: 10px;
+    align-items: flex-end;
+}
+
+.option {
+    background-color: turquoise;
+    border-radius: 4px;
+    color: white;
+    width: 155px;
+    transition-duration: 0.4s;
+    display: flex;
+
+}
+
+.option:hover {
+    background-color: green; /* Green */
+    color: white;
+
+}
+
+.messages {
+    /* display this div for our messages next to our button options */
+    float: right;
+    width: 850px;
+    height: 400px;
+    overflow-y: scroll;
+
+
+}
