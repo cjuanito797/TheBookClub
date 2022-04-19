@@ -436,7 +436,7 @@ input[type=checkbox] {
 }
 
 .option {
-    background-color: turquoise;
+    background-color: skyblue;
     border-radius: 4px;
     color: white;
     width: 155px;
@@ -460,3 +460,4 @@ input[type=checkbox] {
 
 
 }
+

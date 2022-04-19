@@ -97,15 +97,11 @@
                 {% endfor %}
             </div>
             <br>
-            <div class="w-75 mx-auto my-5 border-top border-bottom">
+            <div class="w-75 mx-auto my-5 border-top border-bottom " style="overflow-y: scroll; height: 750px;">
                 <h1 class="text-center mt-4">Your News Feed</h1>
                 {% for post in posts %}
                     <div class="container my-5">
-                        {% if post.writer.email == request.user.email %}
                             <h3 class="mb-0">{{ post.heading }}</h3>
-                        {% else %}
-                            <h3 class="mb-0">{{ post.heading }}</h3>
-                        {% endif %}
                         <div class="mb-3 mt-1">
                             <p class="text-muted d-inline">
                                 {{ post.created_on }} by
@@ -117,6 +113,12 @@
                         </div>
                         <p>
                             {{ post.content }}
+                        <br>
+                            {% if post.writer.email == request.user.email %}
+                            <a href="{% url 'accounts:deletePost' pk=post.pk %}"
+                       onclick="return confirm('Are you sure you want to delete?')"
+                       class="btn btn-danger">Delete</a>
+                            {% endif %}
                         </p>
                     </div>
                 {% endfor %}

@@ -56,8 +56,6 @@ def customerView(request):
         new_post = PostCreation (request.POST)
         if new_post.is_valid ( ):
             this = new_post.save (commit=False)
-            print (this.heading)
-            print (this.content)
             this.writer_id = request.user.id
             this.save ( )
 
@@ -383,7 +381,6 @@ def myMessages(request):
 
     elif (request.GET.get ('recieved_messages')):
         messages = Message.objects.filter (reciever_id=request.user.id).order_by('-created_on')
-
     return render (request, 'Social/myRequests.html', {'messages': messages})
 
 
@@ -391,10 +388,15 @@ def myMessages(request):
 def deleteMessages(request, pk):
     message = get_object_or_404 (Message, pk=pk)
     message.delete ( )
-
     return redirect ('accounts:myMessages')
-
 
 @login_required ( )
 def wishlist(request):
     return render (request, 'accounts/myWishlist.html', {'wishlist': wishlist})
+
+
+@login_required()
+def deletePost(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.delete()
+    return redirect('accounts:customerView')

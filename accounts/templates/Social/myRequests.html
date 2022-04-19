@@ -14,6 +14,9 @@
     <div class="flex-container">
         <div class="flex-child options">
             <form action="#" method="get">
+                <button type="submit" class="option" name="new_message" value="New Message">Compose</button>
+                <br>
+                <br>
                 <button type="submit" class="option" name="all_messages" value="All">All</button>
                 <br>
                 <br>
@@ -45,6 +48,7 @@
 
                 {% else %}
                     <p>Recieved On: {{ message.created_on }}</p>
+                    <p>Sent By: {{ message.sender.email }}</p>
                     <a href="{% url 'accounts:deleteMessages' pk=message.pk %}"
                        onclick="return confirm('Are you sure you want to delete?')"
                        class="btn btn-danger">Delete</a>
