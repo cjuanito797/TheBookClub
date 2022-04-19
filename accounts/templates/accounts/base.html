@@ -32,7 +32,7 @@
                             <a class="nav-link" href="{% url 'accounts:wishlist' %}">Wishlist</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'accounts:editProfile' %}">Profile</a>
+                            <a class="nav-link" href="{% url 'accounts:viewMyProfile' %}">Profile</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'accounts:findBook' %}">Discover</a>
@@ -52,23 +52,6 @@
                 </div>
             </div>
         </nav>
-        <div id="profilePic">
-            <div id="picture">
-                <a href="{% url "accounts:editProfile" %}">
-                    <img src="
-                            {% if request.user.profile_picture %}{{ request.user.profile_picture.url }}{% else %}{% static "images/variety.jpeg" %}{% endif %}"
-                         alt="panda"
-                         width="200"
-                         height="200"
-                         style="border-radius: 50%">
-                </a>
-                <div class="overlay">
-                    <div class="text">
-                        <a href="{% url 'accounts:editProfile' %}">Edit</a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </header>
 {% endblock %}
 {% block content %}
