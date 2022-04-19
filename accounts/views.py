@@ -81,14 +81,8 @@ def customerView(request):
         posts = post | posts
 
     posts.order_by ('-created_on')
-    news_feed = dict()
 
-    comments = 0
-    for p in posts:
-        news_feed[p] = [p]
-
-        # get the comments relating to the said post
-        comments = PostComment.objects.all().order_by('created_on')
+    comments = PostComment.objects.all().order_by('created_on')
 
 
 
