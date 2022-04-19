@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import RegistrationForm
-from .models import User, Message, Post
+from .models import User, Message, Post, PostComment, Reply
 
 
 class CustomUserAdmin (UserAdmin):
@@ -32,11 +32,30 @@ class CustomUserAdmin (UserAdmin):
 
 admin.site.register (User, CustomUserAdmin)
 
+class ReplyInlne(admin.StackedInline):
+    model = Reply
+    extra = 0
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
     list_display = ['sender', 'created_on']
 
+    inlines = [
+        ReplyInlne,
+    ]
+
+class MessageInline(admin.TabularInline):
+    model = Message
+
+class CommentInline(admin.StackedInline):
+    model = PostComment
+    extra = 0
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ['writer', 'heading', 'created_on']
+    inlines = [
+        CommentInline,
+    ]
+
+

@@ -1,7 +1,7 @@
 import datetime
 import email
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
-from .models import User, Message, Post
+from .models import User, Message, Post, PostComment, Reply
 from django.contrib.auth import login, authenticate
 from django.urls import reverse
 from django.views.generic import FormView, TemplateView
@@ -81,6 +81,13 @@ def customerView(request):
         posts = post | posts
 
     posts.order_by ('-created_on')
+
+    for p in posts:
+        print(p.heading)
+        print(p.content)
+
+        # get the comments relating to the said post
+        comments = PostComment.objects.all().filter(post_id=p.id).order_by('-created_on')
 
     return render (request, 'accounts/base.html',
                    {'avail_books': allAvailableBooks, 'favorite_books': favorite_books, 'posts': posts,

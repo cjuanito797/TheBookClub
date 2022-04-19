@@ -7,7 +7,7 @@ from django.core.validators import MinLengthValidator
 from library.models import Book, Genre, Author
 # Create your models here.
 from .managers import CustomUserManager
-
+from django.contrib import admin
 
 class User (AbstractBaseUser, PermissionsMixin):
     username = None
@@ -46,6 +46,7 @@ class Message (models.Model):
     created_on = models.DateTimeField (auto_now_add=True)
 
 
+
 class Post (models.Model):
     writer = models.ForeignKey ('accounts.User', related_name='writer', on_delete=models.CASCADE)
     heading = models.CharField (max_length=30, blank=False, null=False)
@@ -54,3 +55,15 @@ class Post (models.Model):
 
 
 Post.objects.order_by ("created_on")
+
+class PostComment(models.Model):
+    name = models.ForeignKey('accounts.User', related_name='commenter', on_delete=models.CASCADE)
+    Comment = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    post = models.ForeignKey('accounts.Post', on_delete=models.CASCADE, null=False)
+
+class Reply(models.Model):
+    name = models.ForeignKey('accounts.User', related_name='reply', on_delete=models.CASCADE)
+    message = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    parent = models.ForeignKey('accounts.Message', on_delete=models.CASCADE, null=False)
