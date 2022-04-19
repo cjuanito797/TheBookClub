@@ -1,17 +1,30 @@
 {% extends 'accounts/base.html' %}
 {% block title %}<title>View Profile</title>{% endblock %}
 {% block content %}
-    <div class="card mt-5 mb-xl-0 w-50 mx-auto">
-        <div class="card-header text-dark">
-            <h2 class="text-center mt-2">
-                {% if user.first_name %}
-                    {{ user.first_name }}'s
-                {% else %}
-                    User's
-                {% endif %}
-                Profile
-            </h2>
-            <p class="text-muted text-center mb-2"> {{ user.email }} </p>
+    {% load static %}
+    <div class="card mb-xl-0 w-50 mx-auto">
+        <div class="card-header py-2 text-dark d-flex align-items-middle">
+            <div id="profile-pic">
+                <img src="  {% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}{% static "images/variety.jpeg" %}{% endif %}"
+                     alt="panda"
+                     width="100px"
+                     height="100px"
+                     style="border-radius: 50%">
+            </div>
+            <div class="d-flex flex-column justify-content-center">
+                <h2 class="text-center">
+                    {% if user.first_name %}
+                        {{ user.first_name }}'s
+                    {% else %}
+                        User's
+                    {% endif %}
+                    Profile
+                </h2>
+                <p class="text-muted text-center mb-0">
+                    {{ user.email }}
+                </p>
+            </div>
+            <div class="right-placeholder"></div>
         </div>
         <div class="profile-card-section">
             <h4>Bio</h4>
@@ -60,17 +73,22 @@
             {% endif %}
         </div>
         <div class="d-flex justify-content-center gap-5 my-5">
-            <a class="btn btn-primary text-dark"
-               href="{% url 'accounts:wishlist' %}">View Wishlist</a>
-            {% if following %}
+            {% if request.user == user %}
                 <a class="btn btn-primary text-dark"
-                   href="{% url 'accounts:unfollow' pk=user.pk %}">Unfollow</a>
+                   href="{% url 'accounts:editProfile' %}">Edit Account</a>
             {% else %}
                 <a class="btn btn-primary text-dark"
-                   href="{% url 'accounts:follow' pk=user.pk %}">Follow</a>
+                   href="{% url 'accounts:wishlist' %}">View Wishlist</a>
+                {% if following %}
+                    <a class="btn btn-primary text-dark"
+                       href="{% url 'accounts:unfollow' pk=user.pk %}">Unfollow</a>
+                {% else %}
+                    <a class="btn btn-primary text-dark"
+                       href="{% url 'accounts:follow' pk=user.pk %}">Follow</a>
+                {% endif %}
+                <a class="btn btn-primary text-dark"
+                   href="{% url 'accounts:request' pk=user.pk %}">Request A Book</a>
             {% endif %}
-            <a class="btn btn-primary text-dark"
-               href="{% url 'accounts:request' pk=user.pk %}">Request A Book</a>
         </div>
     </div>
 {% endblock %}
