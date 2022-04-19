@@ -13,6 +13,7 @@ urlpatterns = [
     path('bookshelf/' ,views.myBookShelf, name='myBookShelf'),
     path('editProfile/', views.editProfile, name='editProfile'),
     path('viewProfile/<str:id>/', views.viewProfile, name='viewProfile'),
+    path('myProfile/', views.viewMyProfile, name='viewMyProfile'),
     path('editAddress/', views.edit_address, name='edit_address'),
     path('addBook/', views.addBook, name='addBook'),
     path('myFavBooks', views.viewFavBooks, name='viewFavBooks'),

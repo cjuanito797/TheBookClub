@@ -142,6 +142,10 @@ def viewProfile(request, id):
                    {'user': user, 'favAuthors': favAuthors, 'favGenres': favGenres,
                     'books': books, 'following': following})
 
+@login_required 
+def viewMyProfile(request):
+    return render(request, 'profileCustomization/viewProfile.html', {'user': request.user})
+
 
 @login_required
 def addBook(request):
