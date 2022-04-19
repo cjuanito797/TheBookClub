@@ -83,6 +83,7 @@ def customerView(request):
     posts.order_by ('-created_on')
     news_feed = dict()
 
+    comments = 0
     for p in posts:
         news_feed[p] = [p]
 
