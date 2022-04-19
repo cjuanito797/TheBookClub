@@ -89,6 +89,11 @@ def customerView(request):
         # get the comments relating to the said post
         comments = PostComment.objects.all().filter(post_id=p.id).order_by('-created_on')
 
+        for c in comments:
+            print("   " + c.Comment)
+
+        # now how can we print out the comments relating to the post? We may need to re-arrange the models.
+
     return render (request, 'accounts/base.html',
                    {'avail_books': allAvailableBooks, 'favorite_books': favorite_books, 'posts': posts,
                     'new_post': new_post})
