@@ -81,13 +81,19 @@ def customerView(request):
         posts = post | posts
 
     posts.order_by ('-created_on')
-    
+    news_feed = dict()
+
+    for p in posts:
+        news_feed[p] = [p]
+
+        # get the comments relating to the said post
+        comments = PostComment.objects.all().order_by('created_on')
 
 
 
     return render (request, 'accounts/base.html',
                    {'avail_books': allAvailableBooks, 'favorite_books': favorite_books, 'posts': posts,
-                    'new_post': new_post})
+                    'new_post': new_post, 'comments' : comments})
 
 
 @login_required

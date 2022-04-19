@@ -114,14 +114,27 @@
                         <p>
                             {{ post.content }}
                         <br>
+
+                        {% for c in comments %}
+                            {% if c.post.id == post.id %}
+                                <p style="margin-left: 30px;">{{ c.name.first_name }} says: {{ c.Comment }}</p>
+                                <p style="margin-left: 50px;">- <i>{{ c.created_on }}</i></p>
+
+                            {% endif %}
+                            {% endfor %}
                             {% if post.writer.email == request.user.email %}
                             <a href="{% url 'accounts:deletePost' pk=post.pk %}"
                        onclick="return confirm('Are you sure you want to delete?')"
                        class="btn btn-danger">Delete</a>
+                                <a href="{% url 'accounts:customerView' %}"
+                       onclick="return confirm('Are you sure you want to delete?')"
+                       class="btn btn-primary">Reply</a>
                             {% endif %}
                         </p>
                     </div>
                 {% endfor %}
+
+
             </div>
             <div class="card w-75 mx-auto">
                 <h1 class="text-center mt-4 text-dark">What's on your mind?</h1>
