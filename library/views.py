@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from .forms import BookForm
 from bootstrap_modal_forms.generic import BSModalCreateView
 from accounts.views import customerView
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -70,3 +71,8 @@ def home(request):
 
 def contactus(request):
     return render(request, "contactus.html")
+
+@login_required
+def shareABook(request):
+    books = Book.objects.all().filter(owner_id=request.user.id)
+    return render(request, 'LibraryFunctions/shareBook.html', {'books' : books})

@@ -79,7 +79,7 @@ class Book (models.Model):
 
 
 
-class requestBook(models.Model):
+class ShareBook(models.Model):
     borrower = models.ForeignKey ("accounts.User",
                                  related_name='book_borrower',
                                  on_delete=models.CASCADE,
@@ -87,7 +87,7 @@ class requestBook(models.Model):
 
 
 
-    shared_on_date = models.DateField(default=time.timezone)
+    shared_on_date = models.DateField(auto_now_add=True)
     shared_until = models.DateField()
 
     owner = models.ForeignKey("accounts.User",

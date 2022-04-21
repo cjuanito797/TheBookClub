@@ -1,0 +1,18 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}
+    <title>Share A Book</title>
+
+{% endblock %}
+
+{% block content %}
+
+    <h1>Choose from your books below to share to: </h1>
+
+    {% for book in books %}
+        {{ book.title }}
+        <br>
+
+    {% endfor %}
+
+{% endblock %}

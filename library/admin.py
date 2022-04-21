@@ -1,4 +1,4 @@
-from .models import Book, Genre, Author, requestBook, followSystem
+from .models import Book, Genre, Author, followSystem, ShareBook
 from django.contrib import admin
 
 
@@ -23,19 +23,9 @@ class GenreAdmin (admin.ModelAdmin):
     list_display = ['name', 'slug']
     prepopulated_fields = {'slug': ('name',)}
 
-
-@admin.register (requestBook)
-class RequestBookAdmin (admin.ModelAdmin):
-    list_display = ['borrower', 'shared_on_date', 'shared_until']
-    fieldsets = (
-        (
-            'Fields', {
-                'fields': (
-                    'books',)
-            },
-        ),
-    )
-
+@admin.register(ShareBook)
+class ShareBookAdmin(admin.ModelAdmin):
+    list_display = ['borrower', 'owner']
 
 @admin.register (followSystem)
 class followSystemAdmin (admin.ModelAdmin):

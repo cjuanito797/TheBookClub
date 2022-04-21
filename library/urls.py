@@ -12,4 +12,5 @@ urlpatterns = [
     path("create/", views.BookCreateView.as_view(), name="create_book"),
     path("authors/", views.author_list, name="author_list"),
     path("contactus", views.contactus, name="contactus"),
+    path("share/", views.shareABook, name='share'),
 ]

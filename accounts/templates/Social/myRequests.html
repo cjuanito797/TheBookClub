@@ -23,7 +23,7 @@
                 <button type="submit" class="option" name="sent_messages" value="Sent">Sent</button>
                 <br>
                 <br>
-                <button type="submit" class="option" name="recieved_messages" value="Recieved">Recieved</button>
+                <button type="submit" class="option" name="recieved_messages" value="Recieved">Requests</button>
             </form>
         </div>
 
@@ -37,7 +37,14 @@
             {% for message in messages %}
 
                 <h3>{{ message.message }}</h3>
+                {% for reply in replies %}
 
+                    {% if reply.parent.id == message.id %}
+                        <p style="margin-left: 35px;">{{ reply.message }}</p>
+                        <p style="margin-left: 50px;"><i>{{ reply.name.email }}</i></p>
+
+                    {% endif %}
+                    {% endfor %}
                 {% if message.sender.email == user.email %}
                     <p>Sent On: {{ message.created_on }}</p>
                     <p>Sent To: {{ message.reciever.email }}</p>
@@ -55,7 +62,7 @@
                     <a href="{% url 'accounts:deleteMessages' pk=message.pk %}"
                        onclick="return confirm('Are you sure you want to delete?')"
                        class="btn btn-primary">Reply</a>
-                    <a class="btn btn-success" href="{% url 'accounts:deleteMessages' pk=message.pk %}">Share Book</a>
+                    <a class="btn btn-success" href="{% url 'library:share' %}">Share Book</a>
                     <a href="/account/viewProfile/{{ message.sender.email }}"
                        class="btn btn-primary">View Profile</a>
                 {% endif %}
