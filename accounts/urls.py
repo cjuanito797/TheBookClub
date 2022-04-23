@@ -33,6 +33,6 @@ urlpatterns = [
     path('<int:pk>/trash', views.deleteMessages, name='deleteMessages'),
     path('<int:pk>/deletePost', views.deletePost, name='deletePost'),
     path('search/', views.search_results, name="search_results"),
-    path('wishlist/', views.wishlist, name="wishlist"),
-
+    path('myWishlist/', views.myWishlist, name="myWishlist"),
+    path('addBookWishlist/', views.addBookWishlist, name='addBookWishlist'),
 ]
