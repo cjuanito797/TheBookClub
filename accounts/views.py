@@ -426,8 +426,8 @@ def deleteMessages(request, pk):
 
 
 @login_required ( )
-def wishlist(request):
-    return render (request, 'accounts/myWishlist.html', {'wishlist': wishlist})
+def myWishlist(request):
+    return render (request, 'accounts/myWishlist.html', {'myWishlist': myWishlist})
 
 
 @login_required ( )
@@ -435,3 +435,34 @@ def deletePost(request, pk):
     post = get_object_or_404 (Post, pk=pk)
     post.delete ( )
     return redirect ('accounts:customerView')
+
+
+@login_required
+def addBookWishlist(request):
+    if request.method == "POST":
+        addBook = addBookForm (request.POST)
+        addAuthor = addAuthorForm (request.POST)
+        addGenre = addGenreForm (request.POST)
+
+        if addBook.is_valid ( ) and addAuthor.is_valid ( ) and addGenre.is_valid ( ):
+            user = request.user
+            book = addBook.save (commit=False)
+            book.owner_id = request.user.id
+            author = addAuthor.save (commit=False)
+            genre = addGenre.save (commit=False)
+            book.author = author
+            book.genre = genre
+            author.save ( )
+            genre.save ( )
+            book.save ( )
+
+            if book.favorite is True:
+                user.favoriteAuthors.add (author)
+                user.favoriteGenres.add (genre)
+
+            return redirect (reverse ('accounts:addBookWishlist'))
+    else:
+        addBook = addBookForm ( )
+        addAuthor = addAuthorForm ( )
+        addGenre = addGenreForm ( )
+    return render (request, "accounts/myWishlist.html", {'addBook': addBook, 'addAuthor': addAuthor, 'addGenre': addGenre})
