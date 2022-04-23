@@ -1,17 +1,25 @@
-{% extends 'accounts/base.html' %}
-
-{% block title %}
-    <title>Wishlist</title>
-{% endblock %}
-
+{% extends "accounts/base.html" %}
+{% block title %}<title>My Wishlist</title>{% endblock %}
 {% block content %}
-<div class="Banner">
-    <h1>Wishlist</h1>
-</div>
 
-	<h2 style="text-align:center; margin-top:25px">You don't have any books wishlisted</h2>
-	<h3 style="text-align:center; margin-top:40px">
-	<th class="d-flex justify-content-end"><a class="btn btn-success me-0 w-10" href="{% url 'accounts:addBook' %}">Add A
-            Book</a></th></h3>
-
+    <table class="listings table-dark">
+        <th>Name</th>
+        <th>Author</th>
+        <th colspan="3">Actions</th>
+        <th class="d-flex justify-content-end"><a class="btn btn-success me-2 w-100" href="{% url 'accounts:addBookWishlist' %}">Add A
+            Book</a></th>
+        {% for book in myBooks %}
+            <tr>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                    <td>
+                        <a href="{% url 'accounts:deleteBook' pk=book.pk %}"
+                            onclick="return confirm('Are you sure you want to delete?')"
+                            class="btn btn-danger">Delete Book</a>
+                        <td>
+                        <a href="{% url 'accounts:viewBook' pk=book.pk %}"
+                            class="btn btn-primary">View Details</a>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
