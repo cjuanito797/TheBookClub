@@ -99,11 +99,15 @@
                     {{ post.content }}
                     <br>
 
+
+
+
                     {% for c in comments %}
                         {% if c.post.id == post.id %}
                             <p style="margin-left: 30px;">{{ c.Comment }}</p>
                             <p style="margin-left: 50px;">- <i>{{ c.created_on }} by {{ c.name.first_name }}
                             </i></p>
+
 
                         {% endif %}
                     {% endfor %}
@@ -111,8 +115,12 @@
                     <a href="{% url 'accounts:deletePost' pk=post.pk %}"
                        onclick="return confirm('Are you sure you want to delete?')"
                        class="btn btn-danger">Delete</a>
-                    <a href="{% url 'accounts:customerView' %}"
+                    <a href="{% url 'accounts:comment' pk=post.pk %}"
                        onclick="return confirm('Are you sure you want to delete?')"
+                       class="btn btn-primary">Reply</a>
+
+                    {% else %}
+                        <a href="{% url 'accounts:comment' pk=post.pk %}"
                        class="btn btn-primary">Reply</a>
                 {% endif %}
                 </p>

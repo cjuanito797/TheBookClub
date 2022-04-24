@@ -36,4 +36,6 @@ urlpatterns = [
     path('search/', views.search_results, name="search_results"),
     path('myWishlist/', views.myWishlist, name="myWishlist"),
     path('addBookWishlist/', views.addBookWishlist, name='addBookWishlist'),
+    path('<int:pk>/comment', views.replyPost, name='comment'),
+
 ]

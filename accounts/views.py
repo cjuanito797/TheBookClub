@@ -444,6 +444,25 @@ def deletePost(request, pk):
     post.delete ( )
     return redirect ('accounts:customerView')
 
+@login_required()
+def replyPost(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.method == 'POST':
+        comment_on_post = PostReply(request.POST)
+
+        if comment_on_post.is_valid():
+            comment = comment_on_post.save(commit=False)
+            comment.name = request.user
+            comment.post = post
+            comment.save()
+
+            return redirect(reverse('accounts:customerView'))
+    else:
+        comment_on_post = PostReply()
+
+    return render(request, 'Social/commentOnPost.html',  {'form': comment_on_post})
+
 
 @login_required
 def addBookWishlist(request):
