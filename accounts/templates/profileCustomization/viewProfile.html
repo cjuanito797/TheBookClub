@@ -78,7 +78,7 @@
                    href="{% url 'accounts:editProfile' %}">Edit Account</a>
             {% else %}
                 <a class="btn btn-primary text-dark"
-                   href="{% url 'accounts:wishlist' %}">View Wishlist</a>
+                   href="{% url 'accounts:myWishlist' %}">View Wishlist</a>
                 {% if following %}
                     <a class="btn btn-primary text-dark"
                        href="{% url 'accounts:unfollow' pk=user.pk %}">Unfollow</a>

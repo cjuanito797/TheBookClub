@@ -113,7 +113,7 @@ def editProfile(request):
         form = EditProfile (data=request.POST, instance=request.user, files=request.FILES)
         if form.is_valid ( ):
             form.save ( )
-            return customerView (request)
+            return redirect(reverse('accounts:viewMyProfile'))
     else:
         form = EditProfile (instance=request.user)
     return render (request, 'profileCustomization/editProfile.html', {'form': form})
