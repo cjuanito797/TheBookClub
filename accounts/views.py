@@ -144,7 +144,14 @@ def viewProfile(request, id):
 
 @login_required
 def viewMyProfile(request):
-    return render (request, 'profileCustomization/viewProfile.html', {'user': request.user})
+    user = request.user
+    favAuthors = user.favoriteAuthors.distinct ( )
+    favGenres = user.favoriteGenres.filter ( )
+    books = Book.objects.filter (owner_id=user.id, available=True, shared=False)
+
+    return render (request, 'profileCustomization/viewProfile.html',
+                   {'user': user, 'favAuthors': favAuthors, 'favGenres': favGenres,
+                    'books': books})
 
 
 @login_required
