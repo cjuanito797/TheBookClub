@@ -17,4 +17,12 @@
         {{ reply.name.email }}: &nbsp;{{ reply.message }}
         <br>
     {% endfor %}
+
+    <form method="post">
+    {% csrf_token %}
+
+    {{ reply.as_p }}
+    <input class="btn btn-primary rounded-pill mx-auto mb-3 text-light"
+                   type="submit">
+    </form>
 {% endblock %}

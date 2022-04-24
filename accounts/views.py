@@ -389,8 +389,6 @@ def myMessages(request):
         messages = Message.objects.filter (sender_id=request.user.id).order_by ('-created_on')
 
 
-
-
     elif (request.GET.get ('recieved_messages')):
         messages = Message.objects.filter (reciever_id=request.user.id).order_by ('-created_on')
 
@@ -407,18 +405,29 @@ def deleteMessages(request, pk):
 @login_required ( )
 def myWishlist(request):
     return render (request, 'accounts/myWishlist.html', {'myWishlist': myWishlist})
+
+@login_required()
 def viewMessageThread(request, pk):
     message = get_object_or_404 (Message, pk=pk)
 
     # get all of the replies corresponding to the message object we have selected.
     replies = Reply.objects.all ( ).filter (parent_id=message.id)
 
-    return render (request, 'Social/messageThread.html', {'replies': replies, 'message' : message})
+    if request.method == 'POST':
+        # load up the form for the reply
+        reply = replyForm(request.POST)
+
+        if reply.is_valid():
+            new_message = reply.save(commit=False)
+            new_message.name = request.user
+            new_message.parent = message
+            new_message.save()
 
 
-@login_required ( )
-def wishlist(request):
-    return render (request, 'accounts/myWishlist.html', {'wishlist': wishlist})
+    else:
+        reply = replyForm()
+
+    return render (request, 'Social/messageThread.html', {'replies': replies, 'message': message, 'reply': reply})
 
 
 @login_required ( )
@@ -456,4 +465,5 @@ def addBookWishlist(request):
         addBook = addBookForm ( )
         addAuthor = addAuthorForm ( )
         addGenre = addGenreForm ( )
-    return render (request, "accounts/myWishlist.html", {'addBook': addBook, 'addAuthor': addAuthor, 'addGenre': addGenre})
+    return render (request, "accounts/myWishlist.html",
+                   {'addBook': addBook, 'addAuthor': addAuthor, 'addGenre': addGenre})

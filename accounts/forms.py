@@ -8,7 +8,7 @@ from .models import User
 from django.core.exceptions import ValidationError
 from django.forms import HiddenInput
 from django.forms.models import ModelForm
-from .models import User, Message, Post
+from .models import User, Message, Post, Reply
 from library.models import Book, Author, Genre
 
 
@@ -105,6 +105,11 @@ class messageForm (forms.ModelForm):
     class Meta:
         model = Message
         fields = ("message",)
+
+class replyForm (forms.ModelForm):
+    class Meta:
+        model = Reply
+        fields = ('message', )
 
 
 class PostPersonalization (forms.ModelForm):
