@@ -413,6 +413,9 @@ def viewMessageThread(request, pk):
     # get all of the replies corresponding to the message object we have selected.
     replies = Reply.objects.all ( ).filter (parent_id=message.id)
 
+    # once the user has opened this page, we should set the read variable to True.
+    message.read = True
+
     if request.method == 'POST':
         # load up the form for the reply
         reply = replyForm(request.POST)
@@ -423,6 +426,11 @@ def viewMessageThread(request, pk):
             new_message.parent = message
             new_message.save()
 
+            # when a new reply is sent we need to set the read boolean variable for the parent message equal to false, so that the other user (reciever) gets a notification
+            message.read = False
+
+
+            return redirect (reverse ('accounts:myMessages'))
 
     else:
         reply = replyForm()
