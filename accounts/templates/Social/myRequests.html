@@ -65,6 +65,8 @@
                     <a class="btn btn-success" href="{% url 'library:share' %}">Share Book</a>
                     <a href="/account/viewProfile/{{ message.sender.email }}"
                        class="btn btn-primary">View Profile</a>
+                    <a href="{% url 'accounts:thread'  pk=message.pk %}"
+                       class="btn btn-primary">View Messages</a>
                 {% endif %}
             {% endfor %}
 

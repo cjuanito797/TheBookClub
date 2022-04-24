@@ -371,18 +371,11 @@ def requestABook(request, pk):
 def myMessages(request):
     # by default get all of the messages.
     # load all of your messages both sent and recieved
-    replies = Reply.objects.none ( )
 
     recieved_messages = Message.objects.filter (reciever_id=request.user.id).order_by ('-created_on')
     sent_messages = Message.objects.filter (sender_id=request.user.id).order_by ('-created_on')
     messages = recieved_messages | sent_messages
     messages.order_by ('-created_on')
-
-    for message in messages:
-        # add all of the replies where the parent id is equal to the message id
-        replies = Reply.objects.all ( ).filter (parent_id=message.id).order_by ('created_on')
-
-        replies = replies | replies
 
     if (request.GET.get ('all_messages')):
         # load all of your messages both sent and recieved
@@ -391,31 +384,17 @@ def myMessages(request):
         messages = recieved_messages | sent_messages
         messages.order_by ('-created_on')
 
-        for message in messages:
-            # add all of the replies where the parent id is equal to the message id
-            replies = Reply.objects.all ( ).filter (parent_id=message.id).order_by ('created_on')
-
-            replies = replies | replies
 
     elif (request.GET.get ('sent_messages')):
         messages = Message.objects.filter (sender_id=request.user.id).order_by ('-created_on')
 
-        for message in messages:
-            # add all of the replies where the parent id is equal to the message id
-            reply = Reply.objects.all ( ).filter (parent_id=message.id).order_by ('created_on')
 
-            replies = replies | reply
 
 
     elif (request.GET.get ('recieved_messages')):
         messages = Message.objects.filter (reciever_id=request.user.id).order_by ('-created_on')
 
-        for message in messages:
-            # add all of the replies where the parent id is equal to the message id
-            replies = Reply.objects.all ( ).filter (parent_id=message.id).order_by ('created_on')
-
-            replies = replies | replies
-    return render (request, 'Social/myRequests.html', {'messages': messages, 'replies': replies})
+    return render (request, 'Social/myRequests.html', {'messages': messages, })
 
 
 @login_required ( )
@@ -428,6 +407,18 @@ def deleteMessages(request, pk):
 @login_required ( )
 def myWishlist(request):
     return render (request, 'accounts/myWishlist.html', {'myWishlist': myWishlist})
+def viewMessageThread(request, pk):
+    message = get_object_or_404 (Message, pk=pk)
+
+    # get all of the replies corresponding to the message object we have selected.
+    replies = Reply.objects.all ( ).filter (parent_id=message.id)
+
+    return render (request, 'Social/messageThread.html', {'replies': replies, 'message' : message})
+
+
+@login_required ( )
+def wishlist(request):
+    return render (request, 'accounts/myWishlist.html', {'wishlist': wishlist})
 
 
 @login_required ( )

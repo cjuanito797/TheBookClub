@@ -1,0 +1,20 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}
+    <title>View Thread</title>
+
+{% endblock %}
+
+{% block content %}
+    <h1>View Messages below.</h1>
+
+    <!-- First print out the original (parent) message and later print out the subsequent replies, will have a form on this page for a reply -->
+    {{ message.sender }}: &nbsp;{{ message.message }}
+
+    <br>
+    {% for reply in replies %}
+        <br>
+        {{ reply.name.email }}: &nbsp;{{ reply.message }}
+        <br>
+    {% endfor %}
+{% endblock %}
