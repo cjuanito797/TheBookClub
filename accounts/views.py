@@ -210,19 +210,19 @@ def viewFavBooks(request):
     return render (request, 'profileCustomization/myFavoriteBooks.html', {'favBooks': favBooks})
 
 
-@login_required ( )
-def viewFavAuthors(request):
-    user = request.user
-    favAuthors = user.favoriteAuthors.distinct ( )
+# @login_required ( )
+# def viewFavAuthors(request):
+#     user = request.user
+#     favAuthors = user.favoriteAuthors.distinct ( )
 
-    uniqueAuthors = []
-    for fa in favAuthors:
-        if fa not in uniqueAuthors:
-            uniqueAuthors.append (fa)
+#     uniqueAuthors = []
+#     for fa in favAuthors:
+#         if fa not in uniqueAuthors:
+#             uniqueAuthors.append (fa)
 
-    # now we will also get the favorite authors from the books that were marked as favorites again we will still want to keep it unique
+#     # now we will also get the favorite authors from the books that were marked as favorites again we will still want to keep it unique
 
-    return render (request, 'profileCustomization/myFavoriteAuthors.html', {'uniqueAuthors': uniqueAuthors})
+#     return render (request, 'profileCustomization/myFavoriteAuthors.html', {'uniqueAuthors': uniqueAuthors})
 
 
 @login_required ( )
@@ -236,20 +236,68 @@ def viewFavGenres(request):
 
     return render (request, 'profileCustomization/myFavoriteGenres.html', {'uniqueGenres': uniqueGenres})
 
+@login_required ( )
+def viewFavGenres(request):
+    user = request.user
+    favGenres = user.favoriteGenres.distinct ( )
+
+    uniqueGenres = []
+    for fg in favGenres:
+        if fg.name not in uniqueGenres:
+            uniqueGenres.append (fg.name)
+    
+    if request.method == "POST":
+        favGenre = addGenreForm (request.POST)
+
+        if favGenre.is_valid ( ):
+            genre = favGenre.save (commit=False)
+            genre.save()
+            user.favoriteGenres.add(genre)
+        
+        return redirect ('accounts:viewFavGenres')
+    else:
+        favGenre = addGenreForm ()
+
+    return render (request, 'profileCustomization/myFavoriteGenres.html', {'uniqueGenres': uniqueGenres, 'favGenre': favGenre})
+
+def delFavGenre(request, pk):
+    genre = get_object_or_404(Genre, name=pk)
+    request.user.favoriteGenres.remove(genre)
+
+    return redirect ('accounts:viewFavGenres')
+
 
 @login_required ( )
-def addFavAuthors(request):
+def viewFavAuthors(request):
+    user = request.user
+    favAuthors = user.favoriteAuthors.distinct ( )
+
+    uniqueAuthors = []
+    for fa in favAuthors:
+        if fa not in uniqueAuthors:
+            uniqueAuthors.append (fa)
+    
     if request.method == "POST":
         favAuthor = addAuthorForm (request.POST)
 
         if favAuthor.is_valid ( ):
             author = favAuthor.save (commit=False)
-            author.favorite = True
-            author.save ( )
+            author.save()
+            user.favoriteAuthors.add(author)
+        
+        favAuthor = addAuthorForm ()
+        return redirect ('accounts:viewFavAuthors')
     else:
-        favAuthor = addAuthorForm (request.POST)
+        favAuthor = addAuthorForm ()
 
-    return render (request, 'profileCustomization/addFavAuthor.html', {'favAuthor': favAuthor})
+    return render (request, 'profileCustomization/myFavoriteAuthors.html', {'uniqueAuthors': uniqueAuthors, 'favAuthor': favAuthor})
+
+def delFavAuthor(request, pk):
+    author = get_object_or_404(Author, pk=pk)
+    request.user.favoriteAuthors.remove(author)
+
+    return redirect ('accounts:viewFavAuthors')
+
 
 
 @login_required ( )

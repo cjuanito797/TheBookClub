@@ -1,22 +1,29 @@
 {% extends 'accounts/base.html' %}
-
-{% block title %}
-<title>Edit Address</title>
-{% endblock %}
-
-
+{% block title %}<title>Favorite Genres</title>{% endblock %}
 {% block content %}
-    <div class="Banner">
-    <h1>See Your Favorite Genres Below Based Off of your books</h1>
+    <h1 class="text-center mb-5">Add/Edit Your Favorite Genres</h1>
+    <div class="card w-50 text-dark mx-auto">
+        <div class="card-header list-group-item-primary text-center mb-2">Add a Favorite Genre</div>
+        <form class="mb-2 w-75 mx-auto" method="post">
+            {% csrf_token %}
+            {{ favGenre.as_p }}
+            <p>
+                <input class="btn btn-primary rounded-pill text-light" type="submit">
+            </p>
+        </form>
     </div>
-
-    {% for fg in uniqueGenres%}
-
-        <!-- build a list here but only grab unique items -->
-        <h2>{{ fg }}</h2>
-        <br>
-
-    {% endfor %}
-
-
+    <div class="list-group w-50 mx-auto mt-5 text-center">
+        <li class="list-group-item list-group-item-primary">Your Favorite Genres</li>
+        {% for fg in uniqueGenres %}
+            <li class="list-group-item">
+                <div class="mr-1 d-inline">{{ fg }}</div>
+                <a href="{% url 'accounts:delFavGenre' pk=fg %}"
+                   onclick="return confirm('Are you sure you want to delete?')">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                  </svg></a>
+            </li>
+        {% endfor %}
+    </div>
 {% endblock %}

@@ -1,20 +1,29 @@
 {% extends 'accounts/base.html' %}
-
-{% block title %}
-    <title>Favorite Authors</title>
-
-{% endblock %}
-
-
-
+{% block title %}<title>Favorite Authors</title>{% endblock %}
 {% block content %}
-
-    <div class="Banner">
-    <h1>See Your Favorite Authors Below Based Off Of Your Favorite Books.</h1>
+    <h1 class="text-center mb-5">Add/Edit Your Favorite Authors</h1>
+    <div class="card w-50 text-dark mx-auto">
+        <div class="card-header list-group-item-primary text-center mb-2">Add a Favorite Author</div>
+        <form class="mb-2 w-75 mx-auto" method="post">
+            {% csrf_token %}
+            {{ favAuthor.as_p }}
+            <p>
+                <input class="btn btn-primary rounded-pill text-light" type="submit">
+            </p>
+        </form>
     </div>
-
-    {% for fa in uniqueAuthors %}
-    <h3>{{ fa.first_name }}&nbsp;{{ fa.last_name }}</h3>
-    {% endfor %}
-
+    <div class="list-group w-50 mx-auto mt-5 text-center">
+        <li class="list-group-item list-group-item-primary">Your Favorite Authors</li>
+        {% for fa in uniqueAuthors %}
+            <li class="list-group-item">
+                <div class="mr-1 d-inline">{{ fa.first_name }}&nbsp;{{ fa.last_name }}</div>
+                <a href="{% url 'accounts:delFavAuthor' pk=fa.pk %}"
+                   onclick="return confirm('Are you sure you want to delete?')">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                  </svg></a>
+            </li>
+        {% endfor %}
+    </div>
 {% endblock %}
