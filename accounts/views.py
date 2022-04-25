@@ -13,7 +13,6 @@ from django.db.models import Q
 from library.models import followSystem
 from django.contrib import messages
 
-
 # Create your views here.
 class registration_view (FormView):
     def post(self, request):
@@ -84,9 +83,12 @@ def customerView(request):
 
     comments = PostComment.objects.all ( ).order_by ('created_on')
 
+    # get the number of unread messages that the user currently has.
+    unread_messages = Message.objects.all().filter(read=False, reciever_id=request.user.id, sender_id=request.user.id).count()
+
     return render (request, 'accounts/base.html',
                    {'avail_books': allAvailableBooks, 'favorite_books': favorite_books, 'posts': posts,
-                    'new_post': new_post, 'comments': comments})
+                    'new_post': new_post, 'comments': comments, 'unread_messages' : unread_messages})
 
 
 @login_required

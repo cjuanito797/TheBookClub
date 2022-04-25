@@ -38,7 +38,7 @@
                             <a class="nav-link" href="{% url 'accounts:findBook' %}">Discover</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'accounts:myMessages' %}">Messages</a>
+                            <a class="nav-link" href="{% url 'accounts:myMessages' %}">Messages: {{ unread_messages }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'accounts:followList' %}">Following</a>

@@ -61,7 +61,6 @@
                     <a href="{% url 'accounts:deleteMessages' pk=message.pk %}"
                        onclick="return confirm('Are you sure you want to delete?')"
                        class="btn btn-danger">Delete</a>
-                    <a class="btn btn-success" href="{% url 'library:share' %}">Share Book</a>
                     <a href="/account/viewProfile/{{ message.sender.email }}"
                        class="btn btn-primary">View Profile</a>
                     <a href="{% url 'accounts:thread'  pk=message.pk %}"
