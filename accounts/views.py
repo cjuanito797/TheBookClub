@@ -13,7 +13,6 @@ from django.db.models import Q
 from library.models import followSystem
 from django.contrib import messages
 
-
 # Create your views here.
 class registration_view (FormView):
     def post(self, request):
@@ -27,7 +26,6 @@ class registration_view (FormView):
     def get(self, request):
         form = RegistrationForm (files=request.FILES)
         return render (request, 'registration/register.html', {'form': form})
-
 
 def user_login(request):
     form = LoginForm (request.POST)
@@ -49,7 +47,6 @@ def user_login(request):
         form = LoginForm ( )
     return render (request, 'registration/login.html', {'form': form})
 
-
 @login_required
 def customerView(request):
     if request.method == "POST":
@@ -60,8 +57,6 @@ def customerView(request):
             this.save ( )
 
             return HttpResponseRedirect (request.path_info)
-
-
 
     else:
         new_post = PostCreation ( )
@@ -96,6 +91,8 @@ def search_results(request):
         author__last_name__icontains=input) | Q (genre__name__icontains=input))
     results.filter (available=True)
     results_found = results.exists ( )
+    results.exclude(owner_id=request.user.id)
+
     if (not results_found):
         results = Book.objects.filter (available=True)[:5]
     return render (request, 'accounts/search_results.html', {'results_found': results_found, 'results': results})
@@ -105,7 +102,6 @@ def search_results(request):
 def myBookShelf(request):
     # exclude books that are in the user's wishlist
     myBooks = Book.objects.filter (owner_id=request.user, wishlist=False).order_by ("title")
-
     return render (request, 'accounts/myBookshelf.html', {'myBooks': myBooks})
 
 
@@ -130,8 +126,8 @@ def viewProfile(request, id):
     # display the user's book that
     books = Book.objects.filter (owner_id=user.id, available=True, shared=False)
 
-    # determine whether we are currently following the user or not based off of the user's following list and check if email exists. Pass in boolean value to template.
-
+    # determine whether we are currently following the user or not based off of the user's following list and check if email exists.
+    # Pass in boolean value to template.
     this_user = User.objects.get (pk=request.user.id)
 
     if user in this_user.follow_list.all ( ):
@@ -186,11 +182,9 @@ def addBook(request):
         addGenre = addGenreForm ( )
     return render (request, "accounts/addBook.html", {'addBook': addBook, 'addAuthor': addAuthor, 'addGenre': addGenre})
 
-
 @login_required
 def user_logout(request):
     return HttpResponseRedirect (reversed ('your_app:login'))
-
 
 @login_required
 def edit_address(request):
@@ -204,39 +198,11 @@ def edit_address(request):
         form = EditAddress (request.POST or None, instance=request.user, use_required_attribute=False)
     return render (request, 'profileCustomization/editAddress.html', {'form': form})
 
-
 @login_required ( )
 def viewFavBooks(request):
     favBooks = Book.objects.filter (owner_id=request.user.id, favorite=True)
 
     return render (request, 'profileCustomization/myFavoriteBooks.html', {'favBooks': favBooks})
-
-
-# @login_required ( )
-# def viewFavAuthors(request):
-#     user = request.user
-#     favAuthors = user.favoriteAuthors.distinct ( )
-
-#     uniqueAuthors = []
-#     for fa in favAuthors:
-#         if fa not in uniqueAuthors:
-#             uniqueAuthors.append (fa)
-
-#     # now we will also get the favorite authors from the books that were marked as favorites again we will still want to keep it unique
-
-#     return render (request, 'profileCustomization/myFavoriteAuthors.html', {'uniqueAuthors': uniqueAuthors})
-
-
-@login_required ( )
-def viewFavGenres(request):
-    user = request.user
-    favGenres = user.favoriteGenres.filter ( )
-    uniqueGenres = []
-    for fg in favGenres:
-        if fg.name not in uniqueGenres:
-            uniqueGenres.append (fg.name)
-
-    return render (request, 'profileCustomization/myFavoriteGenres.html', {'uniqueGenres': uniqueGenres})
 
 
 @login_required ( )
@@ -359,7 +325,6 @@ def changeBookVisibility(request, pk):
 
     return redirect ('accounts:myBookShelf')
 
-
 @login_required ( )
 def findBook(request):
     # get all of the user objects, except for the currently logged in user.
@@ -392,7 +357,6 @@ def findBook(request):
         favGen.append (str (fg))
 
     # iterate through the users and also iterate through their favorite genres, if we find another user with the same genre interest, add them to the list.
-
     favGenUsers = []
 
     for user in users:
@@ -401,10 +365,8 @@ def findBook(request):
             if str (fg) in favGen:
                 if user not in favGenUsers:
                     favGenUsers.append (user)
-
     return render (request, 'Social/findBook.html',
                    {'users': users, 'favAuthorsUsers': favAuthorsUsers, 'favGenUsers': favGenUsers})
-
 
 @login_required ( )
 def follow(request, pk):
@@ -434,31 +396,6 @@ def unfollow(request, pk):
     # return a message indicating that user was removed from our followings list.
     messages.success (request, 'User Removed From My Followings List.')
     return HttpResponseRedirect ('/account/viewProfile/' + str (user_to_unfollow.email))
-
-
-@login_required ( )
-def requestABook(request, pk):
-    user_to_request_from = User.objects.get (pk=pk)
-
-    # display the list of available books that the user can share at the moment
-    books = Book.objects.filter (owner_id=pk, available=True, shared=False)
-
-    if request.method == 'POST':
-        new_message = messageForm (request.POST)
-
-        if new_message.is_valid ( ):
-            message = new_message.save (commit=False)
-            message.sender = request.user
-            message.reciever = user_to_request_from
-            message.save ( )
-            return redirect ('accounts:customerView')
-
-
-    else:
-        message = messageForm ( )
-    return render (request, 'Social/requestABook.html',
-                   {'requestee': user_to_request_from, 'books': books, 'messageForm': messageForm})
-
 
 @login_required ( )
 def myMessages(request):
@@ -514,7 +451,7 @@ def viewMessageThread(request, pk):
     reciever = message.sender
 
     if sender.email != request.user.email:
-        # once the user has opened this page, we should set the read variable to True and is not the sender.
+        # once the user has opened this page, we should set the read variable to True  is not the sender.
         message.read = True
         message.save ( )
 

@@ -29,7 +29,6 @@ urlpatterns = [
     path('<int:pk>/follow/', views.follow, name='follow'),
     path('<int:pk>/unfollow/', views.unfollow, name='unfollow'),
     path('myFollowings/', views.followList, name='followList'),
-    path('<int:pk>/request/', views.requestABook, name='request'),
     path('myMessages/', views.myMessages, name='myMessages'),
     path('<int:pk>/thread', views.viewMessageThread, name='thread'),
     path('<int:pk>/trash', views.deleteMessages, name='deleteMessages'),
