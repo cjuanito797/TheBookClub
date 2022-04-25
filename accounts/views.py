@@ -13,6 +13,7 @@ from django.db.models import Q
 from library.models import followSystem
 from django.contrib import messages
 
+
 # Create your views here.
 class registration_view (FormView):
     def post(self, request):
@@ -83,12 +84,9 @@ def customerView(request):
 
     comments = PostComment.objects.all ( ).order_by ('created_on')
 
-    # get the number of unread messages that the user currently has.
-    unread_messages = Message.objects.all().filter(read=False, reciever_id=request.user.id, sender_id=request.user.id).count()
-
     return render (request, 'accounts/base.html',
                    {'avail_books': allAvailableBooks, 'favorite_books': favorite_books, 'posts': posts,
-                    'new_post': new_post, 'comments': comments, 'unread_messages' : unread_messages})
+                    'new_post': new_post, 'comments': comments, })
 
 
 @login_required
@@ -105,7 +103,9 @@ def search_results(request):
 
 @login_required
 def myBookShelf(request):
-    myBooks = Book.objects.filter (owner_id=request.user, ).order_by ("title")
+    # exclude books that are in the user's wishlist
+    myBooks = Book.objects.filter (owner_id=request.user, wishlist=False).order_by ("title")
+
     return render (request, 'accounts/myBookshelf.html', {'myBooks': myBooks})
 
 
@@ -265,6 +265,7 @@ def viewFavGenres(request):
                    {'uniqueGenres': uniqueGenres, 'favGenre': favGenre})
 
 
+@login_required ( )
 def delFavGenre(request, pk):
     genre = get_object_or_404 (Genre, name=pk)
     request.user.favoriteGenres.remove (genre)
@@ -299,6 +300,7 @@ def viewFavAuthors(request):
                    {'uniqueAuthors': uniqueAuthors, 'favAuthor': favAuthor})
 
 
+@login_required ( )
 def delFavAuthor(request, pk):
     author = get_object_or_404 (Author, pk=pk)
     request.user.favoriteAuthors.remove (author)
@@ -363,7 +365,6 @@ def findBook(request):
     # get all of the user objects, except for the currently logged in user.
     users = User.objects.exclude (pk=request.user.id)
 
-
     # present the user with other users who like the same authors.
     this_user = request.user
 
@@ -371,8 +372,7 @@ def findBook(request):
     favorite_authors = this_user.favoriteAuthors.all ( )
     list = []
     for fa in favorite_authors:
-        list.append (str(fa))
-
+        list.append (str (fa))
 
     # iterate through the users and also iterate through the favorite authors, if we find another user with the same author interest, add them to a list.
     favAuthorsUsers = []
@@ -380,32 +380,30 @@ def findBook(request):
     for user in users:
         y = user.favoriteAuthors.all ( )
         for fa in y:
-            if str(fa) in list:
+            if str (fa) in list:
                 if user not in favAuthorsUsers:
-                    favAuthorsUsers.append(user)
-
+                    favAuthorsUsers.append (user)
 
     # present the user with other users who also share the same interest in genres.
-    favorite_genres = this_user.favoriteGenres.all()
+    favorite_genres = this_user.favoriteGenres.all ( )
     favGen = []
 
     for fg in favorite_genres:
-        favGen.append(str(fg))
+        favGen.append (str (fg))
 
     # iterate through the users and also iterate through their favorite genres, if we find another user with the same genre interest, add them to the list.
 
     favGenUsers = []
 
     for user in users:
-        x = user.favoriteGenres.all()
+        x = user.favoriteGenres.all ( )
         for fg in x:
-            if str(fg) in favGen:
+            if str (fg) in favGen:
                 if user not in favGenUsers:
-                    favGenUsers.append(user)
+                    favGenUsers.append (user)
 
-
-
-    return render (request, 'Social/findBook.html', {'users': users, 'favAuthorsUsers' : favAuthorsUsers, 'favGenUsers' : favGenUsers})
+    return render (request, 'Social/findBook.html',
+                   {'users': users, 'favAuthorsUsers': favAuthorsUsers, 'favGenUsers': favGenUsers})
 
 
 @login_required ( )
@@ -470,7 +468,7 @@ def myMessages(request):
     recieved_messages = Message.objects.filter (reciever_id=request.user.id).order_by ('-created_on')
     sent_messages = Message.objects.filter (sender_id=request.user.id).order_by ('-created_on')
     messages = recieved_messages | sent_messages
-    messages.order_by ('-created_on')
+    messages.order_by ('read')
 
     if (request.GET.get ('all_messages')):
         # load all of your messages both sent and recieved
@@ -499,7 +497,9 @@ def deleteMessages(request, pk):
 
 @login_required ( )
 def myWishlist(request):
-    return render (request, 'accounts/myWishlist.html', {'myWishlist': myWishlist})
+    this_user = User.objects.get (pk=request.user.id)
+    wishlist = this_user.wishlist.all ( )
+    return render (request, 'accounts/myWishlist.html', {'wishlist': wishlist})
 
 
 @login_required ( )
@@ -509,8 +509,14 @@ def viewMessageThread(request, pk):
     # get all of the replies corresponding to the message object we have selected.
     replies = Reply.objects.all ( ).filter (parent_id=message.id)
 
-    # once the user has opened this page, we should set the read variable to True.
-    message.read = True
+    # get the other user involved in the message
+    sender = request.user
+    reciever = message.sender
+
+    if sender.email != request.user.email:
+        # once the user has opened this page, we should set the read variable to True and is not the sender.
+        message.read = True
+        message.save ( )
 
     if request.method == 'POST':
         # load up the form for the reply
@@ -522,13 +528,22 @@ def viewMessageThread(request, pk):
             new_message.parent = message
             new_message.save ( )
 
-            # when a new reply is sent we need to set the read boolean variable for the parent message equal to false, so that the other user (reciever) gets a notification
+            # set the message = false
             message.read = False
+
+            # inverse the sender and reciever everytime a reply is sent.
+            if (sender.email != reciever.email):
+                message.sender = sender
+                message.reciever = reciever
+
+            message.save ( )
 
             return redirect (reverse ('accounts:myMessages'))
 
     else:
         reply = replyForm ( )
+        message.read = True
+        message.save ( )
 
     return render (request, 'Social/messageThread.html', {'replies': replies, 'message': message, 'reply': reply})
 
@@ -577,16 +592,14 @@ def addBookWishlist(request):
             book.genre = genre
             author.save ( )
             genre.save ( )
+            book.wishlist = True
             book.save ( )
+            user.wishlist.add (book)
 
-            if book.favorite is True:
-                user.favoriteAuthors.add (author)
-                user.favoriteGenres.add (genre)
-
-            return redirect (reverse ('accounts:addBookWishlist'))
+            return redirect (reverse ('accounts:myWishlist'))
     else:
         addBook = addBookForm ( )
         addAuthor = addAuthorForm ( )
         addGenre = addGenreForm ( )
-    return render (request, "accounts/myWishlist.html",
+    return render (request, "accounts/addBookWishlist.html",
                    {'addBook': addBook, 'addAuthor': addAuthor, 'addGenre': addGenre})

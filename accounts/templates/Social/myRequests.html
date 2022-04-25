@@ -14,9 +14,6 @@
     <div class="flex-container">
         <div class="flex-child options">
             <form action="#" method="get">
-                <button type="submit" class="option" name="new_message" value="New Message">Compose</button>
-                <br>
-                <br>
                 <button type="submit" class="option" name="all_messages" value="All">All</button>
                 <br>
                 <br>
@@ -44,7 +41,7 @@
                         <p style="margin-left: 50px;"><i>{{ reply.name.email }}</i></p>
 
                     {% endif %}
-                    {% endfor %}
+                {% endfor %}
                 {% if message.sender.email == user.email %}
                     <p>Sent On: {{ message.created_on }}</p>
                     <p>Sent To: {{ message.reciever.email }}</p>
@@ -53,7 +50,15 @@
                        onclick="return confirm('Are you sure you want to delete?')"
                        class="btn btn-danger">Delete</a>
                     <a href="{% url 'accounts:thread'  pk=message.pk %}"
-                       class="btn btn-primary">Reply</a>
+                       class="btn btn-primary">View Message(s)</a>
+                    {% if message.read %}
+                        <a href="{% url 'accounts:myMessages' %}"
+                           class="btn btn-secondary">Read</a>
+
+                    {% else %}
+                        <a href="{% url 'accounts:myMessages' %}"
+                           class="btn btn-primary">Sent</a>
+                    {% endif %}
 
                 {% else %}
                     <p>Recieved On: {{ message.created_on }}</p>
@@ -64,7 +69,16 @@
                     <a href="/account/viewProfile/{{ message.sender.email }}"
                        class="btn btn-primary">View Profile</a>
                     <a href="{% url 'accounts:thread'  pk=message.pk %}"
-                       class="btn btn-primary">Reply</a>
+                       class="btn btn-primary">View Messages</a>
+
+                    {% if message.read %}
+                        <a href="{% url 'accounts:myMessages' %}"
+                           class="btn btn-secondary">Read</a>
+
+                    {% else %}
+                        <a href="{% url 'accounts:myMessages' %}"
+                           class="btn btn-danger">Unread</a>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
 

@@ -65,6 +65,7 @@ class Book (models.Model):
     isbn = models.CharField(max_length=13, validators=[MinLengthValidator(13)])
     favorite = models.BooleanField(default=False)
     shared = models.BooleanField(default=False)
+    wishlist = models.BooleanField(default=False, blank=False)
 
 
     class Meta:

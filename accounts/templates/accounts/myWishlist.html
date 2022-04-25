@@ -8,7 +8,7 @@
         <th colspan="3">Actions</th>
         <th class="d-flex justify-content-end"><a class="btn btn-success me-2 w-100" href="{% url 'accounts:addBookWishlist' %}">Add A
             Book</a></th>
-        {% for book in myBooks %}
+        {% for book in wishlist %}
             <tr>
                 <td>{{ book.title }}</td>
                 <td>{{ book.author }}</td>
