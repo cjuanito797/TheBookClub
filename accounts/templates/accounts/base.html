@@ -105,7 +105,7 @@
                     {% for c in comments %}
                         {% if c.post.id == post.id %}
                             <p style="margin-left: 30px;">{{ c.Comment }}</p>
-                            <p style="margin-left: 50px;">- <i>{{ c.created_on }} by {{ c.name.first_name }}
+                            <p style="margin-left: 50px;">- <i>{{ c.created_on }} by {{ c.name.email }}
                             </i></p>
 
 

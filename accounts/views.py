@@ -113,7 +113,7 @@ def editProfile(request):
         form = EditProfile (data=request.POST, instance=request.user, files=request.FILES)
         if form.is_valid ( ):
             form.save ( )
-            return redirect(reverse('accounts:viewMyProfile'))
+            return redirect (reverse ('accounts:viewMyProfile'))
     else:
         form = EditProfile (instance=request.user)
     return render (request, 'profileCustomization/editProfile.html', {'form': form})
@@ -236,6 +236,7 @@ def viewFavGenres(request):
 
     return render (request, 'profileCustomization/myFavoriteGenres.html', {'uniqueGenres': uniqueGenres})
 
+
 @login_required ( )
 def viewFavGenres(request):
     user = request.user
@@ -245,24 +246,26 @@ def viewFavGenres(request):
     for fg in favGenres:
         if fg.name not in uniqueGenres:
             uniqueGenres.append (fg.name)
-    
+
     if request.method == "POST":
         favGenre = addGenreForm (request.POST)
 
         if favGenre.is_valid ( ):
             genre = favGenre.save (commit=False)
-            genre.save()
-            user.favoriteGenres.add(genre)
-        
+            genre.save ( )
+            user.favoriteGenres.add (genre)
+
         return redirect ('accounts:viewFavGenres')
     else:
-        favGenre = addGenreForm ()
+        favGenre = addGenreForm ( )
 
-    return render (request, 'profileCustomization/myFavoriteGenres.html', {'uniqueGenres': uniqueGenres, 'favGenre': favGenre})
+    return render (request, 'profileCustomization/myFavoriteGenres.html',
+                   {'uniqueGenres': uniqueGenres, 'favGenre': favGenre})
+
 
 def delFavGenre(request, pk):
-    genre = get_object_or_404(Genre, name=pk)
-    request.user.favoriteGenres.remove(genre)
+    genre = get_object_or_404 (Genre, name=pk)
+    request.user.favoriteGenres.remove (genre)
 
     return redirect ('accounts:viewFavGenres')
 
@@ -276,28 +279,29 @@ def viewFavAuthors(request):
     for fa in favAuthors:
         if fa not in uniqueAuthors:
             uniqueAuthors.append (fa)
-    
+
     if request.method == "POST":
         favAuthor = addAuthorForm (request.POST)
 
         if favAuthor.is_valid ( ):
             author = favAuthor.save (commit=False)
-            author.save()
-            user.favoriteAuthors.add(author)
-        
-        favAuthor = addAuthorForm ()
+            author.save ( )
+            user.favoriteAuthors.add (author)
+
+        favAuthor = addAuthorForm ( )
         return redirect ('accounts:viewFavAuthors')
     else:
-        favAuthor = addAuthorForm ()
+        favAuthor = addAuthorForm ( )
 
-    return render (request, 'profileCustomization/myFavoriteAuthors.html', {'uniqueAuthors': uniqueAuthors, 'favAuthor': favAuthor})
+    return render (request, 'profileCustomization/myFavoriteAuthors.html',
+                   {'uniqueAuthors': uniqueAuthors, 'favAuthor': favAuthor})
+
 
 def delFavAuthor(request, pk):
-    author = get_object_or_404(Author, pk=pk)
-    request.user.favoriteAuthors.remove(author)
+    author = get_object_or_404 (Author, pk=pk)
+    request.user.favoriteAuthors.remove (author)
 
     return redirect ('accounts:viewFavAuthors')
-
 
 
 @login_required ( )
@@ -357,15 +361,49 @@ def findBook(request):
     # get all of the user objects, except for the currently logged in user.
     users = User.objects.exclude (pk=request.user.id)
 
-    # get some of the favorite authors of the user (0 - 3) objects only.
 
-    # get some of the favorite genres of the user (0 - 3) objects only.
+    # present the user with other users who like the same authors.
+    this_user = request.user
 
-    # get some of the favorite books of the user (0 - 3) objects only.
+    # get the favorite authors of the currently logged in user.
+    favorite_authors = this_user.favoriteAuthors.all ( )
+    list = []
+    for fa in favorite_authors:
+        list.append (str(fa))
 
-    # Compare the favorites of the users and determine whether we should suggest them to the currently logged in user. We will build a list of suggestions.
 
-    return render (request, 'Social/findBook.html', {'users': users})
+    # iterate through the users and also iterate through the favorite authors, if we find another user with the same author interest, add them to a list.
+    favAuthorsUsers = []
+
+    for user in users:
+        y = user.favoriteAuthors.all ( )
+        for fa in y:
+            if str(fa) in list:
+                if user not in favAuthorsUsers:
+                    favAuthorsUsers.append(user)
+
+
+    # present the user with other users who also share the same interest in genres.
+    favorite_genres = this_user.favoriteGenres.all()
+    favGen = []
+
+    for fg in favorite_genres:
+        favGen.append(str(fg))
+
+    # iterate through the users and also iterate through their favorite genres, if we find another user with the same genre interest, add them to the list.
+
+    favGenUsers = []
+
+    for user in users:
+        x = user.favoriteGenres.all()
+        for fg in x:
+            if str(fg) in favGen:
+                if user not in favGenUsers:
+                    favGenUsers.append(user)
+
+
+
+    return render (request, 'Social/findBook.html', {'users': users, 'favAuthorsUsers' : favAuthorsUsers, 'favGenUsers' : favGenUsers})
 
 
 @login_required ( )
@@ -461,7 +499,8 @@ def deleteMessages(request, pk):
 def myWishlist(request):
     return render (request, 'accounts/myWishlist.html', {'myWishlist': myWishlist})
 
-@login_required()
+
+@login_required ( )
 def viewMessageThread(request, pk):
     message = get_object_or_404 (Message, pk=pk)
 
@@ -473,22 +512,21 @@ def viewMessageThread(request, pk):
 
     if request.method == 'POST':
         # load up the form for the reply
-        reply = replyForm(request.POST)
+        reply = replyForm (request.POST)
 
-        if reply.is_valid():
-            new_message = reply.save(commit=False)
+        if reply.is_valid ( ):
+            new_message = reply.save (commit=False)
             new_message.name = request.user
             new_message.parent = message
-            new_message.save()
+            new_message.save ( )
 
             # when a new reply is sent we need to set the read boolean variable for the parent message equal to false, so that the other user (reciever) gets a notification
             message.read = False
 
-
             return redirect (reverse ('accounts:myMessages'))
 
     else:
-        reply = replyForm()
+        reply = replyForm ( )
 
     return render (request, 'Social/messageThread.html', {'replies': replies, 'message': message, 'reply': reply})
 
@@ -499,24 +537,25 @@ def deletePost(request, pk):
     post.delete ( )
     return redirect ('accounts:customerView')
 
-@login_required()
+
+@login_required ( )
 def replyPost(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+    post = get_object_or_404 (Post, pk=pk)
 
     if request.method == 'POST':
-        comment_on_post = PostReply(request.POST)
+        comment_on_post = PostReply (request.POST)
 
-        if comment_on_post.is_valid():
-            comment = comment_on_post.save(commit=False)
+        if comment_on_post.is_valid ( ):
+            comment = comment_on_post.save (commit=False)
             comment.name = request.user
             comment.post = post
-            comment.save()
+            comment.save ( )
 
-            return redirect(reverse('accounts:customerView'))
+            return redirect (reverse ('accounts:customerView'))
     else:
-        comment_on_post = PostReply()
+        comment_on_post = PostReply ( )
 
-    return render(request, 'Social/commentOnPost.html',  {'form': comment_on_post})
+    return render (request, 'Social/commentOnPost.html', {'form': comment_on_post})
 
 
 @login_required
