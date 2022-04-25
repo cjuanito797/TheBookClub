@@ -76,6 +76,10 @@
             {% if request.user == user %}
                 <a class="btn btn-primary text-dark"
                    href="{% url 'accounts:editProfile' %}">Edit Account</a>
+                <a class="btn btn-primary text-dark"
+                   href="{% url 'accounts:viewFavAuthors' %}">Edit Favorite Authors</a>
+                <a class="btn btn-primary text-dark"
+                   href="{% url 'accounts:viewFavGenres' %}">Edit Favorite Genre</a>
             {% else %}
                 <a class="btn btn-primary text-dark"
                    href="{% url 'accounts:myWishlist' %}">View Wishlist</a>
