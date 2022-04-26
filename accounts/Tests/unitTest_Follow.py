@@ -29,6 +29,17 @@ class ll_ATS (unittest.TestCase):
         driver.find_element_by_xpath("/html/body/div[1]/form/p/input").click()
         time.sleep(3)
 
+        # Click on the contact owner for first book
+        driver.find_element_by_xpath("/html/body/div[1]/div[1]/div/a").click()
+        time.sleep(3)
+
+
+        # click on the follow/unfollow button
+        driver.find_element_by_xpath("/html/body/div[1]/div[6]/a[2]").click()
+
+        time.sleep(3)
+
+
 
 
 
