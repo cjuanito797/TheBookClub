@@ -3,14 +3,15 @@
 {% block content %}
     <h1 class="text-center mb-5">View users with similar interests as yours</h1>
 
-    <h1 class="text-center mb-5">Users who also like your favorite author(s). </h1>
-    <div class="w-75 mx-auto d-flex flex-row flex-wrap gap-5">
+    {% if favAuthorsUsers %}
+    <h1 class="text-center mb-5">Users who also like your favorite author(s): </h1>
+    <div class="w-75 d-flex flex-row flex-wrap gap-5 justify-content-center">
         {% for user in favAuthorsUsers %}
             <div class="card" style="width: 18rem;">
                 <div class="card-body mx-auto d-flex flex-column justify-content-center">
                     <h5 class="card-title text-dark text-center">{{ user.first_name }} {{ user.last_name }}</h5>
-                    <h6 class="card-subtitle text-muted text-center">{{ user.email }}</h6>
-                    <p class="card-text text-dark">
+                    {% comment %} <h6 class="card-subtitle text-muted text-center">{{ user.email }}</h6> {% endcomment %}
+                    <p class="card-text text-muted">
                         {{ user.bio }}
                     </p>
                     <a href="/account/viewProfile/{{ user.email }}"
@@ -19,16 +20,17 @@
             </div>
         {% endfor %}
     </div>
+    {% endif %}
 
-    <br>
-    <h1 class="text-center mb-5">Users who also like your favorite genre(s).</h1>
-    <div class="w-75 mx-auto d-flex flex-row flex-wrap gap-5">
+    {% if favGenUsers %}
+    <h1 class="text-center mb-5">Users who also like your favorite genre(s):</h1>
+    <div class="w-75 mx-auto d-flex flex-row flex-wrap gap-5 justify-content-center">
         {% for user in favGenUsers %}
             <div class="card" style="width: 18rem;">
                 <div class="card-body mx-auto d-flex flex-column justify-content-center">
                     <h5 class="card-title text-dark text-center">{{ user.first_name }} {{ user.last_name }}</h5>
-                    <h6 class="card-subtitle text-muted text-center">{{ user.email }}</h6>
-                    <p class="card-text text-dark">
+                    {% comment %} <h6 class="card-subtitle text-muted text-center">{{ user.email }}</h6> {% endcomment %}
+                    <p class="card-text text-muted">
                         {{ user.bio }}
                     </p>
                     <a href="/account/viewProfile/{{ user.email }}"
@@ -38,15 +40,21 @@
         {% endfor %}
     </div>
     <br>
-    <h1 class="text-center mb-5">All Other Users</h1>
+    {% endif %}
 
-    <div class="w-75 mx-auto d-flex flex-row flex-wrap gap-5">
+    {% if not favGenUsers and not favAuthorsUsers %}
+        <p class="text-center text-muted fs-5">You have no favorites yet. Add favorite authors or genres to see tailored suggestions.</p>
+    {% endif %}
+
+    <h1 class="text-center mb-5">All Users:</h1>
+
+    <div class="w-75 mx-auto d-flex flex-row flex-wrap gap-5 justify-content-center">
         {% for user in users %}
             <div class="card" style="width: 18rem;">
                 <div class="card-body mx-auto d-flex flex-column justify-content-center">
                     <h5 class="card-title text-dark text-center">{{ user.first_name }} {{ user.last_name }}</h5>
-                    <h6 class="card-subtitle text-muted text-center">{{ user.email }}</h6>
-                    <p class="card-text text-dark">
+                    {% comment %} <h6 class="card-subtitle text-muted text-center">{{ user.email }}</h6> {% endcomment %}
+                    <p class="card-text text-muted">
                         {{ user.bio }}
                     </p>
                     <a href="/account/viewProfile/{{ user.email }}"

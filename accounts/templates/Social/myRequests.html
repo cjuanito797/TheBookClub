@@ -1,87 +1,81 @@
 {% extends 'accounts/base.html' %}
-
-
-{% block title %}
-    <title>My Requests</title>
-{% endblock %}
-
-
+{% block title %}<title>My Requests</title>{% endblock %}
 {% block content %}
-    <div class="Banner">
-        <h1>View Your Messages Below</h1>
-    </div>
-
-    <div class="flex-container">
-        <div class="flex-child options">
-            <form action="#" method="get">
-                <button type="submit" class="option" name="all_messages" value="All">All</button>
-                <br>
-                <br>
-                <button type="submit" class="option" name="sent_messages" value="Sent">Sent</button>
-                <br>
-                <br>
-                <button type="submit" class="option" name="recieved_messages" value="Recieved">Recieved</button>
+    <div class="container bg-msgs w-75 py-5 mx-auto text-dark">
+        <h1 class="text-center mb-5">Messages</h1>
+        <div class="d-flex justify-content-between px-5 gap-5">
+            <form class="bg-light d-flex flex-column list-group-flush w-25"
+                  action="#"
+                  method="get">
+                  <p class="text-muted text-left">Folders</p>
+                <button type="submit" class="list-group-item list-group-item-action {% if folder == "all" %}active{% endif %}" name="all_messages" value="All">All</button>
+                <button type="submit"
+                        class="list-group-item list-group-item-action {% if folder == "sent" %}active{% endif %}"
+                        name="sent_messages"
+                        value="Sent">Sent</button>
+                <button type="submit"
+                        class="list-group-item list-group-item-action {% if folder == "rcvd" %}active{% endif %}"
+                        name="recieved_messages"
+                        value="Received">Received</button>
             </form>
-        </div>
-
-        <div class="messages">
-            <!-- Depending on the selected button we will display the messages, and if the messages count is 0, we will display an image -->
-            {% if messages.count == 0 %}
-                <!-- display an image all done for today -->
-                <h3>Nothing to see here, click on the discover tab in order to find a new book or two.</h3>
-            {% endif %}
-
-            {% for message in messages %}
-
-                <h3>{{ message.message }}</h3>
-                {% for reply in replies %}
-
-                    {% if reply.parent.id == message.id %}
-                        <p style="margin-left: 35px;">{{ reply.message }}</p>
-                        <p style="margin-left: 50px;"><i>{{ reply.name.email }}</i></p>
-
+            <div class="messages">
+                <!-- Depending on the selected button we will display the messages, and if the messages count is 0, we will display an image -->
+                {% if messages.count == 0 %}
+                    <!-- display an image all done for today -->
+                    <h3>Nothing to see here, click on the discover tab in order to find a new book or two.</h3>
+                {% endif %}
+                {% for message in messages %}
+                    <h3>{{ message.message }}</h3>
+                    {% for reply in replies %}
+                        {% if reply.parent.id == message.id %}
+                            <p style="margin-left: 35px;">
+                                {{ reply.message }}
+                            </p>
+                            <p style="margin-left: 50px;">
+                                <i>{{ reply.name.email }}</i>
+                            </p>
+                        {% endif %}
+                    {% endfor %}
+                    {% if message.sender.email == user.email %}
+                        <p>
+                            Sent On: {{ message.created_on }}
+                        </p>
+                        <p>
+                            Sent To: {{ message.reciever.email }}
+                        </p>
+                        <!-- if the message was sent by the logged in user, display certain functions -->
+                        <a href="{% url 'accounts:deleteMessages' pk=message.pk %}"
+                           onclick="return confirm('Are you sure you want to delete?')"
+                           class="btn btn-danger">Delete</a>
+                        <a href="{% url 'accounts:thread'  pk=message.pk %}"
+                           class="btn btn-primary">View Message(s)</a>
+                        {% if message.read %}
+                            <a href="{% url 'accounts:myMessages' %}" class="btn btn-secondary">Read</a>
+                        {% else %}
+                            <a href="{% url 'accounts:myMessages' %}" class="btn btn-primary">Sent</a>
+                        {% endif %}
+                    {% else %}
+                        <p>
+                            Recieved On: {{ message.created_on }}
+                        </p>
+                        <p>
+                            Sent By: {{ message.sender.email }}
+                        </p>
+                        <a href="{% url 'accounts:deleteMessages' pk=message.pk %}"
+                           onclick="return confirm('Are you sure you want to delete?')"
+                           class="btn btn-danger">Delete</a>
+                        <a href="/account/viewProfile/{{ message.sender.email }}"
+                           class="btn btn-primary">View Profile</a>
+                        <a href="{% url 'accounts:thread'  pk=message.pk %}"
+                           class="btn btn-primary">View Messages</a>
+                        {% if message.read %}
+                            <a href="{% url 'accounts:myMessages' %}" class="btn btn-primary">Read</a>
+                        {% else %}
+                            <a href="{% url 'accounts:myMessages' %}" class="btn btn-danger">Unread</a>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
-                {% if message.sender.email == user.email %}
-                    <p>Sent On: {{ message.created_on }}</p>
-                    <p>Sent To: {{ message.reciever.email }}</p>
-                    <!-- if the message was sent by the logged in user, display certain functions -->
-                    <a href="{% url 'accounts:deleteMessages' pk=message.pk %}"
-                       onclick="return confirm('Are you sure you want to delete?')"
-                       class="btn btn-danger">Delete</a>
-                    <a href="{% url 'accounts:thread'  pk=message.pk %}"
-                       class="btn btn-primary">View Message(s)</a>
-                    {% if message.read %}
-                        <a href="{% url 'accounts:myMessages' %}"
-                           class="btn btn-secondary">Read</a>
-
-                    {% else %}
-                        <a href="{% url 'accounts:myMessages' %}"
-                           class="btn btn-primary">Sent</a>
-                    {% endif %}
-
-                {% else %}
-                    <p>Recieved On: {{ message.created_on }}</p>
-                    <p>Sent By: {{ message.sender.email }}</p>
-                    <a href="{% url 'accounts:deleteMessages' pk=message.pk %}"
-                       onclick="return confirm('Are you sure you want to delete?')"
-                       class="btn btn-danger">Delete</a>
-                    <a href="/account/viewProfile/{{ message.sender.email }}"
-                       class="btn btn-primary">View Profile</a>
-                    <a href="{% url 'accounts:thread'  pk=message.pk %}"
-                       class="btn btn-primary">View Messages</a>
-
-                    {% if message.read %}
-                        <a href="{% url 'accounts:myMessages' %}"
-                           class="btn btn-secondary">Read</a>
-
-                    {% else %}
-                        <a href="{% url 'accounts:myMessages' %}"
-                           class="btn btn-danger">Unread</a>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
-
+            </div>
         </div>
     </div>
 {% endblock %}

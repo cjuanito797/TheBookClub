@@ -415,6 +415,7 @@ def myMessages(request):
     sent_messages = Message.objects.filter (sender_id=request.user.id).order_by ('-created_on')
     messages = recieved_messages | sent_messages
     messages.order_by ('read')
+    folder = "all"
 
     if (request.GET.get ('all_messages')):
         # load all of your messages both sent and recieved
@@ -422,16 +423,19 @@ def myMessages(request):
         sent_messages = Message.objects.filter (sender_id=request.user.id).order_by ('-created_on')
         messages = recieved_messages | sent_messages
         messages.order_by ('-created_on')
+        folder = "all"
 
 
     elif (request.GET.get ('sent_messages')):
         messages = Message.objects.filter (sender_id=request.user.id).order_by ('-created_on')
+        folder = "sent"
 
 
     elif (request.GET.get ('recieved_messages')):
         messages = Message.objects.filter (reciever_id=request.user.id).order_by ('-created_on')
+        folder = "rcvd"
 
-    return render (request, 'Social/myRequests.html', {'messages': messages, })
+    return render (request, 'Social/myRequests.html', {'messages': messages, 'folder': folder})
 
 
 @login_required ( )

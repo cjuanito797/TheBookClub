@@ -6,23 +6,22 @@
 {% endblock %}
 
 {% block content %}
+<div class="container bg-msgs w-75 py-5 mx-auto text-dark text-center">
     <h1>View Messages below.</h1>
-
+    <ul class="list-group list-group-flush my-3">
     <!-- First print out the original (parent) message and later print out the subsequent replies, will have a form on this page for a reply -->
-    {{ message.sender }}: &nbsp;{{ message.message }}
+    <li class="list-group-item">{{ message.sender }}: &nbsp;{{ message.message }}</li>
+        {% for reply in replies %}
+            <li class="list-group-item">{{ reply.name.email }}: &nbsp;{{ reply.message }}</li>
+        {% endfor %}
+    </ul>
 
-    <br>
-    {% for reply in replies %}
-        <br>
-        {{ reply.name.email }}: &nbsp;{{ reply.message }}
-        <br>
-    {% endfor %}
-
-    <form method="post">
+    <form class="bg-light d-flex flex-column list-group-flush hide-label w-75 mx-auto" method="post">
     {% csrf_token %}
 
     {{ reply.as_p }}
     <input class="btn btn-primary rounded-pill mx-auto mb-3 text-light"
                    type="submit">
     </form>
+</div>
 {% endblock %}

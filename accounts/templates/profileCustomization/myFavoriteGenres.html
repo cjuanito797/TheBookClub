@@ -12,6 +12,7 @@
             </p>
         </form>
     </div>
+    {% if uniqueGenres %}
     <div class="list-group w-50 mx-auto mt-5 text-center">
         <li class="list-group-item list-group-item-primary">Your Favorite Genres</li>
         {% for fg in uniqueGenres %}
@@ -26,4 +27,5 @@
             </li>
         {% endfor %}
     </div>
+    {% endif %}
 {% endblock %}

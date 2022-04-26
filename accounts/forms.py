@@ -105,12 +105,26 @@ class messageForm (forms.ModelForm):
     class Meta:
         model = Message
         fields = ("message",)
+    
+    def __init__(self, *args, **kwargs):
+        super (messageForm, self).__init__ (*args, **kwargs)
+
+        for visible in self.visible_fields ( ):
+            visible.field.widget.attrs['class'] = 'form-control'
+            visible.field.widget.attrs['placeholder'] = 'Write a message here'
 
 
 class replyForm (forms.ModelForm):
     class Meta:
         model = Reply
         fields = ('message',)
+    
+    def __init__(self, *args, **kwargs):
+        super (replyForm, self).__init__ (*args, **kwargs)
+
+        for visible in self.visible_fields ( ):
+            visible.field.widget.attrs['class'] = 'form-control'
+            visible.field.widget.attrs['placeholder'] = 'Write a message here'
 
 
 class PostPersonalization (forms.ModelForm):
