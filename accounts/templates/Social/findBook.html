@@ -1,34 +1,49 @@
 {% extends 'accounts/base.html' %}
 {% block title %}<title>Find A New Book</title>{% endblock %}
 {% block content %}
+{% load static %}
     <h1 class="text-center mb-5">View users with similar interests as yours</h1>
 
     {% if favAuthorsUsers %}
-    <h1 class="text-center mb-5">Users who also like your favorite author(s): </h1>
+    <h2 class="text-center my-5">Users who also like your favorite author(s): </h1>
     <div class="w-75 d-flex flex-row flex-wrap gap-5 justify-content-center">
         {% for user in favAuthorsUsers %}
-            <div class="card" style="width: 18rem;">
-                <div class="card-body mx-auto d-flex flex-column justify-content-center">
-                    <h5 class="card-title text-dark text-center">{{ user.first_name }} {{ user.last_name }}</h5>
-                    {% comment %} <h6 class="card-subtitle text-muted text-center">{{ user.email }}</h6> {% endcomment %}
-                    <p class="card-text text-muted">
-                        {{ user.bio }}
-                    </p>
-                    <a href="/account/viewProfile/{{ user.email }}"
-                       class="btn btn-primary mx-auto">View Profile</a>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body mx-auto d-flex flex-column justify-content-center">
+                <div class="mx-auto">
+                    <img src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}{% static "images/variety.jpeg" %}{% endif %}"
+                         alt="panda"
+                         width="100px"
+                         height="100px"
+                         style="border-radius: 50%">
                 </div>
+                <h5 class="mt-2 card-title text-dark text-center right-placeholder">{{ user.first_name }} {{ user.last_name }}</h5>
+                {% comment %} <h6 class="card-subtitle text-muted text-center">{{ user.email }}</h6> {% endcomment %}
+                <p class="card-text text-muted">
+                    {{ user.bio }}
+                </p>
+                <a href="/account/viewProfile/{{ user.email }}"
+                   class="btn btn-primary mx-auto">View Profile</a>
             </div>
+        </div>
         {% endfor %}
     </div>
     {% endif %}
 
     {% if favGenUsers %}
-    <h1 class="text-center mb-5">Users who also like your favorite genre(s):</h1>
+    <h2 class="text-center my-5">Users who also like your favorite genre(s):</h1>
     <div class="w-75 mx-auto d-flex flex-row flex-wrap gap-5 justify-content-center">
         {% for user in favGenUsers %}
             <div class="card" style="width: 18rem;">
                 <div class="card-body mx-auto d-flex flex-column justify-content-center">
-                    <h5 class="card-title text-dark text-center">{{ user.first_name }} {{ user.last_name }}</h5>
+                    <div class="mx-auto">
+                        <img src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}{% static "images/variety.jpeg" %}{% endif %}"
+                             alt="panda"
+                             width="100px"
+                             height="100px"
+                             style="border-radius: 50%">
+                    </div>
+                    <h5 class="mt-2 card-title text-dark text-center right-placeholder">{{ user.first_name }} {{ user.last_name }}</h5>
                     {% comment %} <h6 class="card-subtitle text-muted text-center">{{ user.email }}</h6> {% endcomment %}
                     <p class="card-text text-muted">
                         {{ user.bio }}
@@ -46,21 +61,28 @@
         <p class="text-center text-muted fs-5">You have no favorites yet. Add favorite authors or genres to see tailored suggestions.</p>
     {% endif %}
 
-    <h1 class="text-center mb-5">All Users:</h1>
+    <h2 class="text-center my-5">All Users:</h1>
 
     <div class="w-75 mx-auto d-flex flex-row flex-wrap gap-5 justify-content-center">
         {% for user in users %}
-            <div class="card" style="width: 18rem;">
-                <div class="card-body mx-auto d-flex flex-column justify-content-center">
-                    <h5 class="card-title text-dark text-center">{{ user.first_name }} {{ user.last_name }}</h5>
-                    {% comment %} <h6 class="card-subtitle text-muted text-center">{{ user.email }}</h6> {% endcomment %}
-                    <p class="card-text text-muted">
-                        {{ user.bio }}
-                    </p>
-                    <a href="/account/viewProfile/{{ user.email }}"
-                       class="btn btn-primary mx-auto">View Profile</a>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body mx-auto d-flex flex-column justify-content-center">
+                <div class="mx-auto">
+                    <img src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}{% static "images/variety.jpeg" %}{% endif %}"
+                         alt="panda"
+                         width="100px"
+                         height="100px"
+                         style="border-radius: 50%">
                 </div>
+                <h5 class="mt-2 card-title text-dark text-center right-placeholder">{{ user.first_name }} {{ user.last_name }}</h5>
+                {% comment %} <h6 class="card-subtitle text-muted text-center">{{ user.email }}</h6> {% endcomment %}
+                <p class="card-text text-muted">
+                    {{ user.bio }}
+                </p>
+                <a href="/account/viewProfile/{{ user.email }}"
+                   class="btn btn-primary mx-auto">View Profile</a>
             </div>
+        </div>
         {% endfor %}
     </div>
 {% endblock %}
