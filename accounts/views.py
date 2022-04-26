@@ -13,6 +13,7 @@ from django.db.models import Q
 from library.models import followSystem
 from django.contrib import messages
 
+
 # Create your views here.
 class registration_view (FormView):
     def post(self, request):
@@ -26,6 +27,7 @@ class registration_view (FormView):
     def get(self, request):
         form = RegistrationForm (files=request.FILES)
         return render (request, 'registration/register.html', {'form': form})
+
 
 def user_login(request):
     form = LoginForm (request.POST)
@@ -46,6 +48,7 @@ def user_login(request):
     else:
         form = LoginForm ( )
     return render (request, 'registration/login.html', {'form': form})
+
 
 @login_required
 def customerView(request):
@@ -91,7 +94,7 @@ def search_results(request):
         author__last_name__icontains=input) | Q (genre__name__icontains=input))
     results.filter (available=True)
     results_found = results.exists ( )
-    results.exclude(owner_id=request.user.id)
+    results.exclude (owner_id=request.user.id)
 
     if (not results_found):
         results = Book.objects.filter (available=True)[:5]
@@ -182,9 +185,11 @@ def addBook(request):
         addGenre = addGenreForm ( )
     return render (request, "accounts/addBook.html", {'addBook': addBook, 'addAuthor': addAuthor, 'addGenre': addGenre})
 
+
 @login_required
 def user_logout(request):
     return HttpResponseRedirect (reversed ('your_app:login'))
+
 
 @login_required
 def edit_address(request):
@@ -197,6 +202,7 @@ def edit_address(request):
     else:
         form = EditAddress (request.POST or None, instance=request.user, use_required_attribute=False)
     return render (request, 'profileCustomization/editAddress.html', {'form': form})
+
 
 @login_required ( )
 def viewFavBooks(request):
@@ -325,6 +331,7 @@ def changeBookVisibility(request, pk):
 
     return redirect ('accounts:myBookShelf')
 
+
 @login_required ( )
 def findBook(request):
     # get all of the user objects, except for the currently logged in user.
@@ -368,6 +375,7 @@ def findBook(request):
     return render (request, 'Social/findBook.html',
                    {'users': users, 'favAuthorsUsers': favAuthorsUsers, 'favGenUsers': favGenUsers})
 
+
 @login_required ( )
 def follow(request, pk):
     user_to_add = User.objects.get (pk=pk)
@@ -396,6 +404,7 @@ def unfollow(request, pk):
     # return a message indicating that user was removed from our followings list.
     messages.success (request, 'User Removed From My Followings List.')
     return HttpResponseRedirect ('/account/viewProfile/' + str (user_to_unfollow.email))
+
 
 @login_required ( )
 def myMessages(request):
@@ -540,3 +549,27 @@ def addBookWishlist(request):
         addGenre = addGenreForm ( )
     return render (request, "accounts/addBookWishlist.html",
                    {'addBook': addBook, 'addAuthor': addAuthor, 'addGenre': addGenre})
+
+
+@login_required
+def requestABook(request, pk):
+    user_to_request_from = User.objects.get (pk=pk)
+
+    # display the list of available books that the user can share at the moment
+    books = Book.objects.filter (owner_id=pk, available=True, shared=False)
+
+    if request.method == 'POST':
+        new_message = messageForm (request.POST)
+
+        if new_message.is_valid ( ):
+            message = new_message.save (commit=False)
+            message.sender = request.user
+            message.reciever = user_to_request_from
+            message.save ( )
+            return redirect ('accounts:customerView')
+
+
+    else:
+        message = messageForm ( )
+    return render (request, 'Social/requestABook.html',
+                   {'requestee': user_to_request_from, 'books': books, 'messageForm': messageForm})
