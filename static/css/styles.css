@@ -94,7 +94,7 @@ a:hover {
     color: #0088a9;
 }
 
-button {
+/* button {
     margin-left: 20px;
     padding: 9px 25px;
     background-color: rgba(0, 136, 169, 1);
@@ -106,7 +106,7 @@ button {
 
 button:hover {
     background-color: rgba(0, 136, 169, 0.8);
-}
+} */
 
 /* #signupBackdrop {
     position: absolute;
@@ -387,7 +387,7 @@ input[type=checkbox] {
 }
 
 #picture {
-    width: 50px;
+    width: 100px;
     border-radius: 50%;
 }
 
