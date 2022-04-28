@@ -127,7 +127,7 @@ def viewProfile(request, id):
     favGenres = user.favoriteGenres.filter ( )
 
     # display the user's book that
-    books = Book.objects.filter (owner_id=user.id, available=True, shared=False)
+    books = Book.objects.filter (owner_id=user.id, available=True, shared=False, wishlist=False)
 
     # determine whether we are currently following the user or not based off of the user's following list and check if email exists.
     # Pass in boolean value to template.
@@ -148,7 +148,7 @@ def viewMyProfile(request):
     user = request.user
     favAuthors = user.favoriteAuthors.distinct ( )
     favGenres = user.favoriteGenres.filter ( )
-    books = Book.objects.filter (owner_id=user.id, available=True, shared=False)
+    books = Book.objects.filter (owner_id=user.id, available=True, shared=False, wishlist=False)
 
     return render (request, 'profileCustomization/viewProfile.html',
                    {'user': user, 'favAuthors': favAuthors, 'favGenres': favGenres,
@@ -560,7 +560,7 @@ def requestABook(request, pk):
     user_to_request_from = User.objects.get (pk=pk)
 
     # display the list of available books that the user can share at the moment
-    books = Book.objects.filter (owner_id=pk, available=True, shared=False)
+    books = Book.objects.filter (owner_id=pk, available=True, shared=False, wishlist=False)
 
     if request.method == 'POST':
         new_message = messageForm (request.POST)
